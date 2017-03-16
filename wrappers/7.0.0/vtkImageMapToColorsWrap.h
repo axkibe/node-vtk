@@ -33,6 +33,7 @@ class VtkImageMapToColorsWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetActiveComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNaNColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassAlphaToOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);

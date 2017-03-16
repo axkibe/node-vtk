@@ -59,6 +59,9 @@ void VtkGenericAttributeCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActiveComponent", GetActiveComponent);
 	Nan::SetPrototypeMethod(tpl, "getActiveComponent", GetActiveComponent);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetAttribute", GetAttribute);
 	Nan::SetPrototypeMethod(tpl, "getAttribute", GetAttribute);
 
@@ -67,6 +70,9 @@ void VtkGenericAttributeCollectionWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetMaxNumberOfComponents", GetMaxNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "getMaxNumberOfComponents", GetMaxNumberOfComponents);
@@ -218,6 +224,20 @@ void VtkGenericAttributeCollectionWrap::GetActiveComponent(const Nan::FunctionCa
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGenericAttributeCollectionWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
+	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGenericAttributeCollectionWrap::GetAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
@@ -281,6 +301,20 @@ void VtkGenericAttributeCollectionWrap::GetClassName(const Nan::FunctionCallback
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGenericAttributeCollectionWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
+	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGenericAttributeCollectionWrap::GetMaxNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)

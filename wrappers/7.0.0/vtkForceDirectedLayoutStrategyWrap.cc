@@ -71,6 +71,15 @@ void VtkForceDirectedLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGraphBounds", GetGraphBounds);
 	Nan::SetPrototypeMethod(tpl, "getGraphBounds", GetGraphBounds);
 
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperature", GetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperature", GetInitialTemperature);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMinValue", GetInitialTemperatureMinValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMinValue", GetInitialTemperatureMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetIterationsPerLayout", GetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "getIterationsPerLayout", GetIterationsPerLayout);
 
@@ -136,6 +145,9 @@ void VtkForceDirectedLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetGraphBounds", SetGraphBounds);
 	Nan::SetPrototypeMethod(tpl, "setGraphBounds", SetGraphBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SetInitialTemperature", SetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "setInitialTemperature", SetInitialTemperature);
 
 	Nan::SetPrototypeMethod(tpl, "SetIterationsPerLayout", SetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "setIterationsPerLayout", SetIterationsPerLayout);
@@ -299,6 +311,48 @@ void VtkForceDirectedLayoutStrategyWrap::GetGraphBounds(const Nan::FunctionCallb
 	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
 	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkForceDirectedLayoutStrategyWrap::GetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
+	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperature();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkForceDirectedLayoutStrategyWrap::GetInitialTemperatureMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
+	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkForceDirectedLayoutStrategyWrap::GetInitialTemperatureMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
+	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkForceDirectedLayoutStrategyWrap::GetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -715,6 +769,25 @@ void VtkForceDirectedLayoutStrategyWrap::SetGraphBounds(const Nan::FunctionCallb
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkForceDirectedLayoutStrategyWrap::SetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
+	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInitialTemperature(
+			info[0]->NumberValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

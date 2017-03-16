@@ -91,6 +91,9 @@ void VtkChartLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPen", GetPen);
 	Nan::SetPrototypeMethod(tpl, "getPen", GetPen);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint", GetPoint);
+	Nan::SetPrototypeMethod(tpl, "getPoint", GetPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetSymbolWidth", GetSymbolWidth);
 	Nan::SetPrototypeMethod(tpl, "getSymbolWidth", GetSymbolWidth);
 
@@ -129,6 +132,9 @@ void VtkChartLegendWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPadding", SetPadding);
 	Nan::SetPrototypeMethod(tpl, "setPadding", SetPadding);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint", SetPoint);
+	Nan::SetPrototypeMethod(tpl, "setPoint", SetPoint);
 
 	Nan::SetPrototypeMethod(tpl, "SetSymbolWidth", SetSymbolWidth);
 	Nan::SetPrototypeMethod(tpl, "setSymbolWidth", SetSymbolWidth);
@@ -383,6 +389,23 @@ void VtkChartLegendWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkChartLegendWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkChartLegendWrap::GetSymbolWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -641,6 +664,78 @@ void VtkChartLegendWrap::SetPadding(const Nan::FunctionCallbackInfo<v8::Value>& 
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartLegendWrap::SetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPoint(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -10,6 +10,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "vtkDoubleArrayWrap.h"
 #include "../../plus/plus.h"
 
 using namespace v8;
@@ -57,6 +58,9 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
+
+	Nan::SetPrototypeMethod(tpl, "Integrate", Integrate);
+	Nan::SetPrototypeMethod(tpl, "integrate", Integrate);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -150,6 +154,80 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::Initialize(const Nan::Func
 				(vtkDataArray *) a1->native.GetPointer()
 			);
 			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUnstructuredGridHomogeneousRayIntegratorWrap::Integrate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridHomogeneousRayIntegratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridHomogeneousRayIntegratorWrap>(info.Holder());
+	vtkUnstructuredGridHomogeneousRayIntegrator *native = (vtkUnstructuredGridHomogeneousRayIntegrator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsFloat32Array())
+				{
+					v8::Local<v8::Float32Array>a3(v8::Local<v8::Float32Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 4 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->Integrate(
+						(vtkDoubleArray *) a0->native.GetPointer(),
+						(vtkDataArray *) a1->native.GetPointer(),
+						(vtkDataArray *) a2->native.GetPointer(),
+						(float *)(a3->Buffer()->GetContents().Data())
+					);
+					return;
+				}
+				else if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					float b3[4];
+					if( a3->Length() < 4 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 4; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->Integrate(
+						(vtkDoubleArray *) a0->native.GetPointer(),
+						(vtkDataArray *) a1->native.GetPointer(),
+						(vtkDataArray *) a2->native.GetPointer(),
+						b3
+					);
+					return;
+				}
+			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");

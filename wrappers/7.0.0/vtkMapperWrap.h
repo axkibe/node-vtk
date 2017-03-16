@@ -50,6 +50,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetInterpolateScalarsBeforeMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolveCoincidentTopology(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolveCoincidentTopologyPolygonOffsetFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);

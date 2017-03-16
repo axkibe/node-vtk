@@ -30,8 +30,11 @@ class VtkVolumeWrap : public VtkProp3DWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetArraySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGradientOpacityConstant(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxXBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxYBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +43,7 @@ class VtkVolumeWrap : public VtkProp3DWrap
 		static void GetMinYBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinZBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +54,7 @@ class VtkVolumeWrap : public VtkProp3DWrap
 		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UpdateScalarOpacityforSampleSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateTransferFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKVOLUMEWRAP_CLASSDEF

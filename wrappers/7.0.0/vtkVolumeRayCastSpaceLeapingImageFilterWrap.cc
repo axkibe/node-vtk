@@ -79,8 +79,20 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetIndependentComponents", GetIndependentComponents);
 	Nan::SetPrototypeMethod(tpl, "getIndependentComponents", GetIndependentComponents);
 
+	Nan::SetPrototypeMethod(tpl, "GetLastMinMaxBuildTime", GetLastMinMaxBuildTime);
+	Nan::SetPrototypeMethod(tpl, "getLastMinMaxBuildTime", GetLastMinMaxBuildTime);
+
+	Nan::SetPrototypeMethod(tpl, "GetLastMinMaxFlagTime", GetLastMinMaxFlagTime);
+	Nan::SetPrototypeMethod(tpl, "getLastMinMaxFlagTime", GetLastMinMaxFlagTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfIndependentComponents", GetNumberOfIndependentComponents);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfIndependentComponents", GetNumberOfIndependentComponents);
+
+	Nan::SetPrototypeMethod(tpl, "GetTableScale", GetTableScale);
+	Nan::SetPrototypeMethod(tpl, "getTableScale", GetTableScale);
+
+	Nan::SetPrototypeMethod(tpl, "GetTableShift", GetTableShift);
+	Nan::SetPrototypeMethod(tpl, "getTableShift", GetTableShift);
 
 	Nan::SetPrototypeMethod(tpl, "GetTableSize", GetTableSize);
 	Nan::SetPrototypeMethod(tpl, "getTableSize", GetTableSize);
@@ -111,6 +123,12 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetIndependentComponents", SetIndependentComponents);
 	Nan::SetPrototypeMethod(tpl, "setIndependentComponents", SetIndependentComponents);
+
+	Nan::SetPrototypeMethod(tpl, "SetTableScale", SetTableScale);
+	Nan::SetPrototypeMethod(tpl, "setTableScale", SetTableScale);
+
+	Nan::SetPrototypeMethod(tpl, "SetTableShift", SetTableShift);
+	Nan::SetPrototypeMethod(tpl, "setTableShift", SetTableShift);
 
 	Nan::SetPrototypeMethod(tpl, "SetTableSize", SetTableSize);
 	Nan::SetPrototypeMethod(tpl, "setTableSize", SetTableSize);
@@ -709,6 +727,34 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetIndependentComponents(const
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetLastMinMaxBuildTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
+	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastMinMaxBuildTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetLastMinMaxFlagTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
+	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastMinMaxFlagTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetNumberOfIndependentComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
@@ -721,6 +767,40 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetNumberOfIndependentComponen
 	}
 	r = native->GetNumberOfIndependentComponents();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetTableScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
+	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTableScale();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetTableShift(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
+	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTableShift();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -923,6 +1003,166 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetIndependentComponents(const
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetTableScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
+	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTableScale(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTableScale(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetTableScale(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetTableShift(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
+	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTableShift(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTableShift(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetTableShift(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

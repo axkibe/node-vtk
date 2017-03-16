@@ -57,6 +57,9 @@ void VtkImplicitVolumeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutGradient", GetOutGradient);
 	Nan::SetPrototypeMethod(tpl, "getOutGradient", GetOutGradient);
 
@@ -348,6 +351,20 @@ void VtkImplicitVolumeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImplicitVolumeWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitVolumeWrap>(info.Holder());
+	vtkImplicitVolume *native = (vtkImplicitVolume *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImplicitVolumeWrap::GetOutGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)

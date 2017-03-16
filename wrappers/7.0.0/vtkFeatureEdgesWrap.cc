@@ -93,6 +93,9 @@ void VtkFeatureEdgesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetManifoldEdges", GetManifoldEdges);
 	Nan::SetPrototypeMethod(tpl, "getManifoldEdges", GetManifoldEdges);
 
@@ -382,6 +385,20 @@ void VtkFeatureEdgesWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkFeatureEdgesWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
+	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkFeatureEdgesWrap::GetManifoldEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)

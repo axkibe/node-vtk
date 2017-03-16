@@ -65,6 +65,7 @@ class VtkRendererWrap : public VtkViewportWrap
 		static void GetLayer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLightFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLights(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNearClippingPlaneTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNearClippingPlaneToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

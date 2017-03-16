@@ -77,6 +77,9 @@ void VtkImageStackWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImages", GetImages);
 	Nan::SetPrototypeMethod(tpl, "getImages", GetImages);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
 	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
 
@@ -88,6 +91,9 @@ void VtkImageStackWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
 	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetRedrawMTime", GetRedrawMTime);
+	Nan::SetPrototypeMethod(tpl, "getRedrawMTime", GetRedrawMTime);
 
 	Nan::SetPrototypeMethod(tpl, "HasImage", HasImage);
 	Nan::SetPrototypeMethod(tpl, "hasImage", HasImage);
@@ -348,6 +354,20 @@ void VtkImageStackWrap::GetImages(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkImageStackWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageStackWrap *wrapper = ObjectWrap::Unwrap<VtkImageStackWrap>(info.Holder());
+	vtkImageStack *native = (vtkImageStack *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkImageStackWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageStackWrap *wrapper = ObjectWrap::Unwrap<VtkImageStackWrap>(info.Holder());
@@ -429,6 +449,20 @@ void VtkImageStackWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageStackWrap::GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageStackWrap *wrapper = ObjectWrap::Unwrap<VtkImageStackWrap>(info.Holder());
+	vtkImageStack *native = (vtkImageStack *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRedrawMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageStackWrap::HasImage(const Nan::FunctionCallbackInfo<v8::Value>& info)

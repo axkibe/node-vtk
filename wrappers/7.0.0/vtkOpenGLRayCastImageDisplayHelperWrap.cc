@@ -8,6 +8,9 @@
 #include "vtkRayCastImageDisplayHelperWrap.h"
 #include "vtkOpenGLRayCastImageDisplayHelperWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkVolumeWrap.h"
+#include "vtkRendererWrap.h"
+#include "vtkFixedPointRayCastImageWrap.h"
 #include "vtkWindowWrap.h"
 #include "../../plus/plus.h"
 
@@ -59,6 +62,9 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
+
+	Nan::SetPrototypeMethod(tpl, "RenderTexture", RenderTexture);
+	Nan::SetPrototypeMethod(tpl, "renderTexture", RenderTexture);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -170,6 +176,40 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::ReleaseGraphicsResources(const Nan:
 			(vtkWindow *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLRayCastImageDisplayHelperWrap::RenderTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLRayCastImageDisplayHelperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRayCastImageDisplayHelperWrap>(info.Holder());
+	vtkOpenGLRayCastImageDisplayHelper *native = (vtkOpenGLRayCastImageDisplayHelper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkFixedPointRayCastImageWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkFixedPointRayCastImageWrap *a2 = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->RenderTexture(
+						(vtkVolume *) a0->native.GetPointer(),
+						(vtkRenderer *) a1->native.GetPointer(),
+						(vtkFixedPointRayCastImage *) a2->native.GetPointer(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

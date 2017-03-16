@@ -38,6 +38,7 @@ class VtkExtractPolyDataGeometryWrap : public VtkPolyDataAlgorithmWrap
 		static void GetExtractBoundaryCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtractInside(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImplicitFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

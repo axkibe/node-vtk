@@ -71,6 +71,9 @@ void VtkActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLayerNumber", GetLayerNumber);
 	Nan::SetPrototypeMethod(tpl, "getLayerNumber", GetLayerNumber);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
 	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
 
@@ -280,6 +283,20 @@ void VtkActor2DWrap::GetLayerNumber(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLayerNumber();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkActor2DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
+	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

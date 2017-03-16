@@ -53,6 +53,9 @@ void VtkWidgetCallbackMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEventTranslator", GetEventTranslator);
 	Nan::SetPrototypeMethod(tpl, "getEventTranslator", GetEventTranslator);
 
+	Nan::SetPrototypeMethod(tpl, "InvokeCallback", InvokeCallback);
+	Nan::SetPrototypeMethod(tpl, "invokeCallback", InvokeCallback);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -132,6 +135,25 @@ void VtkWidgetCallbackMapperWrap::GetEventTranslator(const Nan::FunctionCallback
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkWidgetCallbackMapperWrap::InvokeCallback(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetCallbackMapperWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetCallbackMapperWrap>(info.Holder());
+	vtkWidgetCallbackMapper *native = (vtkWidgetCallbackMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->InvokeCallback(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkWidgetCallbackMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

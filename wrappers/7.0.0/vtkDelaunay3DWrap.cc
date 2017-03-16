@@ -114,6 +114,9 @@ void VtkDelaunay3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOffset", GetOffset);
 	Nan::SetPrototypeMethod(tpl, "getOffset", GetOffset);
 
@@ -497,6 +500,20 @@ void VtkDelaunay3DWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDelaunay3DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelaunay3DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay3DWrap>(info.Holder());
+	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDelaunay3DWrap::GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)

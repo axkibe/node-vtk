@@ -48,9 +48,11 @@ class VtkAxesActorWrap : public VtkProp3DWrap
 		static void GetCylinderResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCylinderResolutionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCylinderResolutionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalizedLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalizedShaftLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalizedTipLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShaftType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSphereRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSphereRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

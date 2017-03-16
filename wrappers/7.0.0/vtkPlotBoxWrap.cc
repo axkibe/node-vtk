@@ -55,6 +55,9 @@ void VtkPlotBoxWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLookupTable", CreateDefaultLookupTable);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLookupTable", CreateDefaultLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetBoxWidth", GetBoxWidth);
+	Nan::SetPrototypeMethod(tpl, "getBoxWidth", GetBoxWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -78,6 +81,9 @@ void VtkPlotBoxWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetBoxWidth", SetBoxWidth);
+	Nan::SetPrototypeMethod(tpl, "setBoxWidth", SetBoxWidth);
 
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
@@ -130,6 +136,20 @@ void VtkPlotBoxWrap::CreateDefaultLookupTable(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	native->CreateDefaultLookupTable();
+}
+
+void VtkPlotBoxWrap::GetBoxWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBoxWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBoxWrap>(info.Holder());
+	vtkPlotBox *native = (vtkPlotBox *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBoxWidth();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotBoxWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -308,6 +328,25 @@ void VtkPlotBoxWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotBoxWrap::SetBoxWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBoxWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBoxWrap>(info.Holder());
+	vtkPlotBox *native = (vtkPlotBox *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBoxWidth(
+			info[0]->NumberValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

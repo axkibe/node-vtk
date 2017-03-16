@@ -85,6 +85,9 @@ void VtkSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLeftValue", GetLeftValue);
 	Nan::SetPrototypeMethod(tpl, "getLeftValue", GetLeftValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPoints", GetNumberOfPoints);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPoints", GetNumberOfPoints);
 
@@ -356,6 +359,20 @@ void VtkSplineWrap::GetLeftValue(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetLeftValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSplineWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSplineWrap>(info.Holder());
+	vtkSpline *native = (vtkSpline *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

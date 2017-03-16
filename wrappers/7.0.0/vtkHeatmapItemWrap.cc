@@ -62,8 +62,17 @@ void VtkHeatmapItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColumnLabelWidth", GetColumnLabelWidth);
+	Nan::SetPrototypeMethod(tpl, "getColumnLabelWidth", GetColumnLabelWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
 	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetRowLabelWidth", GetRowLabelWidth);
+	Nan::SetPrototypeMethod(tpl, "getRowLabelWidth", GetRowLabelWidth);
 
 	Nan::SetPrototypeMethod(tpl, "GetRowNames", GetRowNames);
 	Nan::SetPrototypeMethod(tpl, "getRowNames", GetRowNames);
@@ -94,6 +103,9 @@ void VtkHeatmapItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
 	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "SetPosition", SetPosition);
+	Nan::SetPrototypeMethod(tpl, "setPosition", SetPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetTable", SetTable);
 	Nan::SetPrototypeMethod(tpl, "setTable", SetTable);
@@ -228,6 +240,20 @@ void VtkHeatmapItemWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkHeatmapItemWrap::GetColumnLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
+	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColumnLabelWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkHeatmapItemWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
@@ -239,6 +265,37 @@ void VtkHeatmapItemWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetOrientation();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHeatmapItemWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
+	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkHeatmapItemWrap::GetRowLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
+	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRowLabelWidth();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -460,6 +517,78 @@ void VtkHeatmapItemWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Valu
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHeatmapItemWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
+	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPosition(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

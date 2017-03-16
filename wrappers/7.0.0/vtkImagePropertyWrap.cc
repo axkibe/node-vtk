@@ -122,6 +122,9 @@ void VtkImagePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
 	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
 
@@ -596,6 +599,20 @@ void VtkImagePropertyWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImagePropertyWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
+	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImagePropertyWrap::GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)

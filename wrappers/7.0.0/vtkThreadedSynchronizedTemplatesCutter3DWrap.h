@@ -32,6 +32,7 @@ class VtkThreadedSynchronizedTemplatesCutter3DWrap : public VtkThreadedSynchroni
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCutFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecisionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecisionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

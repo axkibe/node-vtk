@@ -107,17 +107,29 @@ void VtkShaderProgramWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfOutputs", SetNumberOfOutputs);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfOutputs", SetNumberOfOutputs);
 
+	Nan::SetPrototypeMethod(tpl, "SetUniform2f", SetUniform2f);
+	Nan::SetPrototypeMethod(tpl, "setUniform2f", SetUniform2f);
+
 	Nan::SetPrototypeMethod(tpl, "SetUniform2i", SetUniform2i);
 	Nan::SetPrototypeMethod(tpl, "setUniform2i", SetUniform2i);
 
+	Nan::SetPrototypeMethod(tpl, "SetUniform3f", SetUniform3f);
+	Nan::SetPrototypeMethod(tpl, "setUniform3f", SetUniform3f);
+
 	Nan::SetPrototypeMethod(tpl, "SetUniform3uc", SetUniform3uc);
 	Nan::SetPrototypeMethod(tpl, "setUniform3uc", SetUniform3uc);
+
+	Nan::SetPrototypeMethod(tpl, "SetUniform4f", SetUniform4f);
+	Nan::SetPrototypeMethod(tpl, "setUniform4f", SetUniform4f);
 
 	Nan::SetPrototypeMethod(tpl, "SetUniform4uc", SetUniform4uc);
 	Nan::SetPrototypeMethod(tpl, "setUniform4uc", SetUniform4uc);
 
 	Nan::SetPrototypeMethod(tpl, "SetUniformMatrix", SetUniformMatrix);
 	Nan::SetPrototypeMethod(tpl, "setUniformMatrix", SetUniformMatrix);
+
+	Nan::SetPrototypeMethod(tpl, "SetUniformf", SetUniformf);
+	Nan::SetPrototypeMethod(tpl, "setUniformf", SetUniformf);
 
 	Nan::SetPrototypeMethod(tpl, "SetUniformi", SetUniformi);
 	Nan::SetPrototypeMethod(tpl, "setUniformi", SetUniformi);
@@ -535,6 +547,72 @@ void VtkShaderProgramWrap::SetNumberOfOutputs(const Nan::FunctionCallbackInfo<v8
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkShaderProgramWrap::SetUniform2f(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
+	vtkShaderProgram *native = (vtkShaderProgram *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsFloat32Array())
+		{
+			v8::Local<v8::Float32Array>a1(v8::Local<v8::Float32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUniform2f(
+				*a0,
+				(float *)(a1->Buffer()->GetContents().Data())
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			float b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUniform2f(
+				*a0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkShaderProgramWrap::SetUniform2i(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
@@ -601,6 +679,72 @@ void VtkShaderProgramWrap::SetUniform2i(const Nan::FunctionCallbackInfo<v8::Valu
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkShaderProgramWrap::SetUniform3f(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
+	vtkShaderProgram *native = (vtkShaderProgram *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsFloat32Array())
+		{
+			v8::Local<v8::Float32Array>a1(v8::Local<v8::Float32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUniform3f(
+				*a0,
+				(float *)(a1->Buffer()->GetContents().Data())
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			float b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUniform3f(
+				*a0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkShaderProgramWrap::SetUniform3uc(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
@@ -657,6 +801,72 @@ void VtkShaderProgramWrap::SetUniform3uc(const Nan::FunctionCallbackInfo<v8::Val
 				return;
 			}
 			r = native->SetUniform3uc(
+				*a0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkShaderProgramWrap::SetUniform4f(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
+	vtkShaderProgram *native = (vtkShaderProgram *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsFloat32Array())
+		{
+			v8::Local<v8::Float32Array>a1(v8::Local<v8::Float32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUniform4f(
+				*a0,
+				(float *)(a1->Buffer()->GetContents().Data())
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			float b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUniform4f(
 				*a0,
 				b1
 			);
@@ -768,6 +978,32 @@ void VtkShaderProgramWrap::SetUniformMatrix(const Nan::FunctionCallbackInfo<v8::
 			r = native->SetUniformMatrix(
 				*a0,
 				(vtkMatrix3x3 *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkShaderProgramWrap::SetUniformf(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
+	vtkShaderProgram *native = (vtkShaderProgram *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUniformf(
+				*a0,
+				info[1]->NumberValue()
 			);
 			info.GetReturnValue().Set(Nan::New(r));
 			return;

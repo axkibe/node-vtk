@@ -48,6 +48,9 @@ void VtkInformationUnsignedLongKeyWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkInformationUnsignedLongKeyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "Get", Get);
+	Nan::SetPrototypeMethod(tpl, "get", Get);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +65,9 @@ void VtkInformationUnsignedLongKeyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "Set", Set);
+	Nan::SetPrototypeMethod(tpl, "set", Set);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
@@ -95,6 +101,28 @@ void VtkInformationUnsignedLongKeyWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkInformationUnsignedLongKeyWrap::Get(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInformationUnsignedLongKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info.Holder());
+	vtkInformationUnsignedLongKey *native = (vtkInformationUnsignedLongKey *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformation *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkInformationUnsignedLongKeyWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -219,6 +247,30 @@ void VtkInformationUnsignedLongKeyWrap::SafeDownCast(const Nan::FunctionCallback
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInformationUnsignedLongKeyWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInformationUnsignedLongKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info.Holder());
+	vtkInformationUnsignedLongKey *native = (vtkInformationUnsignedLongKey *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Set(
+				(vtkInformation *) a0->native.GetPointer(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

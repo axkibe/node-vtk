@@ -43,6 +43,7 @@ class VtkMCubesReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void GetHeaderSizeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLimitsFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

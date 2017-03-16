@@ -50,6 +50,9 @@ void VtkStrahlerMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxStrahler", GetMaxStrahler);
+	Nan::SetPrototypeMethod(tpl, "getMaxStrahler", GetMaxStrahler);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormalize", GetNormalize);
 	Nan::SetPrototypeMethod(tpl, "getNormalize", GetNormalize);
 
@@ -118,6 +121,20 @@ void VtkStrahlerMetricWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkStrahlerMetricWrap::GetMaxStrahler(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStrahlerMetricWrap *wrapper = ObjectWrap::Unwrap<VtkStrahlerMetricWrap>(info.Holder());
+	vtkStrahlerMetric *native = (vtkStrahlerMetric *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxStrahler();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStrahlerMetricWrap::GetNormalize(const Nan::FunctionCallbackInfo<v8::Value>& info)

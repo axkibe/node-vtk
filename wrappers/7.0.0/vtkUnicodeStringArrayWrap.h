@@ -33,6 +33,7 @@ class VtkUnicodeStringArrayWrap : public VtkAbstractArrayWrap
 		static void ClearLookup(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DataChanged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataTypeSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -34,6 +34,7 @@ class VtkPlotPointsWrap : public VtkPlotWrap
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMarkerSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMarkerStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +45,7 @@ class VtkPlotPointsWrap : public VtkPlotWrap
 		static void ScalarVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScalarVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMarkerSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMarkerStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);

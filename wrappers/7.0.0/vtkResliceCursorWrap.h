@@ -37,6 +37,7 @@ class VtkResliceCursorWrap : public VtkObjectWrap
 		static void GetHoleWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHoleWidthInPixels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

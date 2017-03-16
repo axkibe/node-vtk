@@ -35,6 +35,7 @@ class VtkVolumeRayCastMIPFunctionWrap : public VtkVolumeRayCastFunctionWrap
 		static void GetMaximizeMethodAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximizeMethodMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximizeMethodMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroOpacityThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

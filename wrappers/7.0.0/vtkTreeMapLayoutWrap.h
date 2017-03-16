@@ -32,6 +32,7 @@ class VtkTreeMapLayoutWrap : public VtkTreeAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRectanglesFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

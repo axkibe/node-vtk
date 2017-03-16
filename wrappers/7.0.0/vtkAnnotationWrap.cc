@@ -70,6 +70,9 @@ void VtkAnnotationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetData", GetData);
 	Nan::SetPrototypeMethod(tpl, "getData", GetData);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelection", GetSelection);
 	Nan::SetPrototypeMethod(tpl, "getSelection", GetSelection);
 
@@ -291,6 +294,20 @@ void VtkAnnotationWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAnnotationWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationWrap>(info.Holder());
+	vtkAnnotation *native = (vtkAnnotation *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAnnotationWrap::GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)

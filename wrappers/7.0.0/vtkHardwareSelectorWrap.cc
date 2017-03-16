@@ -58,6 +58,9 @@ void VtkHardwareSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ClearBuffers", ClearBuffers);
 	Nan::SetPrototypeMethod(tpl, "clearBuffers", ClearBuffers);
 
+	Nan::SetPrototypeMethod(tpl, "Convert", Convert);
+	Nan::SetPrototypeMethod(tpl, "convert", Convert);
+
 	Nan::SetPrototypeMethod(tpl, "EndRenderProp", EndRenderProp);
 	Nan::SetPrototypeMethod(tpl, "endRenderProp", EndRenderProp);
 
@@ -78,6 +81,9 @@ void VtkHardwareSelectorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetProcessID", GetProcessID);
 	Nan::SetPrototypeMethod(tpl, "getProcessID", GetProcessID);
+
+	Nan::SetPrototypeMethod(tpl, "GetPropColorValue", GetPropColorValue);
+	Nan::SetPrototypeMethod(tpl, "getPropColorValue", GetPropColorValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetPropFromID", GetPropFromID);
 	Nan::SetPrototypeMethod(tpl, "getPropFromID", GetPropFromID);
@@ -114,6 +120,9 @@ void VtkHardwareSelectorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetProcessID", SetProcessID);
 	Nan::SetPrototypeMethod(tpl, "setProcessID", SetProcessID);
+
+	Nan::SetPrototypeMethod(tpl, "SetPropColorValue", SetPropColorValue);
+	Nan::SetPrototypeMethod(tpl, "setPropColorValue", SetPropColorValue);
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
@@ -189,6 +198,67 @@ void VtkHardwareSelectorWrap::ClearBuffers(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	native->ClearBuffers();
+}
+
+void VtkHardwareSelectorWrap::Convert(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
+	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat32Array())
+		{
+			v8::Local<v8::Float32Array>a1(v8::Local<v8::Float32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Convert(
+				info[0]->Int32Value(),
+				(float *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			float b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Convert(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHardwareSelectorWrap::EndRenderProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -403,6 +473,23 @@ void VtkHardwareSelectorWrap::GetProcessID(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetProcessID();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHardwareSelectorWrap::GetPropColorValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
+	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPropColorValue();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkHardwareSelectorWrap::GetPropFromID(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -723,6 +810,82 @@ void VtkHardwareSelectorWrap::SetProcessID(const Nan::FunctionCallbackInfo<v8::V
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHardwareSelectorWrap::SetPropColorValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
+	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPropColorValue(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPropColorValue(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetPropColorValue(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

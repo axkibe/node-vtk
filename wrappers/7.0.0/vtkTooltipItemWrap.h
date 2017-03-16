@@ -33,11 +33,13 @@ class VtkTooltipItemWrap : public VtkContextItemWrap
 		static void GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKTOOLTIPITEMWRAP_CLASSDEF

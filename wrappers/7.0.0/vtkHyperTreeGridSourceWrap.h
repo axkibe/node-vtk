@@ -41,6 +41,7 @@ class VtkHyperTreeGridSourceWrap : public VtkHyperTreeGridAlgorithmWrap
 		static void GetDimensionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialMaskBits(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);

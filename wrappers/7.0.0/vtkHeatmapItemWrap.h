@@ -34,7 +34,10 @@ class VtkHeatmapItemWrap : public VtkContextItemWrap
 		static void GetCellHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColumnLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRowLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRowNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextAngleForOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,6 +48,7 @@ class VtkHeatmapItemWrap : public VtkContextItemWrap
 		static void SetCellHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKHEATMAPITEMWRAP_CLASSDEF

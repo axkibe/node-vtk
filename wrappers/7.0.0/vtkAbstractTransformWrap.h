@@ -34,6 +34,7 @@ class VtkAbstractTransformWrap : public VtkObjectWrap
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,9 @@ class VtkAbstractTransformWrap : public VtkObjectWrap
 		static void TransformDoubleNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformDoublePoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformDoubleVectorAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformFloatNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformFloatPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformFloatVectorAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);

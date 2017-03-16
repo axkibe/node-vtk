@@ -36,6 +36,7 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void CheckIfCropped(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CheckMIPMinMaxVolumeFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CheckMinMaxVolumeFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeRequiredImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateCanonicalView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayRenderedImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FixedPointIncrement(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,8 +49,15 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void GetCompositeHelper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompositeShadeHelper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFlipMIPComparison(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGradientOpacityRequired(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInteractiveSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometryMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometryMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -57,11 +65,20 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void GetLockSampleDistanceToInputSpacingMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLockSampleDistanceToInputSpacingMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMIPHelper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreviousScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRayCastImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShadingRequired(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTableScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTableShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeRayInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntermixIntersectingGeometryOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -77,12 +94,21 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void RenderSubVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutoAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInteractiveSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLockSampleDistanceToInputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRayCastImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShiftVectorDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShouldUseNearestNeighborInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ToFixedPointDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ToFixedPointPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTMAPPERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTMAPPERWRAP_CLASSDEF

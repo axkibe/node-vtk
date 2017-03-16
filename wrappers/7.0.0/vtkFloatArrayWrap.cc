@@ -53,6 +53,15 @@ void VtkFloatArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
 	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMax", GetDataTypeValueMax);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMax", GetDataTypeValueMax);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMin", GetDataTypeValueMin);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMin", GetDataTypeValueMin);
+
+	Nan::SetPrototypeMethod(tpl, "GetValueRange", GetValueRange);
+	Nan::SetPrototypeMethod(tpl, "getValueRange", GetValueRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -120,6 +129,68 @@ void VtkFloatArrayWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetDataType();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFloatArrayWrap::GetDataTypeValueMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFloatArrayWrap *wrapper = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info.Holder());
+	vtkFloatArray *native = (vtkFloatArray *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMax();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFloatArrayWrap::GetDataTypeValueMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFloatArrayWrap *wrapper = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info.Holder());
+	vtkFloatArray *native = (vtkFloatArray *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMin();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFloatArrayWrap::GetValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFloatArrayWrap *wrapper = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info.Holder());
+	vtkFloatArray *native = (vtkFloatArray *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetValueRange(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+		Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetValueRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkFloatArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

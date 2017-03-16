@@ -51,6 +51,7 @@ class VtkPropWrap : public VtkObjectWrap
 		static void GetNumberOfPaths(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPropertyKeys(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);

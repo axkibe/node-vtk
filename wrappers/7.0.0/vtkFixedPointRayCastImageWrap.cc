@@ -67,6 +67,9 @@ void VtkFixedPointRayCastImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImageOrigin", GetImageOrigin);
 	Nan::SetPrototypeMethod(tpl, "getImageOrigin", GetImageOrigin);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistance", GetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistance", GetImageSampleDistance);
+
 	Nan::SetPrototypeMethod(tpl, "GetImageViewportSize", GetImageViewportSize);
 	Nan::SetPrototypeMethod(tpl, "getImageViewportSize", GetImageViewportSize);
 
@@ -85,6 +88,9 @@ void VtkFixedPointRayCastImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetZBufferSize", GetZBufferSize);
 	Nan::SetPrototypeMethod(tpl, "getZBufferSize", GetZBufferSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetZBufferValue", GetZBufferValue);
+	Nan::SetPrototypeMethod(tpl, "getZBufferValue", GetZBufferValue);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -102,6 +108,9 @@ void VtkFixedPointRayCastImageWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetImageOrigin", SetImageOrigin);
 	Nan::SetPrototypeMethod(tpl, "setImageOrigin", SetImageOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "SetImageSampleDistance", SetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setImageSampleDistance", SetImageSampleDistance);
 
 	Nan::SetPrototypeMethod(tpl, "SetImageViewportSize", SetImageViewportSize);
 	Nan::SetPrototypeMethod(tpl, "setImageViewportSize", SetImageViewportSize);
@@ -254,6 +263,20 @@ void VtkFixedPointRayCastImageWrap::GetImageOrigin(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(at);
 }
 
+void VtkFixedPointRayCastImageWrap::GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkFixedPointRayCastImageWrap::GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
@@ -345,6 +368,31 @@ void VtkFixedPointRayCastImageWrap::GetZBufferSize(const Nan::FunctionCallbackIn
 	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
 	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkFixedPointRayCastImageWrap::GetZBufferValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			float r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetZBufferValue(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkFixedPointRayCastImageWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -635,6 +683,25 @@ void VtkFixedPointRayCastImageWrap::SetImageOrigin(const Nan::FunctionCallbackIn
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointRayCastImageWrap::SetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

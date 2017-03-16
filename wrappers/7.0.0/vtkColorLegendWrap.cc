@@ -88,6 +88,12 @@ void VtkColorLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
 	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
 
+	Nan::SetPrototypeMethod(tpl, "SetPoint", SetPoint);
+	Nan::SetPrototypeMethod(tpl, "setPoint", SetPoint);
+
+	Nan::SetPrototypeMethod(tpl, "SetTextureSize", SetTextureSize);
+	Nan::SetPrototypeMethod(tpl, "setTextureSize", SetTextureSize);
+
 	Nan::SetPrototypeMethod(tpl, "SetTransferFunction", SetTransferFunction);
 	Nan::SetPrototypeMethod(tpl, "setTransferFunction", SetTransferFunction);
 
@@ -403,6 +409,52 @@ void VtkColorLegendWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Valu
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkColorLegendWrap::SetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorLegendWrap *wrapper = ObjectWrap::Unwrap<VtkColorLegendWrap>(info.Holder());
+	vtkColorLegend *native = (vtkColorLegend *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPoint(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkColorLegendWrap::SetTextureSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorLegendWrap *wrapper = ObjectWrap::Unwrap<VtkColorLegendWrap>(info.Holder());
+	vtkColorLegend *native = (vtkColorLegend *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetTextureSize(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

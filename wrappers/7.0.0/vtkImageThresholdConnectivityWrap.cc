@@ -61,6 +61,9 @@ void VtkImageThresholdConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLowerThreshold", GetLowerThreshold);
 	Nan::SetPrototypeMethod(tpl, "getLowerThreshold", GetLowerThreshold);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNeighborhoodFraction", GetNeighborhoodFraction);
 	Nan::SetPrototypeMethod(tpl, "getNeighborhoodFraction", GetNeighborhoodFraction);
 
@@ -254,6 +257,20 @@ void VtkImageThresholdConnectivityWrap::GetLowerThreshold(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetLowerThreshold();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageThresholdConnectivityWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
+	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

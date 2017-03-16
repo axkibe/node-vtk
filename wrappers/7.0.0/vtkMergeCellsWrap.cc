@@ -57,6 +57,15 @@ void VtkMergeCellsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMergeDuplicatePoints", GetMergeDuplicatePoints);
 	Nan::SetPrototypeMethod(tpl, "getMergeDuplicatePoints", GetMergeDuplicatePoints);
 
+	Nan::SetPrototypeMethod(tpl, "GetPointMergeTolerance", GetPointMergeTolerance);
+	Nan::SetPrototypeMethod(tpl, "getPointMergeTolerance", GetPointMergeTolerance);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointMergeToleranceMaxValue", GetPointMergeToleranceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getPointMergeToleranceMaxValue", GetPointMergeToleranceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointMergeToleranceMinValue", GetPointMergeToleranceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getPointMergeToleranceMinValue", GetPointMergeToleranceMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetTotalNumberOfDataSets", GetTotalNumberOfDataSets);
 	Nan::SetPrototypeMethod(tpl, "getTotalNumberOfDataSets", GetTotalNumberOfDataSets);
 
@@ -89,6 +98,9 @@ void VtkMergeCellsWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetMergeDuplicatePoints", SetMergeDuplicatePoints);
 	Nan::SetPrototypeMethod(tpl, "setMergeDuplicatePoints", SetMergeDuplicatePoints);
+
+	Nan::SetPrototypeMethod(tpl, "SetPointMergeTolerance", SetPointMergeTolerance);
+	Nan::SetPrototypeMethod(tpl, "setPointMergeTolerance", SetPointMergeTolerance);
 
 	Nan::SetPrototypeMethod(tpl, "SetTotalNumberOfDataSets", SetTotalNumberOfDataSets);
 	Nan::SetPrototypeMethod(tpl, "setTotalNumberOfDataSets", SetTotalNumberOfDataSets);
@@ -171,6 +183,48 @@ void VtkMergeCellsWrap::GetMergeDuplicatePoints(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetMergeDuplicatePoints();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMergeCellsWrap::GetPointMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
+	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointMergeTolerance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMergeCellsWrap::GetPointMergeToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
+	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointMergeToleranceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMergeCellsWrap::GetPointMergeToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
+	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointMergeToleranceMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -374,6 +428,25 @@ void VtkMergeCellsWrap::SetMergeDuplicatePoints(const Nan::FunctionCallbackInfo<
 		}
 		native->SetMergeDuplicatePoints(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMergeCellsWrap::SetPointMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
+	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointMergeTolerance(
+			info[0]->NumberValue()
 		);
 		return;
 	}

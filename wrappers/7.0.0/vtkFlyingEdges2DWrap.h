@@ -36,6 +36,7 @@ class VtkFlyingEdges2DWrap : public VtkPolyDataAlgorithmWrap
 		static void GetArrayComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

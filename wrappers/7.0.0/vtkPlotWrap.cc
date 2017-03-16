@@ -111,6 +111,9 @@ void VtkPlotWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetUseIndexForXSeries", GetUseIndexForXSeries);
 	Nan::SetPrototypeMethod(tpl, "getUseIndexForXSeries", GetUseIndexForXSeries);
 
+	Nan::SetPrototypeMethod(tpl, "GetWidth", GetWidth);
+	Nan::SetPrototypeMethod(tpl, "getWidth", GetWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetXAxis", GetXAxis);
 	Nan::SetPrototypeMethod(tpl, "getXAxis", GetXAxis);
 
@@ -179,6 +182,9 @@ void VtkPlotWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetUseIndexForXSeries", SetUseIndexForXSeries);
 	Nan::SetPrototypeMethod(tpl, "setUseIndexForXSeries", SetUseIndexForXSeries);
+
+	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
+	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
 	Nan::SetPrototypeMethod(tpl, "SetXAxis", SetXAxis);
 	Nan::SetPrototypeMethod(tpl, "setXAxis", SetXAxis);
@@ -741,6 +747,20 @@ void VtkPlotWrap::GetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPlotWrap::GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPlotWrap::GetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
@@ -1211,6 +1231,25 @@ void VtkPlotWrap::SetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Valu
 		}
 		native->SetUseIndexForXSeries(
 			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotWrap::SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWidth(
+			info[0]->NumberValue()
 		);
 		return;
 	}

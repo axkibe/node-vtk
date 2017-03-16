@@ -72,6 +72,9 @@ void VtkAnnotationLayersWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetData", GetData);
 	Nan::SetPrototypeMethod(tpl, "getData", GetData);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfAnnotations", GetNumberOfAnnotations);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfAnnotations", GetNumberOfAnnotations);
 
@@ -318,6 +321,20 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAnnotationLayersWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
+	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAnnotationLayersWrap::GetNumberOfAnnotations(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -51,6 +51,9 @@ void VtkGraphAnnotationLayersFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -131,6 +134,20 @@ void VtkGraphAnnotationLayersFilterWrap::GetClassName(const Nan::FunctionCallbac
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGraphAnnotationLayersFilterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphAnnotationLayersFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphAnnotationLayersFilterWrap>(info.Holder());
+	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphAnnotationLayersFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

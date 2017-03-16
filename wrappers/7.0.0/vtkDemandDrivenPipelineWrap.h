@@ -32,6 +32,7 @@ class VtkDemandDrivenPipelineWrap : public VtkExecutiveWrap
 
 		static void DATA_NOT_GENERATED(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPipelineMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReleaseDataFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info);

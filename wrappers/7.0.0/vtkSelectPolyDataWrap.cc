@@ -79,6 +79,9 @@ void VtkSelectPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLoop", GetLoop);
 	Nan::SetPrototypeMethod(tpl, "getLoop", GetLoop);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectionEdges", GetSelectionEdges);
 	Nan::SetPrototypeMethod(tpl, "getSelectionEdges", GetSelectionEdges);
 
@@ -313,6 +316,20 @@ void VtkSelectPolyDataWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkSelectPolyDataWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
+	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSelectPolyDataWrap::GetSelectionEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)

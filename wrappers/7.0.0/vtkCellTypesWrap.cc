@@ -54,6 +54,9 @@ void VtkCellTypesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellType", GetCellType);
 	Nan::SetPrototypeMethod(tpl, "getCellType", GetCellType);
 
@@ -168,6 +171,20 @@ void VtkCellTypesWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCellTypesWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
+	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCellTypesWrap::GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info)

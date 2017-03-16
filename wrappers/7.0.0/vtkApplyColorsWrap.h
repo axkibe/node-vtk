@@ -37,6 +37,7 @@ class VtkApplyColorsWrap : public VtkPassInputTypeAlgorithmWrap
 		static void GetDefaultCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDefaultPointColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDefaultPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointColorOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);

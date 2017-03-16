@@ -34,6 +34,7 @@ class VtkGenericDataSetTessellatorWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeepCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void KeepCellIdsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

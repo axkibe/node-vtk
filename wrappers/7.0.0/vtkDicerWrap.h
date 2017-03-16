@@ -37,6 +37,9 @@ class VtkDicerWrap : public VtkDataSetAlgorithmWrap
 		static void GetDiceModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiceModeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMemoryLimitMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMemoryLimitMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfActualPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPiecesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,6 +55,7 @@ class VtkDicerWrap : public VtkDataSetAlgorithmWrap
 		static void SetDiceModeToNumberOfPointsPerPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDiceModeToSpecifiedNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPointsPerPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 

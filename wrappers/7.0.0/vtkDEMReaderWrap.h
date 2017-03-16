@@ -33,6 +33,7 @@ class VtkDEMReaderWrap : public VtkImageAlgorithmWrap
 		static void GetAccuracyCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDEMLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetElevationBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetElevationPattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetElevationReference(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetElevationReferenceAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,10 +43,13 @@ class VtkDEMReaderWrap : public VtkImageAlgorithmWrap
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGroundSystem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGroundZone(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLocalRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapLabel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaneUnitOfMeasure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolygonSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProfileDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProjectionParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpatialResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

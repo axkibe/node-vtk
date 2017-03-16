@@ -44,6 +44,7 @@ class VtkLightWrap : public VtkObjectWrap
 		static void GetLightType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPositional(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShadowAttenuation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwitch(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -73,6 +74,7 @@ class VtkLightWrap : public VtkObjectWrap
 		static void SetLightTypeToSceneLight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPositional(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetShadowAttenuation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSwitch(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);

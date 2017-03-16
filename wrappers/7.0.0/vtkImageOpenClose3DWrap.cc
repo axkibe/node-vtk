@@ -66,6 +66,9 @@ void VtkImageOpenClose3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFilter1", GetFilter1);
 	Nan::SetPrototypeMethod(tpl, "getFilter1", GetFilter1);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOpenValue", GetOpenValue);
 	Nan::SetPrototypeMethod(tpl, "getOpenValue", GetOpenValue);
 
@@ -218,6 +221,20 @@ void VtkImageOpenClose3DWrap::GetFilter1(const Nan::FunctionCallbackInfo<v8::Val
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageOpenClose3DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageOpenClose3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageOpenClose3DWrap>(info.Holder());
+	vtkImageOpenClose3D *native = (vtkImageOpenClose3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageOpenClose3DWrap::GetOpenValue(const Nan::FunctionCallbackInfo<v8::Value>& info)

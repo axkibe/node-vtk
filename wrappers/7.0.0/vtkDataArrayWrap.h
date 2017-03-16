@@ -38,6 +38,7 @@ class VtkDataArrayWrap : public VtkAbstractArrayWrap
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FastDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FillComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataTypeMax(const Nan::FunctionCallbackInfo<v8::Value>& info);

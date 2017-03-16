@@ -56,6 +56,7 @@ class VtkDataObjectWrap : public VtkObjectWrap
 		static void FIELD_OPERATION(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FIELD_RANGE(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveFieldInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAssociationTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAssociationTypeFromString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributeTypeForArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -69,7 +70,9 @@ class VtkDataObjectWrap : public VtkObjectWrap
 		static void GetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalReleaseDataFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNamedFieldInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUpdateTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalReleaseDataFlagOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalReleaseDataFlagOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);

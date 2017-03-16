@@ -41,6 +41,7 @@ class VtkGeoTerrainNodeWrap : public VtkGeoTreeNodeWrap
 		static void GetCornerNormal01(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCornerNormal10(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCornerNormal11(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCoverage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraticuleLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +51,7 @@ class VtkGeoTerrainNodeWrap : public VtkGeoTreeNodeWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCoverage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraticuleLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetModel(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -39,6 +39,7 @@ class VtkUnstructuredGridGeometryFilterWrap : public VtkUnstructuredGridBaseAlgo
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentClipping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOriginalCellIdsName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOriginalPointIdsName(const Nan::FunctionCallbackInfo<v8::Value>& info);

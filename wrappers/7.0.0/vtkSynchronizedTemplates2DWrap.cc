@@ -65,6 +65,9 @@ void VtkSynchronizedTemplates2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetComputeScalars", GetComputeScalars);
 	Nan::SetPrototypeMethod(tpl, "getComputeScalars", GetComputeScalars);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -265,6 +268,20 @@ void VtkSynchronizedTemplates2DWrap::GetComputeScalars(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetComputeScalars();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSynchronizedTemplates2DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSynchronizedTemplates2DWrap *wrapper = ObjectWrap::Unwrap<VtkSynchronizedTemplates2DWrap>(info.Holder());
+	vtkSynchronizedTemplates2D *native = (vtkSynchronizedTemplates2D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

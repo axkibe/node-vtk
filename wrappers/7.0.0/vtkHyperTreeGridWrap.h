@@ -35,6 +35,7 @@ class VtkHyperTreeGridWrap : public VtkDataSetWrap
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateSuperCursorTraversalTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateTrees(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBranchFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);

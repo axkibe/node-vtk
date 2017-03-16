@@ -31,6 +31,7 @@ class VtkAssemblyNodeWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -39,10 +39,12 @@ class VtkFieldDataWrap : public VtkObjectWrap
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAbstractArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetField(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasArray(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -67,6 +67,9 @@ void VtkSliderRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoint1Coordinate", GetPoint1Coordinate);
 	Nan::SetPrototypeMethod(tpl, "getPoint1Coordinate", GetPoint1Coordinate);
 
@@ -267,6 +270,20 @@ void VtkSliderRepresentation3DWrap::GetClassName(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSliderRepresentation3DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
+	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSliderRepresentation3DWrap::GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info)

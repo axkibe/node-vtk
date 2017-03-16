@@ -40,6 +40,7 @@ class VtkBoxClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetGenerateClipScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateClippedOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfOutputs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -78,6 +78,9 @@ void VtkTableToGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLinkGraph", GetLinkGraph);
 	Nan::SetPrototypeMethod(tpl, "getLinkGraph", GetLinkGraph);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -282,6 +285,20 @@ void VtkTableToGraphWrap::GetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTableToGraphWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
+	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTableToGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

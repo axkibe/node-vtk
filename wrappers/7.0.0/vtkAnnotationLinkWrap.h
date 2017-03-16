@@ -35,6 +35,7 @@ class VtkAnnotationLinkWrap : public VtkAnnotationLayersAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDomainMap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfDomainMaps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

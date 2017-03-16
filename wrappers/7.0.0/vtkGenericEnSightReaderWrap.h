@@ -45,6 +45,8 @@ class VtkGenericEnSightReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetEnSightVersion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilePath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeometryFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfComplexScalarsPerElement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfComplexScalarsPerNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -68,6 +70,7 @@ class VtkGenericEnSightReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetReadAllVariables(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeSets(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVariableType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -85,6 +88,7 @@ class VtkGenericEnSightReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetParticleCoordinatesByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadAllVariables(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_CLASSDEF

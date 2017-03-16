@@ -69,6 +69,9 @@ void VtkImageSliceMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCroppingRegion", GetCroppingRegion);
 	Nan::SetPrototypeMethod(tpl, "getCroppingRegion", GetCroppingRegion);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
 	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
 
@@ -284,6 +287,20 @@ void VtkImageSliceMapperWrap::GetCroppingRegion(const Nan::FunctionCallbackInfo<
 	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
 	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkImageSliceMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
+	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageSliceMapperWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)

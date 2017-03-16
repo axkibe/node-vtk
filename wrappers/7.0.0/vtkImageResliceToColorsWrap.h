@@ -35,6 +35,7 @@ class VtkImageResliceToColorsWrap : public VtkImageResliceWrap
 		static void GetBypass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFormatMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFormatMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -59,6 +59,9 @@ void VtkImplicitWindowFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImplicitFunction", GetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "getImplicitFunction", GetImplicitFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetWindowRange", GetWindowRange);
 	Nan::SetPrototypeMethod(tpl, "getWindowRange", GetWindowRange);
 
@@ -370,6 +373,20 @@ void VtkImplicitWindowFunctionWrap::GetImplicitFunction(const Nan::FunctionCallb
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitWindowFunctionWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitWindowFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitWindowFunctionWrap>(info.Holder());
+	vtkImplicitWindowFunction *native = (vtkImplicitWindowFunction *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImplicitWindowFunctionWrap::GetWindowRange(const Nan::FunctionCallbackInfo<v8::Value>& info)

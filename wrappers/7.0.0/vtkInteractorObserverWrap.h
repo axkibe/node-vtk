@@ -42,6 +42,9 @@ class VtkInteractorObserverWrap : public VtkObjectWrap
 		static void GetKeyPressActivation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyPressActivationValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPriority(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPriorityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPriorityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GrabFocus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void KeyPressActivationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -61,6 +64,7 @@ class VtkInteractorObserverWrap : public VtkObjectWrap
 		static void SetKeyPressActivation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKeyPressActivationValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPriority(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_CLASSDEF

@@ -64,6 +64,9 @@ void VtkChartBoxWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetVisibleColumns", GetVisibleColumns);
 	Nan::SetPrototypeMethod(tpl, "getVisibleColumns", GetVisibleColumns);
 
+	Nan::SetPrototypeMethod(tpl, "GetXPosition", GetXPosition);
+	Nan::SetPrototypeMethod(tpl, "getXPosition", GetXPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetYAxis", GetYAxis);
 	Nan::SetPrototypeMethod(tpl, "getYAxis", GetYAxis);
 
@@ -198,6 +201,27 @@ void VtkChartBoxWrap::GetVisibleColumns(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkChartBoxWrap::GetXPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartBoxWrap *wrapper = ObjectWrap::Unwrap<VtkChartBoxWrap>(info.Holder());
+	vtkChartBox *native = (vtkChartBox *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetXPosition(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkChartBoxWrap::GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)

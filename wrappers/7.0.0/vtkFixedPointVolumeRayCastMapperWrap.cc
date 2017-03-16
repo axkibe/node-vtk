@@ -77,6 +77,9 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CheckMinMaxVolumeFlag", CheckMinMaxVolumeFlag);
 	Nan::SetPrototypeMethod(tpl, "checkMinMaxVolumeFlag", CheckMinMaxVolumeFlag);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeRequiredImageSampleDistance", ComputeRequiredImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "computeRequiredImageSampleDistance", ComputeRequiredImageSampleDistance);
+
 	Nan::SetPrototypeMethod(tpl, "CreateCanonicalView", CreateCanonicalView);
 	Nan::SetPrototypeMethod(tpl, "createCanonicalView", CreateCanonicalView);
 
@@ -113,11 +116,32 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCurrentScalars", GetCurrentScalars);
 	Nan::SetPrototypeMethod(tpl, "getCurrentScalars", GetCurrentScalars);
 
+	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "GetFinalColorLevel", GetFinalColorLevel);
+	Nan::SetPrototypeMethod(tpl, "getFinalColorLevel", GetFinalColorLevel);
+
+	Nan::SetPrototypeMethod(tpl, "GetFinalColorWindow", GetFinalColorWindow);
+	Nan::SetPrototypeMethod(tpl, "getFinalColorWindow", GetFinalColorWindow);
+
 	Nan::SetPrototypeMethod(tpl, "GetFlipMIPComparison", GetFlipMIPComparison);
 	Nan::SetPrototypeMethod(tpl, "getFlipMIPComparison", GetFlipMIPComparison);
 
 	Nan::SetPrototypeMethod(tpl, "GetGradientOpacityRequired", GetGradientOpacityRequired);
 	Nan::SetPrototypeMethod(tpl, "getGradientOpacityRequired", GetGradientOpacityRequired);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistance", GetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistance", GetImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistanceMaxValue", GetImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistanceMaxValue", GetImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistanceMinValue", GetImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistanceMinValue", GetImageSampleDistanceMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetInteractiveSampleDistance", GetInteractiveSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getInteractiveSampleDistance", GetInteractiveSampleDistance);
 
 	Nan::SetPrototypeMethod(tpl, "GetIntermixIntersectingGeometry", GetIntermixIntersectingGeometry);
 	Nan::SetPrototypeMethod(tpl, "getIntermixIntersectingGeometry", GetIntermixIntersectingGeometry);
@@ -140,6 +164,24 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMIPHelper", GetMIPHelper);
 	Nan::SetPrototypeMethod(tpl, "getMIPHelper", GetMIPHelper);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistance", GetMaximumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistance", GetMaximumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistanceMaxValue", GetMaximumImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistanceMaxValue", GetMaximumImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistanceMinValue", GetMaximumImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistanceMinValue", GetMaximumImageSampleDistanceMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistance", GetMinimumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistance", GetMinimumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistanceMaxValue", GetMinimumImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistanceMaxValue", GetMinimumImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistanceMinValue", GetMinimumImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistanceMinValue", GetMinimumImageSampleDistanceMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfThreads", GetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfThreads", GetNumberOfThreads);
 
@@ -152,8 +194,17 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
 
+	Nan::SetPrototypeMethod(tpl, "GetSampleDistance", GetSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getSampleDistance", GetSampleDistance);
+
 	Nan::SetPrototypeMethod(tpl, "GetShadingRequired", GetShadingRequired);
 	Nan::SetPrototypeMethod(tpl, "getShadingRequired", GetShadingRequired);
+
+	Nan::SetPrototypeMethod(tpl, "GetTableScale", GetTableScale);
+	Nan::SetPrototypeMethod(tpl, "getTableScale", GetTableScale);
+
+	Nan::SetPrototypeMethod(tpl, "GetTableShift", GetTableShift);
+	Nan::SetPrototypeMethod(tpl, "getTableShift", GetTableShift);
 
 	Nan::SetPrototypeMethod(tpl, "GetVolume", GetVolume);
 	Nan::SetPrototypeMethod(tpl, "getVolume", GetVolume);
@@ -200,11 +251,29 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 	Nan::SetPrototypeMethod(tpl, "setAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 
+	Nan::SetPrototypeMethod(tpl, "SetFinalColorLevel", SetFinalColorLevel);
+	Nan::SetPrototypeMethod(tpl, "setFinalColorLevel", SetFinalColorLevel);
+
+	Nan::SetPrototypeMethod(tpl, "SetFinalColorWindow", SetFinalColorWindow);
+	Nan::SetPrototypeMethod(tpl, "setFinalColorWindow", SetFinalColorWindow);
+
+	Nan::SetPrototypeMethod(tpl, "SetImageSampleDistance", SetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setImageSampleDistance", SetImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "SetInteractiveSampleDistance", SetInteractiveSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setInteractiveSampleDistance", SetInteractiveSampleDistance);
+
 	Nan::SetPrototypeMethod(tpl, "SetIntermixIntersectingGeometry", SetIntermixIntersectingGeometry);
 	Nan::SetPrototypeMethod(tpl, "setIntermixIntersectingGeometry", SetIntermixIntersectingGeometry);
 
 	Nan::SetPrototypeMethod(tpl, "SetLockSampleDistanceToInputSpacing", SetLockSampleDistanceToInputSpacing);
 	Nan::SetPrototypeMethod(tpl, "setLockSampleDistanceToInputSpacing", SetLockSampleDistanceToInputSpacing);
+
+	Nan::SetPrototypeMethod(tpl, "SetMaximumImageSampleDistance", SetMaximumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setMaximumImageSampleDistance", SetMaximumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "SetMinimumImageSampleDistance", SetMinimumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setMinimumImageSampleDistance", SetMinimumImageSampleDistance);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfThreads", SetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfThreads", SetNumberOfThreads);
@@ -212,11 +281,20 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRayCastImage", SetRayCastImage);
 	Nan::SetPrototypeMethod(tpl, "setRayCastImage", SetRayCastImage);
 
+	Nan::SetPrototypeMethod(tpl, "SetSampleDistance", SetSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setSampleDistance", SetSampleDistance);
+
 	Nan::SetPrototypeMethod(tpl, "ShiftVectorDown", ShiftVectorDown);
 	Nan::SetPrototypeMethod(tpl, "shiftVectorDown", ShiftVectorDown);
 
 	Nan::SetPrototypeMethod(tpl, "ShouldUseNearestNeighborInterpolation", ShouldUseNearestNeighborInterpolation);
 	Nan::SetPrototypeMethod(tpl, "shouldUseNearestNeighborInterpolation", ShouldUseNearestNeighborInterpolation);
+
+	Nan::SetPrototypeMethod(tpl, "ToFixedPointDirection", ToFixedPointDirection);
+	Nan::SetPrototypeMethod(tpl, "toFixedPointDirection", ToFixedPointDirection);
+
+	Nan::SetPrototypeMethod(tpl, "ToFixedPointPosition", ToFixedPointPosition);
+	Nan::SetPrototypeMethod(tpl, "toFixedPointPosition", ToFixedPointPosition);
 
 #ifdef VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTMAPPERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTMAPPERWRAP_INITPTPL
@@ -490,6 +568,49 @@ void VtkFixedPointVolumeRayCastMapperWrap::CheckMinMaxVolumeFlag(const Nan::Func
 			r = native->CheckMinMaxVolumeFlag(
 				b0,
 				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::ComputeRequiredImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkVolumeWrap *a2 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[2]->ToObject());
+				float r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->ComputeRequiredImageSampleDistance(
+					info[0]->NumberValue(),
+					(vtkRenderer *) a1->native.GetPointer(),
+					(vtkVolume *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+			float r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ComputeRequiredImageSampleDistance(
+				info[0]->NumberValue(),
+				(vtkRenderer *) a1->native.GetPointer()
 			);
 			info.GetReturnValue().Set(Nan::New(r));
 			return;
@@ -993,6 +1114,72 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCurrentScalars(const Nan::Function
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkFixedPointVolumeRayCastMapperWrap::GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
+			float r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetEstimatedRenderTime(
+				(vtkRenderer *) a0->native.GetPointer(),
+				(vtkVolume *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEstimatedRenderTime(
+			(vtkRenderer *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFinalColorLevel();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFinalColorWindow();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkFixedPointVolumeRayCastMapperWrap::GetFlipMIPComparison(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
@@ -1018,6 +1205,62 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetGradientOpacityRequired(const Nan:
 		return;
 	}
 	r = native->GetGradientOpacityRequired();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetInteractiveSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInteractiveSampleDistance();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1128,6 +1371,90 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetMIPHelper(const Nan::FunctionCallb
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkFixedPointVolumeRayCastMapperWrap::GetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetMaximumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetMaximumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetMinimumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetMinimumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkFixedPointVolumeRayCastMapperWrap::GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
@@ -1211,6 +1538,20 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetRenderWindow(const Nan::FunctionCa
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkFixedPointVolumeRayCastMapperWrap::GetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkFixedPointVolumeRayCastMapperWrap::GetShadingRequired(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
@@ -1223,6 +1564,40 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetShadingRequired(const Nan::Functio
 	}
 	r = native->GetShadingRequired();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetTableScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTableScale();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::GetTableShift(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTableShift();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkFixedPointVolumeRayCastMapperWrap::GetVolume(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1522,6 +1897,82 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetAutoAdjustSampleDistances(const Na
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkFixedPointVolumeRayCastMapperWrap::SetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFinalColorLevel(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::SetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFinalColorWindow(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::SetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::SetInteractiveSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInteractiveSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkFixedPointVolumeRayCastMapperWrap::SetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
@@ -1554,6 +2005,44 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetLockSampleDistanceToInputSpacing(c
 		}
 		native->SetLockSampleDistanceToInputSpacing(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::SetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::SetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMinimumImageSampleDistance(
+			info[0]->NumberValue()
 		);
 		return;
 	}
@@ -1593,6 +2082,25 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetRayCastImage(const Nan::FunctionCa
 		}
 		native->SetRayCastImage(
 			(vtkFixedPointRayCastImage *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::SetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSampleDistance(
+			info[0]->NumberValue()
 		);
 		return;
 	}
@@ -1752,6 +2260,310 @@ void VtkFixedPointVolumeRayCastMapperWrap::ShouldUseNearestNeighborInterpolation
 		}
 		r = native->ShouldUseNearestNeighborInterpolation(
 			(vtkVolume *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::ToFixedPointDirection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsUint32Array())
+		{
+			v8::Local<v8::Uint32Array>a1(v8::Local<v8::Uint32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointDirection(
+				(float *)(a0->Buffer()->GetContents().Data()),
+				(unsigned int *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			unsigned int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsUint32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Uint32Value();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointDirection(
+				(float *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			unsigned int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsUint32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Uint32Value();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointDirection(
+				b0,
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsUint32Array())
+		{
+			v8::Local<v8::Uint32Array>a1(v8::Local<v8::Uint32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointDirection(
+				b0,
+				(unsigned int *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ToFixedPointDirection(
+			info[0]->NumberValue()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::ToFixedPointPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
+	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsUint32Array())
+		{
+			v8::Local<v8::Uint32Array>a1(v8::Local<v8::Uint32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointPosition(
+				(float *)(a0->Buffer()->GetContents().Data()),
+				(unsigned int *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			unsigned int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsUint32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Uint32Value();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointPosition(
+				(float *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			unsigned int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsUint32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Uint32Value();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointPosition(
+				b0,
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsUint32Array())
+		{
+			v8::Local<v8::Uint32Array>a1(v8::Local<v8::Uint32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ToFixedPointPosition(
+				b0,
+				(unsigned int *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ToFixedPointPosition(
+			info[0]->NumberValue()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

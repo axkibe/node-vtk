@@ -97,6 +97,9 @@ void VtkContourGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -466,6 +469,20 @@ void VtkContourGridWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkContourGridWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
+	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkContourGridWrap::GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -30,12 +30,15 @@ class VtkObjectWrap : public VtkObjectBaseWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BreakOnError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DebugOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DebugOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCommand(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDebug(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalWarningDisplayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalWarningDisplayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);

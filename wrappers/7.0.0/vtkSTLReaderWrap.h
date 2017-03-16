@@ -32,6 +32,7 @@ class VtkSTLReaderWrap : public VtkAbstractPolyDataReaderWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarTags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

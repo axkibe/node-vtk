@@ -36,6 +36,7 @@ class VtkAnnotationWrap : public VtkDataObjectWrap
 		static void ENABLE(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HIDE(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ICON_INDEX(const Nan::FunctionCallbackInfo<v8::Value>& info);

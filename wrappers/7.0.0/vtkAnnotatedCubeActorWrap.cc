@@ -77,6 +77,9 @@ void VtkAnnotatedCubeActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFaceTextVisibility", GetFaceTextVisibility);
 	Nan::SetPrototypeMethod(tpl, "getFaceTextVisibility", GetFaceTextVisibility);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetTextEdgesProperty", GetTextEdgesProperty);
 	Nan::SetPrototypeMethod(tpl, "getTextEdgesProperty", GetTextEdgesProperty);
 
@@ -408,6 +411,20 @@ void VtkAnnotatedCubeActorWrap::GetFaceTextVisibility(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetFaceTextVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAnnotatedCubeActorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
+	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

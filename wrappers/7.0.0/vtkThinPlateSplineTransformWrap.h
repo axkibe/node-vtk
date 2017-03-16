@@ -33,6 +33,7 @@ class VtkThinPlateSplineTransformWrap : public VtkWarpTransformWrap
 		static void GetBasis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBasisAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSigma(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSourceLandmarks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTargetLandmarks(const Nan::FunctionCallbackInfo<v8::Value>& info);

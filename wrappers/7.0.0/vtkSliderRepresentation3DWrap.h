@@ -35,6 +35,7 @@ class VtkSliderRepresentation3DWrap : public VtkSliderRepresentationWrap
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCapProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);

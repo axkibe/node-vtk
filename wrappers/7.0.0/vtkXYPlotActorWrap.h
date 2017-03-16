@@ -73,6 +73,7 @@ class VtkXYPlotActorWrap : public VtkActor2DWrap
 		static void GetLegendPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLegendPosition2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLogx(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfXLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfXLabelsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfXLabelsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

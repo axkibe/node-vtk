@@ -60,6 +60,9 @@ void VtkHyperOctreeDualGridContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -241,6 +244,20 @@ void VtkHyperOctreeDualGridContourFilterWrap::GetLocator(const Nan::FunctionCall
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHyperOctreeDualGridContourFilterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeDualGridContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeDualGridContourFilterWrap>(info.Holder());
+	vtkHyperOctreeDualGridContourFilter *native = (vtkHyperOctreeDualGridContourFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperOctreeDualGridContourFilterWrap::GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info)

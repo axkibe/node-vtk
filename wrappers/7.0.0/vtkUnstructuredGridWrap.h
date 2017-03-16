@@ -33,6 +33,7 @@ class VtkUnstructuredGridWrap : public VtkUnstructuredGridBaseWrap
 		static void BuildLinks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellLinks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellLocationsArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellTypesArray(const Nan::FunctionCallbackInfo<v8::Value>& info);

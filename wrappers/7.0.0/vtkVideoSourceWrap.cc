@@ -80,6 +80,9 @@ void VtkVideoSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFrameIndex", GetFrameIndex);
 	Nan::SetPrototypeMethod(tpl, "getFrameIndex", GetFrameIndex);
 
+	Nan::SetPrototypeMethod(tpl, "GetFrameRate", GetFrameRate);
+	Nan::SetPrototypeMethod(tpl, "getFrameRate", GetFrameRate);
+
 	Nan::SetPrototypeMethod(tpl, "GetFrameSize", GetFrameSize);
 	Nan::SetPrototypeMethod(tpl, "getFrameSize", GetFrameSize);
 
@@ -91,6 +94,9 @@ void VtkVideoSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfOutputFrames", GetNumberOfOutputFrames);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfOutputFrames", GetNumberOfOutputFrames);
+
+	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
+	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
 
 	Nan::SetPrototypeMethod(tpl, "GetOutputFormat", GetOutputFormat);
 	Nan::SetPrototypeMethod(tpl, "getOutputFormat", GetOutputFormat);
@@ -158,11 +164,17 @@ void VtkVideoSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFrameCount", SetFrameCount);
 	Nan::SetPrototypeMethod(tpl, "setFrameCount", SetFrameCount);
 
+	Nan::SetPrototypeMethod(tpl, "SetFrameRate", SetFrameRate);
+	Nan::SetPrototypeMethod(tpl, "setFrameRate", SetFrameRate);
+
 	Nan::SetPrototypeMethod(tpl, "SetFrameSize", SetFrameSize);
 	Nan::SetPrototypeMethod(tpl, "setFrameSize", SetFrameSize);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfOutputFrames", SetNumberOfOutputFrames);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfOutputFrames", SetNumberOfOutputFrames);
+
+	Nan::SetPrototypeMethod(tpl, "SetOpacity", SetOpacity);
+	Nan::SetPrototypeMethod(tpl, "setOpacity", SetOpacity);
 
 	Nan::SetPrototypeMethod(tpl, "SetOutputFormat", SetOutputFormat);
 	Nan::SetPrototypeMethod(tpl, "setOutputFormat", SetOutputFormat);
@@ -374,6 +386,20 @@ void VtkVideoSourceWrap::GetFrameIndex(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVideoSourceWrap::GetFrameRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFrameRate();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkVideoSourceWrap::GetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
@@ -444,6 +470,20 @@ void VtkVideoSourceWrap::GetNumberOfOutputFrames(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetNumberOfOutputFrames();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVideoSourceWrap::GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOpacity();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -996,6 +1036,25 @@ void VtkVideoSourceWrap::SetFrameCount(const Nan::FunctionCallbackInfo<v8::Value
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkVideoSourceWrap::SetFrameRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFrameRate(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkVideoSourceWrap::SetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
@@ -1085,6 +1144,25 @@ void VtkVideoSourceWrap::SetNumberOfOutputFrames(const Nan::FunctionCallbackInfo
 		}
 		native->SetNumberOfOutputFrames(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVideoSourceWrap::SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOpacity(
+			info[0]->NumberValue()
 		);
 		return;
 	}

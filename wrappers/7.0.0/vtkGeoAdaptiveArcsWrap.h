@@ -32,6 +32,7 @@ class VtkGeoAdaptiveArcsWrap : public VtkPolyDataAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobeRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumPixelSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumPixelSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -7,6 +7,8 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkPipelineSizeWrap.h"
+#include "vtkAlgorithmWrap.h"
+#include "vtkPolyDataMapperWrap.h"
 #include "../../plus/plus.h"
 
 using namespace v8;
@@ -48,6 +50,12 @@ void VtkPipelineSizeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetEstimatedSize", GetEstimatedSize);
+	Nan::SetPrototypeMethod(tpl, "getEstimatedSize", GetEstimatedSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfSubPieces", GetNumberOfSubPieces);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfSubPieces", GetNumberOfSubPieces);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -102,6 +110,62 @@ void VtkPipelineSizeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPipelineSizeWrap::GetEstimatedSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPipelineSizeWrap *wrapper = ObjectWrap::Unwrap<VtkPipelineSizeWrap>(info.Holder());
+	vtkPipelineSize *native = (vtkPipelineSize *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				unsigned int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GetEstimatedSize(
+					(vtkAlgorithm *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPipelineSizeWrap::GetNumberOfSubPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPipelineSizeWrap *wrapper = ObjectWrap::Unwrap<VtkPipelineSizeWrap>(info.Holder());
+	vtkPipelineSize *native = (vtkPipelineSize *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataMapperWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkPolyDataMapperWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info[1]->ToObject());
+			unsigned int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNumberOfSubPieces(
+				info[0]->Uint32Value(),
+				(vtkPolyDataMapper *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPipelineSizeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

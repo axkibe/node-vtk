@@ -40,6 +40,7 @@ class VtkImageResliceMapperWrap : public VtkImageMapper3DWrap
 		static void GetImageSampleFactorMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetJumpToNearestSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResampleToScreenPixels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSeparateWindowLevelOperation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSlabSampleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);

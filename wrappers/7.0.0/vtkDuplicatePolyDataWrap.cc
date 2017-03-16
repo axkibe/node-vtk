@@ -58,6 +58,9 @@ void VtkDuplicatePolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetController", GetController);
 	Nan::SetPrototypeMethod(tpl, "getController", GetController);
 
+	Nan::SetPrototypeMethod(tpl, "GetMemorySize", GetMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getMemorySize", GetMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetSocketController", GetSocketController);
 	Nan::SetPrototypeMethod(tpl, "getSocketController", GetSocketController);
 
@@ -175,6 +178,20 @@ void VtkDuplicatePolyDataWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDuplicatePolyDataWrap::GetMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDuplicatePolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDuplicatePolyDataWrap>(info.Holder());
+	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDuplicatePolyDataWrap::GetSocketController(const Nan::FunctionCallbackInfo<v8::Value>& info)

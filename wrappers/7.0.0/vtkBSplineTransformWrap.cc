@@ -71,6 +71,9 @@ void VtkBSplineTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDisplacementScale", GetDisplacementScale);
 	Nan::SetPrototypeMethod(tpl, "getDisplacementScale", GetDisplacementScale);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -240,6 +243,20 @@ void VtkBSplineTransformWrap::GetDisplacementScale(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDisplacementScale();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkBSplineTransformWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkBSplineTransformWrap>(info.Holder());
+	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

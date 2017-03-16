@@ -41,6 +41,7 @@ class VtkTemporalFractalWrap : public VtkAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiscreteTimeSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFractalValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateRectilinearGrids(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,6 +55,7 @@ class VtkTemporalFractalWrap : public VtkAlgorithmWrap
 		static void SetAsymetric(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDiscreteTimeSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFractalValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateRectilinearGrids(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGhostLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -44,6 +44,7 @@ class VtkGenericContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputScalarsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +56,7 @@ class VtkGenericContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_CLASSDEF

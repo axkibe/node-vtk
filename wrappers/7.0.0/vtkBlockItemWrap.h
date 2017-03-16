@@ -31,10 +31,12 @@ class VtkBlockItemWrap : public VtkContextItemWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKBLOCKITEMWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKBLOCKITEMWRAP_CLASSDEF

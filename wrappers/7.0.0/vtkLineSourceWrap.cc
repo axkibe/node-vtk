@@ -403,6 +403,54 @@ void VtkLineSourceWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& in
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1(
+			b0
+		);
+		return;
+	}
 	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -454,6 +502,54 @@ void VtkLineSourceWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& in
 	{
 		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
 		if( a0->Length() < 3 )
 		{
 			Nan::ThrowError("Array too short.");

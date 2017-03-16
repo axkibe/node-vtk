@@ -45,6 +45,7 @@ class VtkPlotParallelCoordinatesWrap : public VtkPlotWrap
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSelectionRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKPLOTPARALLELCOORDINATESWRAP_CLASSDEF

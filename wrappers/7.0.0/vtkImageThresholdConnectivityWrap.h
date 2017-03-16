@@ -34,6 +34,7 @@ class VtkImageThresholdConnectivityWrap : public VtkImageAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLowerThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeighborhoodFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeighborhoodFractionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeighborhoodFractionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -35,6 +35,7 @@ class VtkGeoTreeNodeWrap : public VtkObjectWrap
 		static void DeleteData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetChildTreeNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLatitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLongitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +49,7 @@ class VtkGeoTreeNodeWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetChild(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLatitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLongitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);

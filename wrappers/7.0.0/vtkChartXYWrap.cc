@@ -82,6 +82,9 @@ void VtkChartXYWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAxis", GetAxis);
 	Nan::SetPrototypeMethod(tpl, "getAxis", GetAxis);
 
+	Nan::SetPrototypeMethod(tpl, "GetBarWidthFraction", GetBarWidthFraction);
+	Nan::SetPrototypeMethod(tpl, "getBarWidthFraction", GetBarWidthFraction);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -123,6 +126,9 @@ void VtkChartXYWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetAutoAxes", SetAutoAxes);
 	Nan::SetPrototypeMethod(tpl, "setAutoAxes", SetAutoAxes);
+
+	Nan::SetPrototypeMethod(tpl, "SetBarWidthFraction", SetBarWidthFraction);
+	Nan::SetPrototypeMethod(tpl, "setBarWidthFraction", SetBarWidthFraction);
 
 	Nan::SetPrototypeMethod(tpl, "SetDrawAxesAtOrigin", SetDrawAxesAtOrigin);
 	Nan::SetPrototypeMethod(tpl, "setDrawAxesAtOrigin", SetDrawAxesAtOrigin);
@@ -345,6 +351,20 @@ void VtkChartXYWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYWrap::GetBarWidthFraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBarWidthFraction();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkChartXYWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -608,6 +628,25 @@ void VtkChartXYWrap::SetAutoAxes(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		}
 		native->SetAutoAxes(
 			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYWrap::SetBarWidthFraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBarWidthFraction(
+			info[0]->NumberValue()
 		);
 		return;
 	}

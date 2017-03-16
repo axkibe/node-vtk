@@ -39,6 +39,7 @@ class VtkSocketCollectionWrap : public VtkCollectionWrap
 		static void RemoveItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReplaceItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SelectSockets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKSOCKETCOLLECTIONWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKSOCKETCOLLECTIONWRAP_CLASSDEF

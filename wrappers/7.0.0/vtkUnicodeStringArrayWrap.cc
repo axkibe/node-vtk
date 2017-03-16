@@ -58,6 +58,9 @@ void VtkUnicodeStringArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -171,6 +174,20 @@ void VtkUnicodeStringArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUnicodeStringArrayWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnicodeStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnicodeStringArrayWrap>(info.Holder());
+	vtkUnicodeStringArray *native = (vtkUnicodeStringArray *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkUnicodeStringArrayWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -33,12 +33,16 @@ class VtkConeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void CompressionOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CompressionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCompactness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompression(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCompactness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompression(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKCONELAYOUTSTRATEGYWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKCONELAYOUTSTRATEGYWRAP_CLASSDEF

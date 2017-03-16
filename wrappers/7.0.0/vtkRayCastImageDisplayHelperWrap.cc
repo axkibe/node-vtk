@@ -50,6 +50,9 @@ void VtkRayCastImageDisplayHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetPixelScale", GetPixelScale);
+	Nan::SetPrototypeMethod(tpl, "getPixelScale", GetPixelScale);
+
 	Nan::SetPrototypeMethod(tpl, "GetPreMultipliedColors", GetPreMultipliedColors);
 	Nan::SetPrototypeMethod(tpl, "getPreMultipliedColors", GetPreMultipliedColors);
 
@@ -76,6 +79,9 @@ void VtkRayCastImageDisplayHelperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetPixelScale", SetPixelScale);
+	Nan::SetPrototypeMethod(tpl, "setPixelScale", SetPixelScale);
 
 	Nan::SetPrototypeMethod(tpl, "SetPreMultipliedColors", SetPreMultipliedColors);
 	Nan::SetPrototypeMethod(tpl, "setPreMultipliedColors", SetPreMultipliedColors);
@@ -124,6 +130,20 @@ void VtkRayCastImageDisplayHelperWrap::GetClassName(const Nan::FunctionCallbackI
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRayCastImageDisplayHelperWrap::GetPixelScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRayCastImageDisplayHelperWrap *wrapper = ObjectWrap::Unwrap<VtkRayCastImageDisplayHelperWrap>(info.Holder());
+	vtkRayCastImageDisplayHelper *native = (vtkRayCastImageDisplayHelper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPixelScale();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRayCastImageDisplayHelperWrap::GetPreMultipliedColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -283,6 +303,25 @@ void VtkRayCastImageDisplayHelperWrap::SafeDownCast(const Nan::FunctionCallbackI
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRayCastImageDisplayHelperWrap::SetPixelScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRayCastImageDisplayHelperWrap *wrapper = ObjectWrap::Unwrap<VtkRayCastImageDisplayHelperWrap>(info.Holder());
+	vtkRayCastImageDisplayHelper *native = (vtkRayCastImageDisplayHelper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPixelScale(
+			info[0]->NumberValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

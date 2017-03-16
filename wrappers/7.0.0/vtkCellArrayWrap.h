@@ -31,6 +31,7 @@ class VtkCellArrayWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

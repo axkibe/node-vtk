@@ -54,6 +54,9 @@ void VtkAssemblyPathsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNextItem", GetNextItem);
 	Nan::SetPrototypeMethod(tpl, "getNextItem", GetNextItem);
 
@@ -136,6 +139,20 @@ void VtkAssemblyPathsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAssemblyPathsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAssemblyPathsWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyPathsWrap>(info.Holder());
+	vtkAssemblyPaths *native = (vtkAssemblyPaths *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAssemblyPathsWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Value>& info)

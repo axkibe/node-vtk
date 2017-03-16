@@ -195,6 +195,9 @@ void VtkCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetViewUp", GetViewUp);
 	Nan::SetPrototypeMethod(tpl, "getViewUp", GetViewUp);
 
+	Nan::SetPrototypeMethod(tpl, "GetViewingRaysMTime", GetViewingRaysMTime);
+	Nan::SetPrototypeMethod(tpl, "getViewingRaysMTime", GetViewingRaysMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetWindowCenter", GetWindowCenter);
 	Nan::SetPrototypeMethod(tpl, "getWindowCenter", GetWindowCenter);
 
@@ -1410,6 +1413,20 @@ void VtkCameraWrap::GetViewUp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
 	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkCameraWrap::GetViewingRaysMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
+	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetViewingRaysMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCameraWrap::GetWindowCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)

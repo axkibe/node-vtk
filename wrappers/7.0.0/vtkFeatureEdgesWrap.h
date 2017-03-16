@@ -45,6 +45,7 @@ class VtkFeatureEdgesWrap : public VtkPolyDataAlgorithmWrap
 		static void GetFeatureAngleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFeatureEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetManifoldEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNonManifoldEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);

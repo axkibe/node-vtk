@@ -78,6 +78,9 @@ void VtkExtractUnstructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMerging", GetMerging);
 	Nan::SetPrototypeMethod(tpl, "getMerging", GetMerging);
 
@@ -295,6 +298,20 @@ void VtkExtractUnstructuredGridWrap::GetLocator(const Nan::FunctionCallbackInfo<
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkExtractUnstructuredGridWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
+	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExtractUnstructuredGridWrap::GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info)

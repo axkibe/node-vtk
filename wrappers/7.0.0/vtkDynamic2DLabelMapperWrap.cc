@@ -52,6 +52,12 @@ void VtkDynamic2DLabelMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetLabelHeightPadding", GetLabelHeightPadding);
+	Nan::SetPrototypeMethod(tpl, "getLabelHeightPadding", GetLabelHeightPadding);
+
+	Nan::SetPrototypeMethod(tpl, "GetLabelWidthPadding", GetLabelWidthPadding);
+	Nan::SetPrototypeMethod(tpl, "getLabelWidthPadding", GetLabelWidthPadding);
+
 	Nan::SetPrototypeMethod(tpl, "GetReversePriority", GetReversePriority);
 	Nan::SetPrototypeMethod(tpl, "getReversePriority", GetReversePriority);
 
@@ -75,6 +81,12 @@ void VtkDynamic2DLabelMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetLabelHeightPadding", SetLabelHeightPadding);
+	Nan::SetPrototypeMethod(tpl, "setLabelHeightPadding", SetLabelHeightPadding);
+
+	Nan::SetPrototypeMethod(tpl, "SetLabelWidthPadding", SetLabelWidthPadding);
+	Nan::SetPrototypeMethod(tpl, "setLabelWidthPadding", SetLabelWidthPadding);
 
 	Nan::SetPrototypeMethod(tpl, "SetPriorityArrayName", SetPriorityArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPriorityArrayName", SetPriorityArrayName);
@@ -126,6 +138,34 @@ void VtkDynamic2DLabelMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkDynamic2DLabelMapperWrap::GetLabelHeightPadding(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
+	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLabelHeightPadding();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDynamic2DLabelMapperWrap::GetLabelWidthPadding(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
+	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLabelWidthPadding();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDynamic2DLabelMapperWrap::GetReversePriority(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -287,6 +327,44 @@ void VtkDynamic2DLabelMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDynamic2DLabelMapperWrap::SetLabelHeightPadding(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
+	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLabelHeightPadding(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDynamic2DLabelMapperWrap::SetLabelWidthPadding(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
+	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLabelWidthPadding(
+			info[0]->NumberValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

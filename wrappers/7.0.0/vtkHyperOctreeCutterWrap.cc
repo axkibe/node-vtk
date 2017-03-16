@@ -73,6 +73,9 @@ void VtkHyperOctreeCutterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -342,6 +345,20 @@ void VtkHyperOctreeCutterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHyperOctreeCutterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeCutterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeCutterWrap>(info.Holder());
+	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperOctreeCutterWrap::GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info)

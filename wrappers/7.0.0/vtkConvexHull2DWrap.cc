@@ -67,6 +67,9 @@ void VtkConvexHull2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetHullShapeMinValue", GetHullShapeMinValue);
 	Nan::SetPrototypeMethod(tpl, "getHullShapeMinValue", GetHullShapeMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMinHullSizeInDisplay", GetMinHullSizeInDisplay);
 	Nan::SetPrototypeMethod(tpl, "getMinHullSizeInDisplay", GetMinHullSizeInDisplay);
 
@@ -270,6 +273,20 @@ void VtkConvexHull2DWrap::GetHullShapeMinValue(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetHullShapeMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConvexHull2DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConvexHull2DWrap *wrapper = ObjectWrap::Unwrap<VtkConvexHull2DWrap>(info.Holder());
+	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

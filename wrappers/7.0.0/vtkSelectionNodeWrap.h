@@ -43,6 +43,7 @@ class VtkSelectionNodeWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQueryString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionData(const Nan::FunctionCallbackInfo<v8::Value>& info);

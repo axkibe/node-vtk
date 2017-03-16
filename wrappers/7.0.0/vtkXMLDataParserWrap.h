@@ -37,6 +37,7 @@ class VtkXMLDataParserWrap : public VtkXMLParserWrap
 		static void GetAttributesEncodingMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompressor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRootElement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,6 +46,7 @@ class VtkXMLDataParserWrap : public VtkXMLParserWrap
 		static void SetAbort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAttributesEncoding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompressor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_CLASSDEF

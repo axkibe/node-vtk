@@ -36,6 +36,8 @@ class VtkPlotSurfaceWrap : public VtkPlot3DWrap
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetXRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetYRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKPLOTSURFACEWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKPLOTSURFACEWRAP_CLASSDEF

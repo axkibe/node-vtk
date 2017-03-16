@@ -67,6 +67,12 @@ void VtkPlotSurfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	Nan::SetPrototypeMethod(tpl, "SetXRange", SetXRange);
+	Nan::SetPrototypeMethod(tpl, "setXRange", SetXRange);
+
+	Nan::SetPrototypeMethod(tpl, "SetYRange", SetYRange);
+	Nan::SetPrototypeMethod(tpl, "setYRange", SetYRange);
+
 #ifdef VTK_NODE_PLUS_VTKPLOTSURFACEWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKPLOTSURFACEWRAP_INITPTPL
 #endif
@@ -227,6 +233,52 @@ void VtkPlotSurfaceWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>
 			(vtkTable *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotSurfaceWrap::SetXRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkPlotSurfaceWrap>(info.Holder());
+	vtkPlotSurface *native = (vtkPlotSurface *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetXRange(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotSurfaceWrap::SetYRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkPlotSurfaceWrap>(info.Holder());
+	vtkPlotSurface *native = (vtkPlotSurface *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetYRange(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

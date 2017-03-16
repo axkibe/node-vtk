@@ -8,6 +8,7 @@
 #include "vtkCommunicatorWrap.h"
 #include "vtkSocketCommunicatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkServerSocketWrap.h"
 #include "vtkClientSocketWrap.h"
 #include "../../plus/plus.h"
 
@@ -652,7 +653,26 @@ void VtkSocketCommunicatorWrap::WaitForConnection(const Nan::FunctionCallbackInf
 {
 	VtkSocketCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCommunicatorWrap>(info.Holder());
 	vtkSocketCommunicator *native = (vtkSocketCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkServerSocketWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkServerSocketWrap *a0 = ObjectWrap::Unwrap<VtkServerSocketWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->WaitForConnection(
+				(vtkServerSocket *) a0->native.GetPointer(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		int r;
 		if(info.Length() != 1)

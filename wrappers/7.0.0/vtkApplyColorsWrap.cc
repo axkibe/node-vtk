@@ -69,6 +69,9 @@ void VtkApplyColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDefaultPointOpacity", GetDefaultPointOpacity);
 	Nan::SetPrototypeMethod(tpl, "getDefaultPointOpacity", GetDefaultPointOpacity);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPointColorOutputArrayName", GetPointColorOutputArrayName);
 	Nan::SetPrototypeMethod(tpl, "getPointColorOutputArrayName", GetPointColorOutputArrayName);
 
@@ -334,6 +337,20 @@ void VtkApplyColorsWrap::GetDefaultPointOpacity(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetDefaultPointOpacity();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkApplyColorsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
+	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

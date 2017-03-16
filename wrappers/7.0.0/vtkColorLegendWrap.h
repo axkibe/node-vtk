@@ -43,6 +43,8 @@ class VtkColorLegendWrap : public VtkChartLegendWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDrawBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTextureSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 

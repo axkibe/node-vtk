@@ -63,6 +63,9 @@ void VtkGraphToGlyphsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGlyphType", GetGlyphType);
 	Nan::SetPrototypeMethod(tpl, "getGlyphType", GetGlyphType);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderer", GetRenderer);
 	Nan::SetPrototypeMethod(tpl, "getRenderer", GetRenderer);
 
@@ -191,6 +194,20 @@ void VtkGraphToGlyphsWrap::GetGlyphType(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetGlyphType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphToGlyphsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
+	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

@@ -60,6 +60,9 @@ void VtkTooltipItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPen", GetPen);
 	Nan::SetPrototypeMethod(tpl, "getPen", GetPen);
 
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetTextProperties", GetTextProperties);
 	Nan::SetPrototypeMethod(tpl, "getTextProperties", GetTextProperties);
 
@@ -74,6 +77,9 @@ void VtkTooltipItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetPosition", SetPosition);
+	Nan::SetPrototypeMethod(tpl, "setPosition", SetPosition);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -168,6 +174,23 @@ void VtkTooltipItemWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTooltipItemWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTooltipItemWrap *wrapper = ObjectWrap::Unwrap<VtkTooltipItemWrap>(info.Holder());
+	vtkTooltipItem *native = (vtkTooltipItem *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTooltipItemWrap::GetTextProperties(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -287,6 +310,78 @@ void VtkTooltipItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTooltipItemWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTooltipItemWrap *wrapper = ObjectWrap::Unwrap<VtkTooltipItemWrap>(info.Holder());
+	vtkTooltipItem *native = (vtkTooltipItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPosition(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

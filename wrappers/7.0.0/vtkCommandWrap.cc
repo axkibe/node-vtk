@@ -59,8 +59,14 @@ void VtkCommandWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEventIdFromString", GetEventIdFromString);
+	Nan::SetPrototypeMethod(tpl, "getEventIdFromString", GetEventIdFromString);
+
 	Nan::SetPrototypeMethod(tpl, "GetPassiveObserver", GetPassiveObserver);
 	Nan::SetPrototypeMethod(tpl, "getPassiveObserver", GetPassiveObserver);
+
+	Nan::SetPrototypeMethod(tpl, "GetStringFromEventId", GetStringFromEventId);
+	Nan::SetPrototypeMethod(tpl, "getStringFromEventId", GetStringFromEventId);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -166,6 +172,28 @@ void VtkCommandWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCommandWrap::GetEventIdFromString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommandWrap *wrapper = ObjectWrap::Unwrap<VtkCommandWrap>(info.Holder());
+	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEventIdFromString(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCommandWrap::GetPassiveObserver(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCommandWrap *wrapper = ObjectWrap::Unwrap<VtkCommandWrap>(info.Holder());
@@ -178,6 +206,27 @@ void VtkCommandWrap::GetPassiveObserver(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetPassiveObserver();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCommandWrap::GetStringFromEventId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommandWrap *wrapper = ObjectWrap::Unwrap<VtkCommandWrap>(info.Holder());
+	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetStringFromEventId(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCommandWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

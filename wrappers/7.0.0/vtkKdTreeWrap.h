@@ -33,6 +33,7 @@ class VtkKdTreeWrap : public VtkLocatorWrap
 		static void AddDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildLocatorFromPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void BuildMapForDuplicatePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateCellLists(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeleteCellLists(const Nan::FunctionCallbackInfo<v8::Value>& info);

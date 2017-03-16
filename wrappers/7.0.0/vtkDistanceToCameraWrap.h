@@ -31,6 +31,7 @@ class VtkDistanceToCameraWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

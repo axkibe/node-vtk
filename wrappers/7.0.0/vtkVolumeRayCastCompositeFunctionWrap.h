@@ -35,6 +35,7 @@ class VtkVolumeRayCastCompositeFunctionWrap : public VtkVolumeRayCastFunctionWra
 		static void GetCompositeMethodAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompositeMethodMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompositeMethodMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroOpacityThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

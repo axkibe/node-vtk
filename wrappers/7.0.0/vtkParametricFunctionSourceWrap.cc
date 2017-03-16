@@ -81,6 +81,9 @@ void VtkParametricFunctionSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGenerateTextureCoordinatesMinValue", GetGenerateTextureCoordinatesMinValue);
 	Nan::SetPrototypeMethod(tpl, "getGenerateTextureCoordinatesMinValue", GetGenerateTextureCoordinatesMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
 
@@ -373,6 +376,20 @@ void VtkParametricFunctionSourceWrap::GetGenerateTextureCoordinatesMinValue(cons
 		return;
 	}
 	r = native->GetGenerateTextureCoordinatesMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkParametricFunctionSourceWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParametricFunctionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionSourceWrap>(info.Holder());
+	vtkParametricFunctionSource *native = (vtkParametricFunctionSource *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

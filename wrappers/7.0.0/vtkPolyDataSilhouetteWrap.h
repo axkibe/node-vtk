@@ -38,6 +38,7 @@ class VtkPolyDataSilhouetteWrap : public VtkPolyDataAlgorithmWrap
 		static void GetDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableFeatureAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFeatureAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPieceInvariant(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info);

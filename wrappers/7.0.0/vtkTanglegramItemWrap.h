@@ -31,15 +31,18 @@ class VtkTanglegramItemWrap : public VtkContextItemWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCorrespondenceLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelSizeDifference(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumVisibleFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTree1Label(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTree2Label(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCorrespondenceLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelSizeDifference(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumVisibleFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +51,7 @@ class VtkTanglegramItemWrap : public VtkContextItemWrap
 		static void SetTree1Label(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree2Label(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_CLASSDEF

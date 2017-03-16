@@ -36,6 +36,7 @@ class VtkMNITagPointWriterWrap : public VtkWriterWrap
 		static void GetFileExtensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPatientIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStructureIds(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -95,6 +95,9 @@ void VtkPlotParallelCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarVisibility", SetScalarVisibility);
 	Nan::SetPrototypeMethod(tpl, "setScalarVisibility", SetScalarVisibility);
 
+	Nan::SetPrototypeMethod(tpl, "SetSelectionRange", SetSelectionRange);
+	Nan::SetPrototypeMethod(tpl, "setSelectionRange", SetSelectionRange);
+
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
@@ -440,6 +443,35 @@ void VtkPlotParallelCoordinatesWrap::SetScalarVisibility(const Nan::FunctionCall
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotParallelCoordinatesWrap::SetSelectionRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
+	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->SetSelectionRange(
+					info[0]->Int32Value(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

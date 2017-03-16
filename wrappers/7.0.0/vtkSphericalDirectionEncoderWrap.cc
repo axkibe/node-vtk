@@ -50,6 +50,12 @@ void VtkSphericalDirectionEncoderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDecodedGradient", GetDecodedGradient);
+	Nan::SetPrototypeMethod(tpl, "getDecodedGradient", GetDecodedGradient);
+
+	Nan::SetPrototypeMethod(tpl, "GetEncodedDirection", GetEncodedDirection);
+	Nan::SetPrototypeMethod(tpl, "getEncodedDirection", GetEncodedDirection);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfEncodedDirections", GetNumberOfEncodedDirections);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfEncodedDirections", GetNumberOfEncodedDirections);
 
@@ -106,6 +112,90 @@ void VtkSphericalDirectionEncoderWrap::GetClassName(const Nan::FunctionCallbackI
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSphericalDirectionEncoderWrap::GetDecodedGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphericalDirectionEncoderWrap *wrapper = ObjectWrap::Unwrap<VtkSphericalDirectionEncoderWrap>(info.Holder());
+	vtkSphericalDirectionEncoder *native = (vtkSphericalDirectionEncoder *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetDecodedGradient(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(float));
+		Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(float));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSphericalDirectionEncoderWrap::GetEncodedDirection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphericalDirectionEncoderWrap *wrapper = ObjectWrap::Unwrap<VtkSphericalDirectionEncoderWrap>(info.Holder());
+	vtkSphericalDirectionEncoder *native = (vtkSphericalDirectionEncoder *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEncodedDirection(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEncodedDirection(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkSphericalDirectionEncoderWrap::GetNumberOfEncodedDirections(const Nan::FunctionCallbackInfo<v8::Value>& info)

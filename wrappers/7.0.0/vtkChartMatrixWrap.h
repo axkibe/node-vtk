@@ -42,6 +42,8 @@ class VtkChartMatrixWrap : public VtkAbstractContextItemWrap
 		static void SetBorderRight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBorderTop(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGutterX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGutterY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKCHARTMATRIXWRAP_CLASSDEF

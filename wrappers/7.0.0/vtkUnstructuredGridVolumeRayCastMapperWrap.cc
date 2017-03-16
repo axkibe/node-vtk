@@ -79,6 +79,15 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImageOrigin", GetImageOrigin);
 	Nan::SetPrototypeMethod(tpl, "getImageOrigin", GetImageOrigin);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistance", GetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistance", GetImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistanceMaxValue", GetImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistanceMaxValue", GetImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistanceMinValue", GetImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistanceMinValue", GetImageSampleDistanceMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetImageViewportSize", GetImageViewportSize);
 	Nan::SetPrototypeMethod(tpl, "getImageViewportSize", GetImageViewportSize);
 
@@ -90,6 +99,24 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetIntermixIntersectingGeometryMinValue", GetIntermixIntersectingGeometryMinValue);
 	Nan::SetPrototypeMethod(tpl, "getIntermixIntersectingGeometryMinValue", GetIntermixIntersectingGeometryMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistance", GetMaximumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistance", GetMaximumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistanceMaxValue", GetMaximumImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistanceMaxValue", GetMaximumImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistanceMinValue", GetMaximumImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistanceMinValue", GetMaximumImageSampleDistanceMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistance", GetMinimumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistance", GetMinimumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistanceMaxValue", GetMinimumImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistanceMaxValue", GetMinimumImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistanceMinValue", GetMinimumImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistanceMinValue", GetMinimumImageSampleDistanceMinValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfThreads", GetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfThreads", GetNumberOfThreads);
@@ -124,8 +151,17 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 	Nan::SetPrototypeMethod(tpl, "setAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 
+	Nan::SetPrototypeMethod(tpl, "SetImageSampleDistance", SetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setImageSampleDistance", SetImageSampleDistance);
+
 	Nan::SetPrototypeMethod(tpl, "SetIntermixIntersectingGeometry", SetIntermixIntersectingGeometry);
 	Nan::SetPrototypeMethod(tpl, "setIntermixIntersectingGeometry", SetIntermixIntersectingGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "SetMaximumImageSampleDistance", SetMaximumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setMaximumImageSampleDistance", SetMaximumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "SetMinimumImageSampleDistance", SetMinimumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setMinimumImageSampleDistance", SetMinimumImageSampleDistance);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfThreads", SetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfThreads", SetNumberOfThreads);
@@ -305,6 +341,48 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageOrigin(const Nan::Funct
 	info.GetReturnValue().Set(at);
 }
 
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
@@ -361,6 +439,90 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::GetIntermixIntersectingGeometry
 		return;
 	}
 	r = native->GetIntermixIntersectingGeometryMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetMaximumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetMaximumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetMinimumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetMinimumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistanceMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -588,6 +750,25 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SetAutoAdjustSampleDistances(co
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkUnstructuredGridVolumeRayCastMapperWrap::SetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkUnstructuredGridVolumeRayCastMapperWrap::SetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
@@ -601,6 +782,44 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SetIntermixIntersectingGeometry
 		}
 		native->SetIntermixIntersectingGeometry(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::SetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::SetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMinimumImageSampleDistance(
+			info[0]->NumberValue()
 		);
 		return;
 	}

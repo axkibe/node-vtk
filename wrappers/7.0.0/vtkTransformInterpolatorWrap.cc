@@ -66,6 +66,9 @@ void VtkTransformInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolationTypeMinValue", GetInterpolationTypeMinValue);
 	Nan::SetPrototypeMethod(tpl, "getInterpolationTypeMinValue", GetInterpolationTypeMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumT", GetMaximumT);
 	Nan::SetPrototypeMethod(tpl, "getMaximumT", GetMaximumT);
 
@@ -260,6 +263,20 @@ void VtkTransformInterpolatorWrap::GetInterpolationTypeMinValue(const Nan::Funct
 		return;
 	}
 	r = native->GetInterpolationTypeMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTransformInterpolatorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTransformInterpolatorWrap>(info.Holder());
+	vtkTransformInterpolator *native = (vtkTransformInterpolator *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

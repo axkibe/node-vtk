@@ -61,6 +61,9 @@ void VtkPlotPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetMarkerSize", GetMarkerSize);
+	Nan::SetPrototypeMethod(tpl, "getMarkerSize", GetMarkerSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetMarkerStyle", GetMarkerStyle);
 	Nan::SetPrototypeMethod(tpl, "getMarkerStyle", GetMarkerStyle);
 
@@ -90,6 +93,9 @@ void VtkPlotPointsWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetLookupTable", SetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "setLookupTable", SetLookupTable);
+
+	Nan::SetPrototypeMethod(tpl, "SetMarkerSize", SetMarkerSize);
+	Nan::SetPrototypeMethod(tpl, "setMarkerSize", SetMarkerSize);
 
 	Nan::SetPrototypeMethod(tpl, "SetMarkerStyle", SetMarkerStyle);
 	Nan::SetPrototypeMethod(tpl, "setMarkerStyle", SetMarkerStyle);
@@ -235,6 +241,20 @@ void VtkPlotPointsWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotPointsWrap::GetMarkerSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPointsWrap>(info.Holder());
+	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMarkerSize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotPointsWrap::GetMarkerStyle(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -457,6 +477,25 @@ void VtkPlotPointsWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value
 		}
 		native->SetLookupTable(
 			(vtkScalarsToColors *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotPointsWrap::SetMarkerSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPointsWrap>(info.Holder());
+	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMarkerSize(
+			info[0]->NumberValue()
 		);
 		return;
 	}

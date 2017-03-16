@@ -128,6 +128,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDimensionality", GetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "getDimensionality", GetDimensionality);
 
+	Nan::SetPrototypeMethod(tpl, "GetDisplacementMagnitude", GetDisplacementMagnitude);
+	Nan::SetPrototypeMethod(tpl, "getDisplacementMagnitude", GetDisplacementMagnitude);
+
 	Nan::SetPrototypeMethod(tpl, "GetDisplayType", GetDisplayType);
 	Nan::SetPrototypeMethod(tpl, "getDisplayType", GetDisplayType);
 
@@ -296,6 +299,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImplicitNodeIdArrayName", GetImplicitNodeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "getImplicitNodeIdArrayName", GetImplicitNodeIdArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaterialArrayID", GetMaterialArrayID);
 	Nan::SetPrototypeMethod(tpl, "getMaterialArrayID", GetMaterialArrayID);
 
@@ -304,6 +310,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMaterialArrayStatus", GetMaterialArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "getMaterialArrayStatus", GetMaterialArrayStatus);
+
+	Nan::SetPrototypeMethod(tpl, "GetMetadataMTime", GetMetadataMTime);
+	Nan::SetPrototypeMethod(tpl, "getMetadataMTime", GetMetadataMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetModeShapeTime", GetModeShapeTime);
 	Nan::SetPrototypeMethod(tpl, "getModeShapeTime", GetModeShapeTime);
@@ -595,6 +604,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetCacheSize", SetCacheSize);
 	Nan::SetPrototypeMethod(tpl, "setCacheSize", SetCacheSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetDisplacementMagnitude", SetDisplacementMagnitude);
+	Nan::SetPrototypeMethod(tpl, "setDisplacementMagnitude", SetDisplacementMagnitude);
 
 	Nan::SetPrototypeMethod(tpl, "SetDisplayType", SetDisplayType);
 	Nan::SetPrototypeMethod(tpl, "setDisplayType", SetDisplayType);
@@ -1129,6 +1141,20 @@ void VtkExodusIIReaderWrap::GetDimensionality(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetDimensionality();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkExodusIIReaderWrap::GetDisplacementMagnitude(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDisplacementMagnitude();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -2297,6 +2323,20 @@ void VtkExodusIIReaderWrap::GetImplicitNodeIdArrayName(const Nan::FunctionCallba
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkExodusIIReaderWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkExodusIIReaderWrap::GetMaterialArrayID(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
@@ -2374,6 +2414,20 @@ void VtkExodusIIReaderWrap::GetMaterialArrayStatus(const Nan::FunctionCallbackIn
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExodusIIReaderWrap::GetMetadataMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMetadataMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExodusIIReaderWrap::GetModeShapeTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -4249,6 +4303,25 @@ void VtkExodusIIReaderWrap::SetCacheSize(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 		native->SetCacheSize(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExodusIIReaderWrap::SetDisplacementMagnitude(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplacementMagnitude(
 			info[0]->NumberValue()
 		);
 		return;

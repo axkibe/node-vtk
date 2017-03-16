@@ -75,6 +75,9 @@ void VtkImageDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -110,6 +113,9 @@ void VtkImageDataWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarComponentAsDouble", GetScalarComponentAsDouble);
 	Nan::SetPrototypeMethod(tpl, "getScalarComponentAsDouble", GetScalarComponentAsDouble);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarComponentAsFloat", GetScalarComponentAsFloat);
+	Nan::SetPrototypeMethod(tpl, "getScalarComponentAsFloat", GetScalarComponentAsFloat);
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarSize", GetScalarSize);
 	Nan::SetPrototypeMethod(tpl, "getScalarSize", GetScalarSize);
@@ -167,6 +173,9 @@ void VtkImageDataWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetScalarComponentFromDouble", SetScalarComponentFromDouble);
 	Nan::SetPrototypeMethod(tpl, "setScalarComponentFromDouble", SetScalarComponentFromDouble);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarComponentFromFloat", SetScalarComponentFromFloat);
+	Nan::SetPrototypeMethod(tpl, "setScalarComponentFromFloat", SetScalarComponentFromFloat);
 
 	Nan::SetPrototypeMethod(tpl, "SetScalarType", SetScalarType);
 	Nan::SetPrototypeMethod(tpl, "setScalarType", SetScalarType);
@@ -834,6 +843,20 @@ void VtkImageDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkImageDataWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkImageDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
@@ -1188,6 +1211,39 @@ void VtkImageDataWrap::GetScalarComponentAsDouble(const Nan::FunctionCallbackInf
 						return;
 					}
 					r = native->GetScalarComponentAsDouble(
+						info[0]->Int32Value(),
+						info[1]->Int32Value(),
+						info[2]->Int32Value(),
+						info[3]->Int32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageDataWrap::GetScalarComponentAsFloat(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					float r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->GetScalarComponentAsFloat(
 						info[0]->Int32Value(),
 						info[1]->Int32Value(),
 						info[2]->Int32Value(),
@@ -1814,6 +1870,41 @@ void VtkImageDataWrap::SetScalarComponentFromDouble(const Nan::FunctionCallbackI
 							return;
 						}
 						native->SetScalarComponentFromDouble(
+							info[0]->Int32Value(),
+							info[1]->Int32Value(),
+							info[2]->Int32Value(),
+							info[3]->Int32Value(),
+							info[4]->NumberValue()
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageDataWrap::SetScalarComponentFromFloat(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsNumber())
+					{
+												if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->SetScalarComponentFromFloat(
 							info[0]->Int32Value(),
 							info[1]->Int32Value(),
 							info[2]->Int32Value(),

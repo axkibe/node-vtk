@@ -34,6 +34,8 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void ClearPointerIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ConfigureEvent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateDefaultPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CreateOneShotTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CreateRepeatingTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DestroyTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Disable(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -79,6 +81,9 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void GetStillUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStillUpdateRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStillUpdateRateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimerDurationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimerDurationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimerEventDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimerEventId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimerEventPlatformId(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -134,6 +139,7 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void SetShiftKey(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStillUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimerEventDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimerEventId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimerEventPlatformId(const Nan::FunctionCallbackInfo<v8::Value>& info);

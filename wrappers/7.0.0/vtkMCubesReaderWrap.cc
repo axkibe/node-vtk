@@ -87,6 +87,9 @@ void VtkMCubesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormals", GetNormals);
 	Nan::SetPrototypeMethod(tpl, "getNormals", GetNormals);
 
@@ -359,6 +362,20 @@ void VtkMCubesReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkMCubesReaderWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
+	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMCubesReaderWrap::GetNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)

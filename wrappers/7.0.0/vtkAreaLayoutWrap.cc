@@ -66,6 +66,9 @@ void VtkAreaLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategy", GetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategy", GetLayoutStrategy);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -206,6 +209,20 @@ void VtkAreaLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAreaLayoutWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
+	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAreaLayoutWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

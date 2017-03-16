@@ -86,6 +86,9 @@ void VtkHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInteractionStateMinValue", GetInteractionStateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getInteractionStateMinValue", GetInteractionStateMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPointPlacer", GetPointPlacer);
 	Nan::SetPrototypeMethod(tpl, "getPointPlacer", GetPointPlacer);
 
@@ -435,6 +438,20 @@ void VtkHandleRepresentationWrap::GetInteractionStateMinValue(const Nan::Functio
 		return;
 	}
 	r = native->GetInteractionStateMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHandleRepresentationWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
+	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

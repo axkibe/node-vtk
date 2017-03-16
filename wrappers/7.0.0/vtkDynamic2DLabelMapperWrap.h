@@ -31,6 +31,8 @@ class VtkDynamic2DLabelMapperWrap : public VtkLabeledDataMapperWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelHeightPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelWidthPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReversePriority(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +41,8 @@ class VtkDynamic2DLabelMapperWrap : public VtkLabeledDataMapperWrap
 		static void ReversePriorityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReversePriorityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLabelHeightPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLabelWidthPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPriorityArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReversePriority(const Nan::FunctionCallbackInfo<v8::Value>& info);
 

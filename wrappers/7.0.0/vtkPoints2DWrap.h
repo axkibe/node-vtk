@@ -32,6 +32,7 @@ class VtkPoints2DWrap : public VtkObjectWrap
 
 		static void ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);

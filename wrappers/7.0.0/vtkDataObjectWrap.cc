@@ -116,6 +116,9 @@ void VtkDataObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActiveFieldInformation", GetActiveFieldInformation);
 	Nan::SetPrototypeMethod(tpl, "getActiveFieldInformation", GetActiveFieldInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetAssociationTypeAsString", GetAssociationTypeAsString);
 	Nan::SetPrototypeMethod(tpl, "getAssociationTypeAsString", GetAssociationTypeAsString);
 
@@ -155,8 +158,14 @@ void VtkDataObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInformation", GetInformation);
 	Nan::SetPrototypeMethod(tpl, "getInformation", GetInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNamedFieldInformation", GetNamedFieldInformation);
 	Nan::SetPrototypeMethod(tpl, "getNamedFieldInformation", GetNamedFieldInformation);
+
+	Nan::SetPrototypeMethod(tpl, "GetUpdateTime", GetUpdateTime);
+	Nan::SetPrototypeMethod(tpl, "getUpdateTime", GetUpdateTime);
 
 	Nan::SetPrototypeMethod(tpl, "GlobalReleaseDataFlagOff", GlobalReleaseDataFlagOff);
 	Nan::SetPrototypeMethod(tpl, "globalReleaseDataFlagOff", GlobalReleaseDataFlagOff);
@@ -844,6 +853,20 @@ void VtkDataObjectWrap::GetActiveFieldInformation(const Nan::FunctionCallbackInf
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkDataObjectWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
+	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDataObjectWrap::GetAssociationTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
@@ -1144,6 +1167,20 @@ void VtkDataObjectWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkDataObjectWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
+	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDataObjectWrap::GetNamedFieldInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
@@ -1182,6 +1219,20 @@ void VtkDataObjectWrap::GetNamedFieldInformation(const Nan::FunctionCallbackInfo
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDataObjectWrap::GetUpdateTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
+	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUpdateTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataObjectWrap::GlobalReleaseDataFlagOff(const Nan::FunctionCallbackInfo<v8::Value>& info)

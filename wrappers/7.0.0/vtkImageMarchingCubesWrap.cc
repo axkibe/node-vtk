@@ -80,6 +80,9 @@ void VtkImageMarchingCubesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetComputeScalars", GetComputeScalars);
 	Nan::SetPrototypeMethod(tpl, "getComputeScalars", GetComputeScalars);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -348,6 +351,20 @@ void VtkImageMarchingCubesWrap::GetComputeScalars(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetComputeScalars();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageMarchingCubesWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkImageMarchingCubesWrap>(info.Holder());
+	vtkImageMarchingCubes *native = (vtkImageMarchingCubes *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

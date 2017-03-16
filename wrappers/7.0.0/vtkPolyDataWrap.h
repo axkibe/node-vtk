@@ -38,6 +38,7 @@ class VtkPolyDataWrap : public VtkPointSetWrap
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeleteCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeleteLinks(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);

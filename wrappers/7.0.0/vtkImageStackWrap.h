@@ -37,10 +37,12 @@ class VtkImageStackWrap : public VtkImageSliceWrap
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImages(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNextPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPaths(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);

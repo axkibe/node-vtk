@@ -11,6 +11,8 @@
 #include "vtkVisibilitySortWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkVolumePropertyWrap.h"
+#include "vtkPointsWrap.h"
+#include "vtkFloatArrayWrap.h"
 #include "vtkRenderWindowWrap.h"
 #include "../../plus/plus.h"
 
@@ -74,6 +76,9 @@ void VtkProjectedTetrahedraMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetVisibilitySort", SetVisibilitySort);
 	Nan::SetPrototypeMethod(tpl, "setVisibilitySort", SetVisibilitySort);
+
+	Nan::SetPrototypeMethod(tpl, "TransformPoints", TransformPoints);
+	Nan::SetPrototypeMethod(tpl, "transformPoints", TransformPoints);
 
 #ifdef VTK_NODE_PLUS_VTKPROJECTEDTETRAHEDRAMAPPERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKPROJECTEDTETRAHEDRAMAPPERWRAP_INITPTPL
@@ -288,6 +293,172 @@ void VtkProjectedTetrahedraMapperWrap::SetVisibilitySort(const Nan::FunctionCall
 			(vtkVisibilitySort *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProjectedTetrahedraMapperWrap::TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTetrahedraMapperWrap>(info.Holder());
+	vtkProjectedTetrahedraMapper *native = (vtkProjectedTetrahedraMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsFloat32Array())
+		{
+			v8::Local<v8::Float32Array>a1(v8::Local<v8::Float32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 16 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsFloat32Array())
+			{
+				v8::Local<v8::Float32Array>a2(v8::Local<v8::Float32Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 16 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkFloatArrayWrap *a3 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[3]->ToObject());
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->TransformPoints(
+						(vtkPoints *) a0->native.GetPointer(),
+						(float *)(a1->Buffer()->GetContents().Data()),
+						(float *)(a2->Buffer()->GetContents().Data()),
+						(vtkFloatArray *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				float b2[16];
+				if( a2->Length() < 16 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 16; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkFloatArrayWrap *a3 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[3]->ToObject());
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->TransformPoints(
+						(vtkPoints *) a0->native.GetPointer(),
+						(float *)(a1->Buffer()->GetContents().Data()),
+						b2,
+						(vtkFloatArray *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			float b1[16];
+			if( a1->Length() < 16 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 16; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				float b2[16];
+				if( a2->Length() < 16 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 16; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkFloatArrayWrap *a3 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[3]->ToObject());
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->TransformPoints(
+						(vtkPoints *) a0->native.GetPointer(),
+						b1,
+						b2,
+						(vtkFloatArray *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat32Array())
+			{
+				v8::Local<v8::Float32Array>a2(v8::Local<v8::Float32Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 16 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkFloatArrayWrap *a3 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[3]->ToObject());
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->TransformPoints(
+						(vtkPoints *) a0->native.GetPointer(),
+						b1,
+						(float *)(a2->Buffer()->GetContents().Data()),
+						(vtkFloatArray *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

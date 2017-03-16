@@ -81,6 +81,9 @@ void VtkGeoTerrainNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCornerNormal11", GetCornerNormal11);
 	Nan::SetPrototypeMethod(tpl, "getCornerNormal11", GetCornerNormal11);
 
+	Nan::SetPrototypeMethod(tpl, "GetCoverage", GetCoverage);
+	Nan::SetPrototypeMethod(tpl, "getCoverage", GetCoverage);
+
 	Nan::SetPrototypeMethod(tpl, "GetError", GetError);
 	Nan::SetPrototypeMethod(tpl, "getError", GetError);
 
@@ -107,6 +110,9 @@ void VtkGeoTerrainNodeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCoverage", SetCoverage);
+	Nan::SetPrototypeMethod(tpl, "setCoverage", SetCoverage);
 
 	Nan::SetPrototypeMethod(tpl, "SetError", SetError);
 	Nan::SetPrototypeMethod(tpl, "setError", SetError);
@@ -358,6 +364,20 @@ void VtkGeoTerrainNodeWrap::GetCornerNormal11(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(at);
 }
 
+void VtkGeoTerrainNodeWrap::GetCoverage(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTerrainNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainNodeWrap>(info.Holder());
+	vtkGeoTerrainNode *native = (vtkGeoTerrainNode *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCoverage();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGeoTerrainNodeWrap::GetError(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoTerrainNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainNodeWrap>(info.Holder());
@@ -534,6 +554,25 @@ void VtkGeoTerrainNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoTerrainNodeWrap::SetCoverage(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTerrainNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainNodeWrap>(info.Holder());
+	vtkGeoTerrainNode *native = (vtkGeoTerrainNode *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCoverage(
+			info[0]->NumberValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

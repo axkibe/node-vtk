@@ -63,6 +63,9 @@ void VtkMarchingSquaresWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -264,6 +267,20 @@ void VtkMarchingSquaresWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkMarchingSquaresWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMarchingSquaresWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingSquaresWrap>(info.Holder());
+	vtkMarchingSquares *native = (vtkMarchingSquares *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMarchingSquaresWrap::GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info)

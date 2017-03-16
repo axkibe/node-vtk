@@ -90,6 +90,9 @@ void VtkLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPositional", GetPositional);
 	Nan::SetPrototypeMethod(tpl, "getPositional", GetPositional);
 
+	Nan::SetPrototypeMethod(tpl, "GetShadowAttenuation", GetShadowAttenuation);
+	Nan::SetPrototypeMethod(tpl, "getShadowAttenuation", GetShadowAttenuation);
+
 	Nan::SetPrototypeMethod(tpl, "GetSpecularColor", GetSpecularColor);
 	Nan::SetPrototypeMethod(tpl, "getSpecularColor", GetSpecularColor);
 
@@ -176,6 +179,9 @@ void VtkLightWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPositional", SetPositional);
 	Nan::SetPrototypeMethod(tpl, "setPositional", SetPositional);
+
+	Nan::SetPrototypeMethod(tpl, "SetShadowAttenuation", SetShadowAttenuation);
+	Nan::SetPrototypeMethod(tpl, "setShadowAttenuation", SetShadowAttenuation);
 
 	Nan::SetPrototypeMethod(tpl, "SetSpecularColor", SetSpecularColor);
 	Nan::SetPrototypeMethod(tpl, "setSpecularColor", SetSpecularColor);
@@ -441,6 +447,20 @@ void VtkLightWrap::GetPositional(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetPositional();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLightWrap::GetShadowAttenuation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShadowAttenuation();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1449,6 +1469,25 @@ void VtkLightWrap::SetPositional(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		}
 		native->SetPositional(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLightWrap::SetShadowAttenuation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShadowAttenuation(
+			info[0]->NumberValue()
 		);
 		return;
 	}

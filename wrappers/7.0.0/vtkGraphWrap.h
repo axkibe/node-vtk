@@ -47,6 +47,7 @@ class VtkGraphWrap : public VtkDataObjectWrap
 		static void GetEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraphInternals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInducedEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);

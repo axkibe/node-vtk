@@ -57,6 +57,9 @@ void VtkImageMapToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNaNColor", GetNaNColor);
 	Nan::SetPrototypeMethod(tpl, "getNaNColor", GetNaNColor);
 
@@ -189,6 +192,20 @@ void VtkImageMapToColorsWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageMapToColorsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
+	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageMapToColorsWrap::GetNaNColor(const Nan::FunctionCallbackInfo<v8::Value>& info)

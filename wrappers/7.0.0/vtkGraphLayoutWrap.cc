@@ -55,6 +55,9 @@ void VtkGraphLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategy", GetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategy", GetLayoutStrategy);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetTransform", GetTransform);
 	Nan::SetPrototypeMethod(tpl, "getTransform", GetTransform);
 
@@ -161,6 +164,20 @@ void VtkGraphLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGraphLayoutWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
+	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphLayoutWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)

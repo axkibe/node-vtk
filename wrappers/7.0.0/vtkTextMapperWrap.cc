@@ -60,6 +60,9 @@ void VtkTextMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
 	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
@@ -176,6 +179,20 @@ void VtkTextMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	r = native->GetInput();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTextMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkTextMapperWrap>(info.Holder());
+	vtkTextMapper *native = (vtkTextMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTextMapperWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -51,6 +51,7 @@ class VtkImageReader2Wrap : public VtkImageAlgorithmWrap
 		static void GetFileNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInternalFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -83,6 +84,7 @@ class VtkImageReader2Wrap : public VtkImageAlgorithmWrap
 		static void SetFileNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFilePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBytesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

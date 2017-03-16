@@ -111,6 +111,9 @@ void VtkImageReader2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFilePrefix", GetFilePrefix);
 	Nan::SetPrototypeMethod(tpl, "getFilePrefix", GetFilePrefix);
 
+	Nan::SetPrototypeMethod(tpl, "GetHeaderSize", GetHeaderSize);
+	Nan::SetPrototypeMethod(tpl, "getHeaderSize", GetHeaderSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetInternalFileName", GetInternalFileName);
 	Nan::SetPrototypeMethod(tpl, "getInternalFileName", GetInternalFileName);
 
@@ -206,6 +209,9 @@ void VtkImageReader2Wrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFilePrefix", SetFilePrefix);
 	Nan::SetPrototypeMethod(tpl, "setFilePrefix", SetFilePrefix);
+
+	Nan::SetPrototypeMethod(tpl, "SetHeaderSize", SetHeaderSize);
+	Nan::SetPrototypeMethod(tpl, "setHeaderSize", SetHeaderSize);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfScalarComponents", SetNumberOfScalarComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfScalarComponents", SetNumberOfScalarComponents);
@@ -570,6 +576,34 @@ void VtkImageReader2Wrap::GetFilePrefix(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetFilePrefix();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImageReader2Wrap::GetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info.Holder());
+	vtkImageReader2 *native = (vtkImageReader2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetHeaderSize(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHeaderSize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageReader2Wrap::GetInternalFileName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1291,6 +1325,25 @@ void VtkImageReader2Wrap::SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Valu
 		}
 		native->SetFilePrefix(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageReader2Wrap::SetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info.Holder());
+	vtkImageReader2 *native = (vtkImageReader2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHeaderSize(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

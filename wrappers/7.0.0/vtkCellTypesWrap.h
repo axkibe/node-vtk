@@ -32,6 +32,7 @@ class VtkCellTypesWrap : public VtkObjectWrap
 
 		static void Allocate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassNameFromTypeId(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -34,8 +34,11 @@ class VtkTextActorWrap : public VtkTexturedActor2DWrap
 		static void GetAlignmentPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFontScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumLineHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaledTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,8 +57,10 @@ class VtkTextActorWrap : public VtkTexturedActor2DWrap
 		static void SetAlignmentPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetConstrainedFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaximumLineHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNonLinearFontScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextScaleMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextScaleModeToNone(const Nan::FunctionCallbackInfo<v8::Value>& info);

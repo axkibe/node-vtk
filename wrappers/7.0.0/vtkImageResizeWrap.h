@@ -40,6 +40,7 @@ class VtkImageResizeWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetCroppingRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMagnificationFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);

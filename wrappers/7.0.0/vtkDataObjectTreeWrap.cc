@@ -58,6 +58,9 @@ void VtkDataObjectTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -169,6 +172,20 @@ void VtkDataObjectTreeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDataObjectTreeWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectTreeWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeWrap>(info.Holder());
+	vtkDataObjectTree *native = (vtkDataObjectTree *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataObjectTreeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

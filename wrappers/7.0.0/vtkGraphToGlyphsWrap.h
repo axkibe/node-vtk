@@ -35,6 +35,7 @@ class VtkGraphToGlyphsWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlyphType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

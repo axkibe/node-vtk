@@ -142,6 +142,12 @@ void VtkMultiProcessControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "RemoveFirstRMI", RemoveFirstRMI);
 	Nan::SetPrototypeMethod(tpl, "removeFirstRMI", RemoveFirstRMI);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveRMI", RemoveRMI);
+	Nan::SetPrototypeMethod(tpl, "removeRMI", RemoveRMI);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveRMICallback", RemoveRMICallback);
+	Nan::SetPrototypeMethod(tpl, "removeRMICallback", RemoveRMICallback);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -940,6 +946,48 @@ void VtkMultiProcessControllerWrap::RemoveFirstRMI(const Nan::FunctionCallbackIn
 		}
 		r = native->RemoveFirstRMI(
 			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiProcessControllerWrap::RemoveRMI(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
+	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RemoveRMI(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiProcessControllerWrap::RemoveRMICallback(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
+	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RemoveRMICallback(
+			info[0]->Uint32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

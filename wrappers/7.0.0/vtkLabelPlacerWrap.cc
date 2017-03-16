@@ -70,6 +70,9 @@ void VtkLabelPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetIteratorType", GetIteratorType);
 	Nan::SetPrototypeMethod(tpl, "getIteratorType", GetIteratorType);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumLabelFraction", GetMaximumLabelFraction);
 	Nan::SetPrototypeMethod(tpl, "getMaximumLabelFraction", GetMaximumLabelFraction);
 
@@ -304,6 +307,20 @@ void VtkLabelPlacerWrap::GetIteratorType(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetIteratorType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacerWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

@@ -59,6 +59,15 @@ void VtkFast2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCoolDownRateMinValue", GetCoolDownRateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCoolDownRateMinValue", GetCoolDownRateMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperature", GetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperature", GetInitialTemperature);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMinValue", GetInitialTemperatureMinValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMinValue", GetInitialTemperatureMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetIterationsPerLayout", GetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "getIterationsPerLayout", GetIterationsPerLayout);
 
@@ -86,6 +95,9 @@ void VtkFast2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRandomSeedMinValue", GetRandomSeedMinValue);
 	Nan::SetPrototypeMethod(tpl, "getRandomSeedMinValue", GetRandomSeedMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetRestDistance", GetRestDistance);
+	Nan::SetPrototypeMethod(tpl, "getRestDistance", GetRestDistance);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -107,6 +119,9 @@ void VtkFast2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCoolDownRate", SetCoolDownRate);
 	Nan::SetPrototypeMethod(tpl, "setCoolDownRate", SetCoolDownRate);
 
+	Nan::SetPrototypeMethod(tpl, "SetInitialTemperature", SetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "setInitialTemperature", SetInitialTemperature);
+
 	Nan::SetPrototypeMethod(tpl, "SetIterationsPerLayout", SetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "setIterationsPerLayout", SetIterationsPerLayout);
 
@@ -115,6 +130,9 @@ void VtkFast2DLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
+
+	Nan::SetPrototypeMethod(tpl, "SetRestDistance", SetRestDistance);
+	Nan::SetPrototypeMethod(tpl, "setRestDistance", SetRestDistance);
 
 #ifdef VTK_NODE_PLUS_VTKFAST2DLAYOUTSTRATEGYWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKFAST2DLAYOUTSTRATEGYWRAP_INITPTPL
@@ -201,6 +219,48 @@ void VtkFast2DLayoutStrategyWrap::GetCoolDownRateMinValue(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetCoolDownRateMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFast2DLayoutStrategyWrap::GetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
+	vtkFast2DLayoutStrategy *native = (vtkFast2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperature();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFast2DLayoutStrategyWrap::GetInitialTemperatureMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
+	vtkFast2DLayoutStrategy *native = (vtkFast2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFast2DLayoutStrategyWrap::GetInitialTemperatureMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
+	vtkFast2DLayoutStrategy *native = (vtkFast2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -327,6 +387,20 @@ void VtkFast2DLayoutStrategyWrap::GetRandomSeedMinValue(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetRandomSeedMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFast2DLayoutStrategyWrap::GetRestDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
+	vtkFast2DLayoutStrategy *native = (vtkFast2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRestDistance();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -463,6 +537,25 @@ void VtkFast2DLayoutStrategyWrap::SetCoolDownRate(const Nan::FunctionCallbackInf
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkFast2DLayoutStrategyWrap::SetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
+	vtkFast2DLayoutStrategy *native = (vtkFast2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInitialTemperature(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkFast2DLayoutStrategyWrap::SetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
@@ -514,6 +607,25 @@ void VtkFast2DLayoutStrategyWrap::SetRandomSeed(const Nan::FunctionCallbackInfo<
 		}
 		native->SetRandomSeed(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFast2DLayoutStrategyWrap::SetRestDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
+	vtkFast2DLayoutStrategy *native = (vtkFast2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRestDistance(
+			info[0]->NumberValue()
 		);
 		return;
 	}

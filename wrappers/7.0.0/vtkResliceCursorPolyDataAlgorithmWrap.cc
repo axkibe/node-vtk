@@ -64,6 +64,9 @@ void VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOtherPlaneForAxis", GetOtherPlaneForAxis);
 	Nan::SetPrototypeMethod(tpl, "getOtherPlaneForAxis", GetOtherPlaneForAxis);
 
@@ -233,6 +236,20 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetClassName(const Nan::FunctionCall
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkResliceCursorPolyDataAlgorithmWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
+	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkResliceCursorPolyDataAlgorithmWrap::GetOtherPlaneForAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)

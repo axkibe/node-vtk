@@ -60,6 +60,9 @@ void VtkUGFacetReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMerging", GetMerging);
 	Nan::SetPrototypeMethod(tpl, "getMerging", GetMerging);
 
@@ -192,6 +195,20 @@ void VtkUGFacetReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkUGFacetReaderWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUGFacetReaderWrap *wrapper = ObjectWrap::Unwrap<VtkUGFacetReaderWrap>(info.Holder());
+	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkUGFacetReaderWrap::GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info)

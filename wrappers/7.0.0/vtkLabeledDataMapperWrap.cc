@@ -99,6 +99,9 @@ void VtkLabeledDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLabeledComponent", GetLabeledComponent);
 	Nan::SetPrototypeMethod(tpl, "getLabeledComponent", GetLabeledComponent);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfLabels", GetNumberOfLabels);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfLabels", GetNumberOfLabels);
 
@@ -501,6 +504,20 @@ void VtkLabeledDataMapperWrap::GetLabeledComponent(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetLabeledComponent();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabeledDataMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
+	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

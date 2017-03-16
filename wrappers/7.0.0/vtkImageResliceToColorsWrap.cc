@@ -63,6 +63,9 @@ void VtkImageResliceToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputFormat", GetOutputFormat);
 	Nan::SetPrototypeMethod(tpl, "getOutputFormat", GetOutputFormat);
 
@@ -207,6 +210,20 @@ void VtkImageResliceToColorsWrap::GetLookupTable(const Nan::FunctionCallbackInfo
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageResliceToColorsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
+	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageResliceToColorsWrap::GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info)

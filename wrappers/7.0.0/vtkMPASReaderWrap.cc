@@ -94,6 +94,9 @@ void VtkMPASReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLayerThicknessRange", GetLayerThicknessRange);
 	Nan::SetPrototypeMethod(tpl, "getLayerThicknessRange", GetLayerThicknessRange);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumCells", GetMaximumCells);
 	Nan::SetPrototypeMethod(tpl, "getMaximumCells", GetMaximumCells);
 
@@ -457,6 +460,20 @@ void VtkMPASReaderWrap::GetLayerThicknessRange(const Nan::FunctionCallbackInfo<v
 	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
 	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkMPASReaderWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
+	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMPASReaderWrap::GetMaximumCells(const Nan::FunctionCallbackInfo<v8::Value>& info)

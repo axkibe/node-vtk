@@ -88,11 +88,17 @@ void VtkActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetForceTranslucent", GetForceTranslucent);
 	Nan::SetPrototypeMethod(tpl, "getForceTranslucent", GetForceTranslucent);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
 	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
 
 	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
 	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetRedrawMTime", GetRedrawMTime);
+	Nan::SetPrototypeMethod(tpl, "getRedrawMTime", GetRedrawMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetSupportsSelection", GetSupportsSelection);
 	Nan::SetPrototypeMethod(tpl, "getSupportsSelection", GetSupportsSelection);
@@ -391,6 +397,20 @@ void VtkActorWrap::GetForceTranslucent(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkActorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkActorWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
@@ -435,6 +455,20 @@ void VtkActorWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkActorWrap::GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRedrawMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkActorWrap::GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)

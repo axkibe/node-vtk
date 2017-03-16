@@ -66,6 +66,9 @@ void VtkHyperOctreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -261,6 +264,20 @@ void VtkHyperOctreeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHyperOctreeWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
+	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperOctreeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

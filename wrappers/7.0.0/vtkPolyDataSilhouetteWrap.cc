@@ -73,6 +73,9 @@ void VtkPolyDataSilhouetteWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFeatureAngle", GetFeatureAngle);
 	Nan::SetPrototypeMethod(tpl, "getFeatureAngle", GetFeatureAngle);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
 	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
 
@@ -285,6 +288,20 @@ void VtkPolyDataSilhouetteWrap::GetFeatureAngle(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetFeatureAngle();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolyDataSilhouetteWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
+	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

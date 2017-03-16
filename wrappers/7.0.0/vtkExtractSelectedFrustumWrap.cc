@@ -70,6 +70,9 @@ void VtkExtractSelectedFrustumWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInsideOut", GetInsideOut);
 	Nan::SetPrototypeMethod(tpl, "getInsideOut", GetInsideOut);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetShowBounds", GetShowBounds);
 	Nan::SetPrototypeMethod(tpl, "getShowBounds", GetShowBounds);
 
@@ -296,6 +299,20 @@ void VtkExtractSelectedFrustumWrap::GetInsideOut(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetInsideOut();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkExtractSelectedFrustumWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractSelectedFrustumWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedFrustumWrap>(info.Holder());
+	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

@@ -79,6 +79,9 @@ void VtkExtractCTHPartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGenerateTriangles", GetGenerateTriangles);
 	Nan::SetPrototypeMethod(tpl, "getGenerateTriangles", GetGenerateTriangles);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfVolumeArrayNames", GetNumberOfVolumeArrayNames);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfVolumeArrayNames", GetNumberOfVolumeArrayNames);
 
@@ -318,6 +321,20 @@ void VtkExtractCTHPartWrap::GetGenerateTriangles(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetGenerateTriangles();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkExtractCTHPartWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
+	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

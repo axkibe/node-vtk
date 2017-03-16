@@ -92,6 +92,9 @@ void VtkGlyph3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetIndexModeAsString", GetIndexModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getIndexModeAsString", GetIndexModeAsString);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrient", GetOrient);
 	Nan::SetPrototypeMethod(tpl, "getOrient", GetOrient);
 
@@ -444,6 +447,20 @@ void VtkGlyph3DWrap::GetIndexModeAsString(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetIndexModeAsString();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGlyph3DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DWrap>(info.Holder());
+	vtkGlyph3D *native = (vtkGlyph3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGlyph3DWrap::GetOrient(const Nan::FunctionCallbackInfo<v8::Value>& info)

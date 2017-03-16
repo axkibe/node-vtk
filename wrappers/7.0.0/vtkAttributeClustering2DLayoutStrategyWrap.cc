@@ -59,6 +59,15 @@ void VtkAttributeClustering2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCoolDownRateMinValue", GetCoolDownRateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCoolDownRateMinValue", GetCoolDownRateMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperature", GetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperature", GetInitialTemperature);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMinValue", GetInitialTemperatureMinValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMinValue", GetInitialTemperatureMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetIterationsPerLayout", GetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "getIterationsPerLayout", GetIterationsPerLayout);
 
@@ -86,6 +95,9 @@ void VtkAttributeClustering2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRandomSeedMinValue", GetRandomSeedMinValue);
 	Nan::SetPrototypeMethod(tpl, "getRandomSeedMinValue", GetRandomSeedMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetRestDistance", GetRestDistance);
+	Nan::SetPrototypeMethod(tpl, "getRestDistance", GetRestDistance);
+
 	Nan::SetPrototypeMethod(tpl, "GetVertexAttribute", GetVertexAttribute);
 	Nan::SetPrototypeMethod(tpl, "getVertexAttribute", GetVertexAttribute);
 
@@ -110,6 +122,9 @@ void VtkAttributeClustering2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCoolDownRate", SetCoolDownRate);
 	Nan::SetPrototypeMethod(tpl, "setCoolDownRate", SetCoolDownRate);
 
+	Nan::SetPrototypeMethod(tpl, "SetInitialTemperature", SetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "setInitialTemperature", SetInitialTemperature);
+
 	Nan::SetPrototypeMethod(tpl, "SetIterationsPerLayout", SetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "setIterationsPerLayout", SetIterationsPerLayout);
 
@@ -118,6 +133,9 @@ void VtkAttributeClustering2DLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
+
+	Nan::SetPrototypeMethod(tpl, "SetRestDistance", SetRestDistance);
+	Nan::SetPrototypeMethod(tpl, "setRestDistance", SetRestDistance);
 
 	Nan::SetPrototypeMethod(tpl, "SetVertexAttribute", SetVertexAttribute);
 	Nan::SetPrototypeMethod(tpl, "setVertexAttribute", SetVertexAttribute);
@@ -207,6 +225,48 @@ void VtkAttributeClustering2DLayoutStrategyWrap::GetCoolDownRateMinValue(const N
 		return;
 	}
 	r = native->GetCoolDownRateMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAttributeClustering2DLayoutStrategyWrap::GetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
+	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperature();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAttributeClustering2DLayoutStrategyWrap::GetInitialTemperatureMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
+	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAttributeClustering2DLayoutStrategyWrap::GetInitialTemperatureMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
+	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -333,6 +393,20 @@ void VtkAttributeClustering2DLayoutStrategyWrap::GetRandomSeedMinValue(const Nan
 		return;
 	}
 	r = native->GetRandomSeedMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAttributeClustering2DLayoutStrategyWrap::GetRestDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
+	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRestDistance();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -483,6 +557,25 @@ void VtkAttributeClustering2DLayoutStrategyWrap::SetCoolDownRate(const Nan::Func
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAttributeClustering2DLayoutStrategyWrap::SetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
+	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInitialTemperature(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAttributeClustering2DLayoutStrategyWrap::SetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
@@ -534,6 +627,25 @@ void VtkAttributeClustering2DLayoutStrategyWrap::SetRandomSeed(const Nan::Functi
 		}
 		native->SetRandomSeed(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAttributeClustering2DLayoutStrategyWrap::SetRestDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
+	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRestDistance(
+			info[0]->NumberValue()
 		);
 		return;
 	}

@@ -84,6 +84,12 @@ void VtkChartMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBorders", SetBorders);
 	Nan::SetPrototypeMethod(tpl, "setBorders", SetBorders);
 
+	Nan::SetPrototypeMethod(tpl, "SetGutterX", SetGutterX);
+	Nan::SetPrototypeMethod(tpl, "setGutterX", SetGutterX);
+
+	Nan::SetPrototypeMethod(tpl, "SetGutterY", SetGutterY);
+	Nan::SetPrototypeMethod(tpl, "setGutterY", SetGutterY);
+
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
@@ -402,6 +408,44 @@ void VtkChartMatrixWrap::SetBorders(const Nan::FunctionCallbackInfo<v8::Value>& 
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartMatrixWrap::SetGutterX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkChartMatrixWrap>(info.Holder());
+	vtkChartMatrix *native = (vtkChartMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGutterX(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartMatrixWrap::SetGutterY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkChartMatrixWrap>(info.Holder());
+	vtkChartMatrix *native = (vtkChartMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGutterY(
+			info[0]->NumberValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

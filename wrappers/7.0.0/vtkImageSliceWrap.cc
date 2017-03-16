@@ -63,6 +63,9 @@ void VtkImageSliceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImages", GetImages);
 	Nan::SetPrototypeMethod(tpl, "getImages", GetImages);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
 	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
 
@@ -86,6 +89,9 @@ void VtkImageSliceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
 	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetRedrawMTime", GetRedrawMTime);
+	Nan::SetPrototypeMethod(tpl, "getRedrawMTime", GetRedrawMTime);
 
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
@@ -251,6 +257,20 @@ void VtkImageSliceWrap::GetImages(const Nan::FunctionCallbackInfo<v8::Value>& in
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkImageSliceWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceWrap>(info.Holder());
+	vtkImageSlice *native = (vtkImageSlice *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkImageSliceWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageSliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceWrap>(info.Holder());
@@ -379,6 +399,20 @@ void VtkImageSliceWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageSliceWrap::GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceWrap>(info.Holder());
+	vtkImageSlice *native = (vtkImageSlice *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRedrawMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageSliceWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)

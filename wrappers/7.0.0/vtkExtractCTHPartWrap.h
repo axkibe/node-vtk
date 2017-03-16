@@ -40,6 +40,7 @@ class VtkExtractCTHPartWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetClipPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfVolumeArrayNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRemoveGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolumeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);

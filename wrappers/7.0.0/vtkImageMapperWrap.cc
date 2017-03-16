@@ -71,6 +71,9 @@ void VtkImageMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderToRectangle", GetRenderToRectangle);
 	Nan::SetPrototypeMethod(tpl, "getRenderToRectangle", GetRenderToRectangle);
 
@@ -271,6 +274,20 @@ void VtkImageMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapperWrap>(info.Holder());
+	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageMapperWrap::GetRenderToRectangle(const Nan::FunctionCallbackInfo<v8::Value>& info)

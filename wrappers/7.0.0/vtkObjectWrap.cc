@@ -47,6 +47,9 @@ void VtkObjectWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkObjectWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "AddObserver", AddObserver);
+	Nan::SetPrototypeMethod(tpl, "addObserver", AddObserver);
+
 	Nan::SetPrototypeMethod(tpl, "BreakOnError", BreakOnError);
 	Nan::SetPrototypeMethod(tpl, "breakOnError", BreakOnError);
 
@@ -59,11 +62,17 @@ void VtkObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCommand", GetCommand);
+	Nan::SetPrototypeMethod(tpl, "getCommand", GetCommand);
+
 	Nan::SetPrototypeMethod(tpl, "GetDebug", GetDebug);
 	Nan::SetPrototypeMethod(tpl, "getDebug", GetDebug);
 
 	Nan::SetPrototypeMethod(tpl, "GetGlobalWarningDisplay", GetGlobalWarningDisplay);
 	Nan::SetPrototypeMethod(tpl, "getGlobalWarningDisplay", GetGlobalWarningDisplay);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GlobalWarningDisplayOff", GlobalWarningDisplayOff);
 	Nan::SetPrototypeMethod(tpl, "globalWarningDisplayOff", GlobalWarningDisplayOff);
@@ -136,6 +145,60 @@ void VtkObjectWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkObjectWrap::AddObserver(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
+	vtkObject *native = (vtkObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				unsigned int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->AddObserver(
+					*a0,
+					(vtkCommand *) a1->native.GetPointer(),
+					info[2]->NumberValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				unsigned int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->AddObserver(
+					info[0]->Uint32Value(),
+					(vtkCommand *) a1->native.GetPointer(),
+					info[2]->NumberValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkObjectWrap::BreakOnError(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
@@ -186,6 +249,36 @@ void VtkObjectWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkObjectWrap::GetCommand(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
+	vtkObject *native = (vtkObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkCommand * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetCommand(
+			info[0]->Uint32Value()
+		);
+		VtkCommandWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkCommandWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkCommandWrap *w = new VtkCommandWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkObjectWrap::GetDebug(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
@@ -211,6 +304,20 @@ void VtkObjectWrap::GetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetGlobalWarningDisplay();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkObjectWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
+	vtkObject *native = (vtkObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -273,6 +380,36 @@ void VtkObjectWrap::HasObserver(const Nan::FunctionCallbackInfo<v8::Value>& info
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->HasObserver(
+				info[0]->Uint32Value(),
+				(vtkCommand *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasObserver(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -291,6 +428,20 @@ void VtkObjectWrap::InvokeEvent(const Nan::FunctionCallbackInfo<v8::Value>& info
 		}
 		r = native->InvokeEvent(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->InvokeEvent(
+			info[0]->Uint32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -384,6 +535,18 @@ void VtkObjectWrap::RemoveObserver(const Nan::FunctionCallbackInfo<v8::Value>& i
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveObserver(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -415,6 +578,32 @@ void VtkObjectWrap::RemoveObservers(const Nan::FunctionCallbackInfo<v8::Value>& 
 		}
 		native->RemoveObservers(
 			*a0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RemoveObservers(
+				info[0]->Uint32Value(),
+				(vtkCommand *) a1->native.GetPointer()
+			);
+			return;
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveObservers(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

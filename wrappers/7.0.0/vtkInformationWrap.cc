@@ -1079,6 +1079,21 @@ void VtkInformationWrap::Get(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationUnsignedLongKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationUnsignedLongKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info[0]->ToObject());
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformationUnsignedLongKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationDoubleKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[0]->ToObject());
@@ -2352,6 +2367,23 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			native->Set(
 				(vtkInformationInformationKey *) a0->native.GetPointer(),
 				(vtkInformation *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationUnsignedLongKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationUnsignedLongKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Set(
+				(vtkInformationUnsignedLongKey *) a0->native.GetPointer(),
+				info[1]->Uint32Value()
 			);
 			return;
 		}

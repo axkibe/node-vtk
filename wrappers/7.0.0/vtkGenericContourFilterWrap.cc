@@ -90,6 +90,9 @@ void VtkGenericContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -122,6 +125,9 @@ void VtkGenericContourFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfContours", SetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfContours", SetNumberOfContours);
+
+	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
+	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
 #ifdef VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_INITPTPL
@@ -410,6 +416,20 @@ void VtkGenericContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkGenericContourFilterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
+	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGenericContourFilterWrap::GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
@@ -633,6 +653,29 @@ void VtkGenericContourFilterWrap::SetNumberOfContours(const Nan::FunctionCallbac
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericContourFilterWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
+	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetValue(
+				info[0]->Int32Value(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -44,6 +44,7 @@ class VtkGridSynchronizedTemplates3DWrap : public VtkPolyDataAlgorithmWrap
 		static void GetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecisionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,6 +57,7 @@ class VtkGridSynchronizedTemplates3DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInputMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

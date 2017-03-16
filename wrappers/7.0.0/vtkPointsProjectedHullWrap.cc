@@ -204,6 +204,32 @@ void VtkPointsProjectedHullWrap::RectangleIntersectionX(const Nan::FunctionCallb
 			}
 		}
 	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->RectangleIntersectionX(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -252,6 +278,32 @@ void VtkPointsProjectedHullWrap::RectangleIntersectionY(const Nan::FunctionCallb
 			}
 		}
 	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->RectangleIntersectionY(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -273,6 +325,32 @@ void VtkPointsProjectedHullWrap::RectangleIntersectionZ(const Nan::FunctionCallb
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->RectangleIntersectionZ(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
 	}
 	else if(info.Length() > 0 && info[0]->IsNumber())
 	{

@@ -34,9 +34,11 @@ class VtkGenericAttributeCollectionWrap : public VtkObjectWrap
 		static void FindAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributeIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfAttributesToInterpolate(const Nan::FunctionCallbackInfo<v8::Value>& info);

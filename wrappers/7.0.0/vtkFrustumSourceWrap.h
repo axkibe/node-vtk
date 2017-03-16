@@ -32,6 +32,7 @@ class VtkFrustumSourceWrap : public VtkPolyDataAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinesLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowLines(const Nan::FunctionCallbackInfo<v8::Value>& info);

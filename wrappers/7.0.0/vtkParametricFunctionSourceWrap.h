@@ -41,6 +41,7 @@ class VtkParametricFunctionSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void GetGenerateTextureCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTextureCoordinatesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTextureCoordinatesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParametricFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

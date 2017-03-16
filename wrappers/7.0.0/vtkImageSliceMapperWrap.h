@@ -36,6 +36,7 @@ class VtkImageSliceMapperWrap : public VtkImageMapper3DWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCropping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCroppingRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

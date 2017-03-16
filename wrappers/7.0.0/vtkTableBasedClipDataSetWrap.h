@@ -42,6 +42,7 @@ class VtkTableBasedClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetGenerateClippedOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMergeToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMergeToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -72,6 +72,12 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFinalColorLevel", GetFinalColorLevel);
+	Nan::SetPrototypeMethod(tpl, "getFinalColorLevel", GetFinalColorLevel);
+
+	Nan::SetPrototypeMethod(tpl, "GetFinalColorWindow", GetFinalColorWindow);
+	Nan::SetPrototypeMethod(tpl, "getFinalColorWindow", GetFinalColorWindow);
+
 	Nan::SetPrototypeMethod(tpl, "GetInteractiveAdjustSampleDistances", GetInteractiveAdjustSampleDistances);
 	Nan::SetPrototypeMethod(tpl, "getInteractiveAdjustSampleDistances", GetInteractiveAdjustSampleDistances);
 
@@ -102,8 +108,20 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLastUsedRenderMode", GetLastUsedRenderMode);
 	Nan::SetPrototypeMethod(tpl, "getLastUsedRenderMode", GetLastUsedRenderMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxMemoryFraction", GetMaxMemoryFraction);
+	Nan::SetPrototypeMethod(tpl, "getMaxMemoryFraction", GetMaxMemoryFraction);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaxMemoryFractionMaxValue", GetMaxMemoryFractionMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaxMemoryFractionMaxValue", GetMaxMemoryFractionMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaxMemoryFractionMinValue", GetMaxMemoryFractionMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaxMemoryFractionMinValue", GetMaxMemoryFractionMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetRequestedRenderMode", GetRequestedRenderMode);
 	Nan::SetPrototypeMethod(tpl, "getRequestedRenderMode", GetRequestedRenderMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDistance", GetSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getSampleDistance", GetSampleDistance);
 
 	Nan::SetPrototypeMethod(tpl, "InteractiveAdjustSampleDistancesOff", InteractiveAdjustSampleDistancesOff);
 	Nan::SetPrototypeMethod(tpl, "interactiveAdjustSampleDistancesOff", InteractiveAdjustSampleDistancesOff);
@@ -129,6 +147,12 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 	Nan::SetPrototypeMethod(tpl, "setAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 
+	Nan::SetPrototypeMethod(tpl, "SetFinalColorLevel", SetFinalColorLevel);
+	Nan::SetPrototypeMethod(tpl, "setFinalColorLevel", SetFinalColorLevel);
+
+	Nan::SetPrototypeMethod(tpl, "SetFinalColorWindow", SetFinalColorWindow);
+	Nan::SetPrototypeMethod(tpl, "setFinalColorWindow", SetFinalColorWindow);
+
 	Nan::SetPrototypeMethod(tpl, "SetInteractiveAdjustSampleDistances", SetInteractiveAdjustSampleDistances);
 	Nan::SetPrototypeMethod(tpl, "setInteractiveAdjustSampleDistances", SetInteractiveAdjustSampleDistances);
 
@@ -147,6 +171,9 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInterpolationModeToNearestNeighbor", SetInterpolationModeToNearestNeighbor);
 	Nan::SetPrototypeMethod(tpl, "setInterpolationModeToNearestNeighbor", SetInterpolationModeToNearestNeighbor);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaxMemoryFraction", SetMaxMemoryFraction);
+	Nan::SetPrototypeMethod(tpl, "setMaxMemoryFraction", SetMaxMemoryFraction);
+
 	Nan::SetPrototypeMethod(tpl, "SetRequestedRenderMode", SetRequestedRenderMode);
 	Nan::SetPrototypeMethod(tpl, "setRequestedRenderMode", SetRequestedRenderMode);
 
@@ -158,6 +185,9 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRequestedRenderModeToRayCast", SetRequestedRenderModeToRayCast);
 	Nan::SetPrototypeMethod(tpl, "setRequestedRenderModeToRayCast", SetRequestedRenderModeToRayCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetSampleDistance", SetSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setSampleDistance", SetSampleDistance);
 
 #ifdef VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_INITPTPL
@@ -448,6 +478,34 @@ void VtkSmartVolumeMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkSmartVolumeMapperWrap::GetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFinalColorLevel();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSmartVolumeMapperWrap::GetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFinalColorWindow();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkSmartVolumeMapperWrap::GetInteractiveAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
@@ -588,6 +646,48 @@ void VtkSmartVolumeMapperWrap::GetLastUsedRenderMode(const Nan::FunctionCallback
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkSmartVolumeMapperWrap::GetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxMemoryFraction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSmartVolumeMapperWrap::GetMaxMemoryFractionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxMemoryFractionMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSmartVolumeMapperWrap::GetMaxMemoryFractionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxMemoryFractionMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkSmartVolumeMapperWrap::GetRequestedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
@@ -599,6 +699,20 @@ void VtkSmartVolumeMapperWrap::GetRequestedRenderMode(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetRequestedRenderMode();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSmartVolumeMapperWrap::GetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDistance();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -766,6 +880,44 @@ void VtkSmartVolumeMapperWrap::SetAutoAdjustSampleDistances(const Nan::FunctionC
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkSmartVolumeMapperWrap::SetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFinalColorLevel(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSmartVolumeMapperWrap::SetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFinalColorWindow(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkSmartVolumeMapperWrap::SetInteractiveAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
@@ -859,6 +1011,25 @@ void VtkSmartVolumeMapperWrap::SetInterpolationModeToNearestNeighbor(const Nan::
 	native->SetInterpolationModeToNearestNeighbor();
 }
 
+void VtkSmartVolumeMapperWrap::SetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaxMemoryFraction(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkSmartVolumeMapperWrap::SetRequestedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
@@ -912,5 +1083,24 @@ void VtkSmartVolumeMapperWrap::SetRequestedRenderModeToRayCast(const Nan::Functi
 		return;
 	}
 	native->SetRequestedRenderModeToRayCast();
+}
+
+void VtkSmartVolumeMapperWrap::SetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

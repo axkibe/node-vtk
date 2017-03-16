@@ -102,6 +102,9 @@ void VtkVolumePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolationTypeMinValue", GetInterpolationTypeMinValue);
 	Nan::SetPrototypeMethod(tpl, "getInterpolationTypeMinValue", GetInterpolationTypeMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetRGBTransferFunction", GetRGBTransferFunction);
 	Nan::SetPrototypeMethod(tpl, "getRGBTransferFunction", GetRGBTransferFunction);
 
@@ -629,6 +632,20 @@ void VtkVolumePropertyWrap::GetInterpolationTypeMinValue(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetInterpolationTypeMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumePropertyWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
+	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

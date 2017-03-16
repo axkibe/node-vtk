@@ -32,12 +32,14 @@ class VtkArcPlotterWrap : public VtkPolyDataAlgorithmWrap
 
 		static void GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFieldDataArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFieldDataArrayMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFieldDataArrayMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeightMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeightMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffsetMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffsetMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +53,7 @@ class VtkArcPlotterWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFieldDataArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);

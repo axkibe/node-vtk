@@ -54,6 +54,9 @@ void VtkFrustumSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLinesLength", GetLinesLength);
 	Nan::SetPrototypeMethod(tpl, "getLinesLength", GetLinesLength);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
 
@@ -147,6 +150,20 @@ void VtkFrustumSourceWrap::GetLinesLength(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLinesLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFrustumSourceWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrustumSourceWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumSourceWrap>(info.Holder());
+	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

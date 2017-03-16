@@ -56,6 +56,9 @@ void VtkLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAutomatic", GetAutomatic);
 	Nan::SetPrototypeMethod(tpl, "getAutomatic", GetAutomatic);
 
+	Nan::SetPrototypeMethod(tpl, "GetBuildTime", GetBuildTime);
+	Nan::SetPrototypeMethod(tpl, "getBuildTime", GetBuildTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -176,6 +179,20 @@ void VtkLocatorWrap::GetAutomatic(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetAutomatic();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLocatorWrap::GetBuildTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkLocatorWrap>(info.Holder());
+	vtkLocator *native = (vtkLocator *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBuildTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

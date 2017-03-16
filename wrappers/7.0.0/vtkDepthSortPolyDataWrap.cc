@@ -61,6 +61,9 @@ void VtkDepthSortPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDirection", GetDirection);
 	Nan::SetPrototypeMethod(tpl, "getDirection", GetDirection);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
 	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
 
@@ -221,6 +224,20 @@ void VtkDepthSortPolyDataWrap::GetDirection(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetDirection();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDepthSortPolyDataWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
+	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

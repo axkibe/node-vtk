@@ -61,11 +61,17 @@ void VtkPointSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetData", GetData);
 	Nan::SetPrototypeMethod(tpl, "getData", GetData);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetPoints", GetPoints);
 	Nan::SetPrototypeMethod(tpl, "getPoints", GetPoints);
@@ -177,6 +183,20 @@ void VtkPointSetWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPointSetWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
+	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPointSetWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
@@ -248,6 +268,20 @@ void VtkPointSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPointSetWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
+	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPointSetWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)

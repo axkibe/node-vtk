@@ -36,6 +36,7 @@ class VtkConvexHull2DWrap : public VtkPolyDataAlgorithmWrap
 		static void GetHullShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHullShapeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHullShapeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinHullSizeInDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinHullSizeInDisplayMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinHullSizeInDisplayMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

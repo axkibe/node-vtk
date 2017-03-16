@@ -43,6 +43,7 @@ class VtkChartLegendWrap : public VtkContextItemWrap
 		static void GetLabelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSymbolWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVerticalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,6 +57,7 @@ class VtkChartLegendWrap : public VtkContextItemWrap
 		static void SetInline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSymbolWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVerticalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);

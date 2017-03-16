@@ -31,6 +31,8 @@ class VtkSphericalDirectionEncoderWrap : public VtkDirectionEncoderWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDecodedGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEncodedDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfEncodedDirections(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

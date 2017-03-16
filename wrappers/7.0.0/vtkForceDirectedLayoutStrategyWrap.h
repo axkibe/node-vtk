@@ -38,6 +38,9 @@ class VtkForceDirectedLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void GetCoolDownRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoolDownRateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInitialTemperatureMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInitialTemperatureMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayoutMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayoutMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -60,6 +63,7 @@ class VtkForceDirectedLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetAutomaticBoundsComputation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCoolDownRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRandomInitialPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);

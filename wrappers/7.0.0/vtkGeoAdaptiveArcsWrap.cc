@@ -54,6 +54,9 @@ void VtkGeoAdaptiveArcsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGlobeRadius", GetGlobeRadius);
 	Nan::SetPrototypeMethod(tpl, "getGlobeRadius", GetGlobeRadius);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumPixelSeparation", GetMaximumPixelSeparation);
 	Nan::SetPrototypeMethod(tpl, "getMaximumPixelSeparation", GetMaximumPixelSeparation);
 
@@ -141,6 +144,20 @@ void VtkGeoAdaptiveArcsWrap::GetGlobeRadius(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetGlobeRadius();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGeoAdaptiveArcsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAdaptiveArcsWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAdaptiveArcsWrap>(info.Holder());
+	vtkGeoAdaptiveArcs *native = (vtkGeoAdaptiveArcs *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

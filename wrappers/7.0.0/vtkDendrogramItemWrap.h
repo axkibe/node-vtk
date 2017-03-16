@@ -44,8 +44,11 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 		static void GetDisplayNumberOfCollapsedLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDrawLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtendLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPrunedTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextAngleForOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,7 +62,9 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 		static void SetDrawLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtendLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKDENDROGRAMITEMWRAP_CLASSDEF

@@ -74,6 +74,9 @@ void VtkDataArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FillComponent", FillComponent);
 	Nan::SetPrototypeMethod(tpl, "fillComponent", FillComponent);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayType", GetArrayType);
 	Nan::SetPrototypeMethod(tpl, "getArrayType", GetArrayType);
 
@@ -374,6 +377,20 @@ void VtkDataArrayWrap::FillComponent(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDataArrayWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayWrap>(info.Holder());
+	vtkDataArray *native = (vtkDataArray *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataArrayWrap::GetArrayType(const Nan::FunctionCallbackInfo<v8::Value>& info)

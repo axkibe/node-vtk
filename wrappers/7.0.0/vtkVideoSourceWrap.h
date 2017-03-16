@@ -41,10 +41,12 @@ class VtkVideoSourceWrap : public VtkImageAlgorithmWrap
 		static void GetFrameBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFrameRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameTimeStamp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInitialized(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfOutputFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaying(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -67,8 +69,10 @@ class VtkVideoSourceWrap : public VtkImageAlgorithmWrap
 		static void SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFrameBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFrameCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFrameRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfOutputFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToLuminance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);

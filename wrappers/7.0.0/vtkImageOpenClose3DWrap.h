@@ -36,6 +36,7 @@ class VtkImageOpenClose3DWrap : public VtkImageAlgorithmWrap
 		static void GetCloseValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilter0(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilter1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpenValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Modified(const Nan::FunctionCallbackInfo<v8::Value>& info);

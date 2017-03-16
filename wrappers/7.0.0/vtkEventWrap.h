@@ -31,6 +31,7 @@ class VtkEventWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEventId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeySym(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModifier(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +39,7 @@ class VtkEventWrap : public VtkObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEventId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKeyCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKeySym(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetModifier(const Nan::FunctionCallbackInfo<v8::Value>& info);

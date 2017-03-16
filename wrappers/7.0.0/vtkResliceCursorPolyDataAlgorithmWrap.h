@@ -35,6 +35,7 @@ class VtkResliceCursorPolyDataAlgorithmWrap : public VtkPolyDataAlgorithmWrap
 		static void GetCenterlineAxis1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenterlineAxis2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOtherPlaneForAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaneAxis1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaneAxis2(const Nan::FunctionCallbackInfo<v8::Value>& info);

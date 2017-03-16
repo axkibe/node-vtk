@@ -106,6 +106,9 @@ void VtkAbstractWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParent", SetParent);
 	Nan::SetPrototypeMethod(tpl, "setParent", SetParent);
 
+	Nan::SetPrototypeMethod(tpl, "SetPriority", SetPriority);
+	Nan::SetPrototypeMethod(tpl, "setPriority", SetPriority);
+
 	Nan::SetPrototypeMethod(tpl, "SetProcessEvents", SetProcessEvents);
 	Nan::SetPrototypeMethod(tpl, "setProcessEvents", SetProcessEvents);
 
@@ -467,6 +470,25 @@ void VtkAbstractWidgetWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>
 		}
 		native->SetParent(
 			(vtkAbstractWidget *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractWidgetWrap::SetPriority(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
+	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPriority(
+			info[0]->NumberValue()
 		);
 		return;
 	}

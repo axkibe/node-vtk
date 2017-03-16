@@ -76,6 +76,9 @@ void VtkPerspectiveTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInverseFlag", GetInverseFlag);
 	Nan::SetPrototypeMethod(tpl, "getInverseFlag", GetInverseFlag);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfConcatenatedTransforms", GetNumberOfConcatenatedTransforms);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfConcatenatedTransforms", GetNumberOfConcatenatedTransforms);
 
@@ -482,6 +485,20 @@ void VtkPerspectiveTransformWrap::GetInverseFlag(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPerspectiveTransformWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
+	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPerspectiveTransformWrap::GetNumberOfConcatenatedTransforms(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
@@ -763,6 +780,56 @@ void VtkPerspectiveTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8:
 			);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsFloat32Array())
+		{
+			v8::Local<v8::Float32Array>a1(v8::Local<v8::Float32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RotateWXYZ(
+				info[0]->NumberValue(),
+				(float *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			float b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RotateWXYZ(
+				info[0]->NumberValue(),
+				b1
+			);
+			return;
+		}
 		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
@@ -904,6 +971,54 @@ void VtkPerspectiveTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Scale(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Scale(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
 		if( a0->Length() < 3 )
 		{
 			Nan::ThrowError("Array too short.");
@@ -1549,6 +1664,54 @@ void VtkPerspectiveTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::
 	{
 		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Translate(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Translate(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
 		if( a0->Length() < 3 )
 		{
 			Nan::ThrowError("Array too short.");

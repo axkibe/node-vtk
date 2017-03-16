@@ -81,6 +81,9 @@ void VtkExtractGeometryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImplicitFunction", GetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "getImplicitFunction", GetImplicitFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -283,6 +286,20 @@ void VtkExtractGeometryWrap::GetImplicitFunction(const Nan::FunctionCallbackInfo
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkExtractGeometryWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
+	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExtractGeometryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

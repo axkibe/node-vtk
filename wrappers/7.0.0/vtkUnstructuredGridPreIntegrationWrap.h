@@ -41,6 +41,7 @@ class VtkUnstructuredGridPreIntegrationWrap : public VtkUnstructuredGridVolumeRa
 		static void IncrementalPreIntegrationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncrementalPreIntegrationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Integrate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

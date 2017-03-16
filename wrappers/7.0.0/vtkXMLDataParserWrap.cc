@@ -70,6 +70,9 @@ void VtkXMLDataParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCompressor", GetCompressor);
 	Nan::SetPrototypeMethod(tpl, "getCompressor", GetCompressor);
 
+	Nan::SetPrototypeMethod(tpl, "GetProgress", GetProgress);
+	Nan::SetPrototypeMethod(tpl, "getProgress", GetProgress);
+
 	Nan::SetPrototypeMethod(tpl, "GetRootElement", GetRootElement);
 	Nan::SetPrototypeMethod(tpl, "getRootElement", GetRootElement);
 
@@ -93,6 +96,9 @@ void VtkXMLDataParserWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetCompressor", SetCompressor);
 	Nan::SetPrototypeMethod(tpl, "setCompressor", SetCompressor);
+
+	Nan::SetPrototypeMethod(tpl, "SetProgress", SetProgress);
+	Nan::SetPrototypeMethod(tpl, "setProgress", SetProgress);
 
 #ifdef VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_INITPTPL
@@ -241,6 +247,20 @@ void VtkXMLDataParserWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkXMLDataParserWrap::GetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLDataParserWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataParserWrap>(info.Holder());
+	vtkXMLDataParser *native = (vtkXMLDataParser *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProgress();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkXMLDataParserWrap::GetRootElement(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -408,6 +428,25 @@ void VtkXMLDataParserWrap::SetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetCompressor(
 			(vtkDataCompressor *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLDataParserWrap::SetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLDataParserWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataParserWrap>(info.Holder());
+	vtkXMLDataParser *native = (vtkXMLDataParser *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetProgress(
+			info[0]->NumberValue()
 		);
 		return;
 	}

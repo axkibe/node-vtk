@@ -37,6 +37,7 @@ class VtkLabelPlacerWrap : public VtkPolyDataAlgorithmWrap
 		static void GetGeneratePerturbedLabelSpokes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIteratorType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLabelFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLabelFractionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLabelFractionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

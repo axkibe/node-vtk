@@ -52,6 +52,9 @@ void VtkTanglegramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCorrespondenceLineWidth", GetCorrespondenceLineWidth);
+	Nan::SetPrototypeMethod(tpl, "getCorrespondenceLineWidth", GetCorrespondenceLineWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetLabelSizeDifference", GetLabelSizeDifference);
 	Nan::SetPrototypeMethod(tpl, "getLabelSizeDifference", GetLabelSizeDifference);
 
@@ -70,6 +73,9 @@ void VtkTanglegramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTree2Label", GetTree2Label);
 	Nan::SetPrototypeMethod(tpl, "getTree2Label", GetTree2Label);
 
+	Nan::SetPrototypeMethod(tpl, "GetTreeLineWidth", GetTreeLineWidth);
+	Nan::SetPrototypeMethod(tpl, "getTreeLineWidth", GetTreeLineWidth);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -78,6 +84,9 @@ void VtkTanglegramItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCorrespondenceLineWidth", SetCorrespondenceLineWidth);
+	Nan::SetPrototypeMethod(tpl, "setCorrespondenceLineWidth", SetCorrespondenceLineWidth);
 
 	Nan::SetPrototypeMethod(tpl, "SetLabelSizeDifference", SetLabelSizeDifference);
 	Nan::SetPrototypeMethod(tpl, "setLabelSizeDifference", SetLabelSizeDifference);
@@ -102,6 +111,9 @@ void VtkTanglegramItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetTree2Label", SetTree2Label);
 	Nan::SetPrototypeMethod(tpl, "setTree2Label", SetTree2Label);
+
+	Nan::SetPrototypeMethod(tpl, "SetTreeLineWidth", SetTreeLineWidth);
+	Nan::SetPrototypeMethod(tpl, "setTreeLineWidth", SetTreeLineWidth);
 
 #ifdef VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_INITPTPL
@@ -147,6 +159,20 @@ void VtkTanglegramItemWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTanglegramItemWrap::GetCorrespondenceLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
+	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCorrespondenceLineWidth();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTanglegramItemWrap::GetLabelSizeDifference(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -242,6 +268,20 @@ void VtkTanglegramItemWrap::GetTree2Label(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkTanglegramItemWrap::GetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
+	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTreeLineWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkTanglegramItemWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
@@ -313,6 +353,25 @@ void VtkTanglegramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTanglegramItemWrap::SetCorrespondenceLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
+	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCorrespondenceLineWidth(
+			info[0]->NumberValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -469,6 +528,25 @@ void VtkTanglegramItemWrap::SetTree2Label(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetTree2Label(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTanglegramItemWrap::SetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
+	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTreeLineWidth(
+			info[0]->NumberValue()
 		);
 		return;
 	}

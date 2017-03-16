@@ -31,11 +31,13 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAtomicRadiusScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAtomicRadiusType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAtomicRadiusTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBondColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBondColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBondColorModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBondRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +57,7 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void RenderBondsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderBondsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAtomicRadiusScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAtomicRadiusType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAtomicRadiusTypeToCovalentRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAtomicRadiusTypeToUnitRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -63,6 +66,7 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void SetBondColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBondColorModeToDiscreteByAtom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBondColorModeToSingleColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBondRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderAtoms(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderBonds(const Nan::FunctionCallbackInfo<v8::Value>& info);

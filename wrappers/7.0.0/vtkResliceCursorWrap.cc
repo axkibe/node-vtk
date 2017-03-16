@@ -70,6 +70,9 @@ void VtkResliceCursorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImage", GetImage);
 	Nan::SetPrototypeMethod(tpl, "getImage", GetImage);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPlane", GetPlane);
 	Nan::SetPrototypeMethod(tpl, "getPlane", GetPlane);
 
@@ -298,6 +301,20 @@ void VtkResliceCursorWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkResliceCursorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
+	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkResliceCursorWrap::GetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)

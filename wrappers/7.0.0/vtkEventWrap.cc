@@ -50,6 +50,9 @@ void VtkEventWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEventId", GetEventId);
+	Nan::SetPrototypeMethod(tpl, "getEventId", GetEventId);
+
 	Nan::SetPrototypeMethod(tpl, "GetKeyCode", GetKeyCode);
 	Nan::SetPrototypeMethod(tpl, "getKeyCode", GetKeyCode);
 
@@ -70,6 +73,9 @@ void VtkEventWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetEventId", SetEventId);
+	Nan::SetPrototypeMethod(tpl, "setEventId", SetEventId);
 
 	Nan::SetPrototypeMethod(tpl, "SetKeyCode", SetKeyCode);
 	Nan::SetPrototypeMethod(tpl, "setKeyCode", SetKeyCode);
@@ -127,6 +133,20 @@ void VtkEventWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkEventWrap::GetEventId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEventWrap *wrapper = ObjectWrap::Unwrap<VtkEventWrap>(info.Holder());
+	vtkEvent *native = (vtkEvent *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEventId();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkEventWrap::GetKeyCode(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -271,6 +291,25 @@ void VtkEventWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEventWrap::SetEventId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEventWrap *wrapper = ObjectWrap::Unwrap<VtkEventWrap>(info.Holder());
+	vtkEvent *native = (vtkEvent *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEventId(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

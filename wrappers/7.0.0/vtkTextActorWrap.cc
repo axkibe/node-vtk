@@ -63,11 +63,20 @@ void VtkTextActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFontScale", GetFontScale);
+	Nan::SetPrototypeMethod(tpl, "getFontScale", GetFontScale);
+
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumLineHeight", GetMaximumLineHeight);
+	Nan::SetPrototypeMethod(tpl, "getMaximumLineHeight", GetMaximumLineHeight);
+
 	Nan::SetPrototypeMethod(tpl, "GetMinimumSize", GetMinimumSize);
 	Nan::SetPrototypeMethod(tpl, "getMinimumSize", GetMinimumSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
+	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
 
 	Nan::SetPrototypeMethod(tpl, "GetScaledTextProperty", GetScaledTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getScaledTextProperty", GetScaledTextProperty);
@@ -123,11 +132,17 @@ void VtkTextActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaximumLineHeight", SetMaximumLineHeight);
+	Nan::SetPrototypeMethod(tpl, "setMaximumLineHeight", SetMaximumLineHeight);
+
 	Nan::SetPrototypeMethod(tpl, "SetMinimumSize", SetMinimumSize);
 	Nan::SetPrototypeMethod(tpl, "setMinimumSize", SetMinimumSize);
 
 	Nan::SetPrototypeMethod(tpl, "SetNonLinearFontScale", SetNonLinearFontScale);
 	Nan::SetPrototypeMethod(tpl, "setNonLinearFontScale", SetNonLinearFontScale);
+
+	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
+	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
 
 	Nan::SetPrototypeMethod(tpl, "SetTextProperty", SetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setTextProperty", SetTextProperty);
@@ -298,6 +313,28 @@ void VtkTextActorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkTextActorWrap::GetFontScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetFontScale(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTextActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
@@ -310,6 +347,20 @@ void VtkTextActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	r = native->GetInput();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTextActorWrap::GetMaximumLineHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumLineHeight();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTextActorWrap::GetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -327,6 +378,20 @@ void VtkTextActorWrap::GetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>
 	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
 	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkTextActorWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrientation();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTextActorWrap::GetScaledTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -766,6 +831,25 @@ void VtkTextActorWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkTextActorWrap::SetMaximumLineHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumLineHeight(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTextActorWrap::SetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
@@ -857,6 +941,25 @@ void VtkTextActorWrap::SetNonLinearFontScale(const Nan::FunctionCallbackInfo<v8:
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextActorWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrientation(
+			info[0]->NumberValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -78,6 +78,9 @@ void VtkPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeleteLinks", DeleteLinks);
 	Nan::SetPrototypeMethod(tpl, "deleteLinks", DeleteLinks);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -323,6 +326,20 @@ void VtkPolyDataWrap::DeleteLinks(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	native->DeleteLinks();
+}
+
+void VtkPolyDataWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
+	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPolyDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

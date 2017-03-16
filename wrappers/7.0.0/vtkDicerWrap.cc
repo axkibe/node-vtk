@@ -68,6 +68,15 @@ void VtkDicerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFieldData", GetFieldData);
 	Nan::SetPrototypeMethod(tpl, "getFieldData", GetFieldData);
 
+	Nan::SetPrototypeMethod(tpl, "GetMemoryLimit", GetMemoryLimit);
+	Nan::SetPrototypeMethod(tpl, "getMemoryLimit", GetMemoryLimit);
+
+	Nan::SetPrototypeMethod(tpl, "GetMemoryLimitMaxValue", GetMemoryLimitMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMemoryLimitMaxValue", GetMemoryLimitMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMemoryLimitMinValue", GetMemoryLimitMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMemoryLimitMinValue", GetMemoryLimitMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfActualPieces", GetNumberOfActualPieces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfActualPieces", GetNumberOfActualPieces);
 
@@ -112,6 +121,9 @@ void VtkDicerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFieldData", SetFieldData);
 	Nan::SetPrototypeMethod(tpl, "setFieldData", SetFieldData);
+
+	Nan::SetPrototypeMethod(tpl, "SetMemoryLimit", SetMemoryLimit);
+	Nan::SetPrototypeMethod(tpl, "setMemoryLimit", SetMemoryLimit);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPieces", SetNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPieces", SetNumberOfPieces);
@@ -241,6 +253,48 @@ void VtkDicerWrap::GetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetFieldData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDicerWrap::GetMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
+	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMemoryLimit();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDicerWrap::GetMemoryLimitMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
+	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMemoryLimitMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDicerWrap::GetMemoryLimitMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
+	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMemoryLimitMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -486,6 +540,25 @@ void VtkDicerWrap::SetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info
 		}
 		native->SetFieldData(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDicerWrap::SetMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
+	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMemoryLimit(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

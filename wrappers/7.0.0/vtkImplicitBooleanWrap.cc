@@ -63,6 +63,9 @@ void VtkImplicitBooleanWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFunction", GetFunction);
 	Nan::SetPrototypeMethod(tpl, "getFunction", GetFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOperationType", GetOperationType);
 	Nan::SetPrototypeMethod(tpl, "getOperationType", GetOperationType);
 
@@ -409,6 +412,20 @@ void VtkImplicitBooleanWrap::GetFunction(const Nan::FunctionCallbackInfo<v8::Val
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitBooleanWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitBooleanWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitBooleanWrap>(info.Holder());
+	vtkImplicitBoolean *native = (vtkImplicitBoolean *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImplicitBooleanWrap::GetOperationType(const Nan::FunctionCallbackInfo<v8::Value>& info)

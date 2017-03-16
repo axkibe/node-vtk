@@ -38,11 +38,20 @@ class VtkUnstructuredGridVolumeZSweepMapperWrap : public VtkUnstructuredGridVolu
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageInUseSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometryMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometryMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxPixelListSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRayIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntermixIntersectingGeometryOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntermixIntersectingGeometryOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,8 +60,11 @@ class VtkUnstructuredGridVolumeZSweepMapperWrap : public VtkUnstructuredGridVolu
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutoAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxPixelListSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRayIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMEZSWEEPMAPPERWRAP_CLASSDEF

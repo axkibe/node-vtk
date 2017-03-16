@@ -54,6 +54,9 @@ void VtkPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
 	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
 
@@ -65,6 +68,9 @@ void VtkPointsWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
 	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetPoints", GetPoints);
 	Nan::SetPrototypeMethod(tpl, "getPoints", GetPoints);
@@ -196,6 +202,20 @@ void VtkPointsWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPointsWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPointsWrap>(info.Holder());
+	vtkPoints *native = (vtkPoints *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPointsWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPointsWrap>(info.Holder());
@@ -310,6 +330,20 @@ void VtkPointsWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetDataType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPointsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPointsWrap>(info.Holder());
+	vtkPoints *native = (vtkPoints *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

@@ -225,6 +225,58 @@ void VtkAbstractImageInterpolatorWrap::CheckBoundsIJK(const Nan::FunctionCallbac
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CheckBoundsIJK(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CheckBoundsIJK(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

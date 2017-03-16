@@ -31,6 +31,8 @@ class VtkRecursiveSphereDirectionEncoderWrap : public VtkDirectionEncoderWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDecodedGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEncodedDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfEncodedDirections(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRecursionDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRecursionDepthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

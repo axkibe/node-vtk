@@ -38,6 +38,7 @@ class VtkAlgorithmWrap : public VtkObjectWrap
 		static void CAN_PRODUCE_SUB_EXTENT(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAbortExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetErrorCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExecutive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);

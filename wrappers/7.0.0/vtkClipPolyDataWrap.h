@@ -43,6 +43,7 @@ class VtkClipPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void GetGenerateClippedOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsideOutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -31,6 +31,7 @@ class VtkRayCastImageDisplayHelperWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPixelScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreMultipliedColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreMultipliedColorsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreMultipliedColorsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +41,7 @@ class VtkRayCastImageDisplayHelperWrap : public VtkObjectWrap
 		static void PreMultipliedColorsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPixelScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreMultipliedColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKRAYCASTIMAGEDISPLAYHELPERWRAP_CLASSDEF

@@ -148,6 +148,69 @@ void VtkWidgetEventTranslatorWrap::GetTranslation(const Nan::FunctionCallbackInf
 		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkEventWrap *a0 = ObjectWrap::Unwrap<VtkEventWrap>(info[0]->ToObject());
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetTranslation(
+			(vtkEvent *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				char a2 = info[2]->Int32Value();
+				if( a2 < -127 || a2 > 128 )
+				{
+					Nan::ThrowError("char value out of bounds.");
+					return;
+				}
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsString())
+					{
+						Nan::Utf8String a4(info[4]);
+						unsigned int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->GetTranslation(
+							info[0]->Uint32Value(),
+							info[1]->Int32Value(),
+							a2,
+							info[3]->Int32Value(),
+							*a4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetTranslation(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -230,6 +293,54 @@ void VtkWidgetEventTranslatorWrap::RemoveTranslation(const Nan::FunctionCallback
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				char a2 = info[2]->Int32Value();
+				if( a2 < -127 || a2 > 128 )
+				{
+					Nan::ThrowError("char value out of bounds.");
+					return;
+				}
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsString())
+					{
+						Nan::Utf8String a4(info[4]);
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->RemoveTranslation(
+							info[0]->Uint32Value(),
+							info[1]->Int32Value(),
+							a2,
+							info[3]->Int32Value(),
+							*a4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RemoveTranslation(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -284,6 +395,75 @@ void VtkWidgetEventTranslatorWrap::SetTranslation(const Nan::FunctionCallbackInf
 				*a1
 			);
 			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkEventWrap *a0 = ObjectWrap::Unwrap<VtkEventWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetTranslation(
+				(vtkEvent *) a0->native.GetPointer(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetTranslation(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				char a2 = info[2]->Int32Value();
+				if( a2 < -127 || a2 > 128 )
+				{
+					Nan::ThrowError("char value out of bounds.");
+					return;
+				}
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsString())
+					{
+						Nan::Utf8String a4(info[4]);
+						if(info.Length() > 5 && info[5]->IsUint32())
+						{
+														if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							native->SetTranslation(
+								info[0]->Uint32Value(),
+								info[1]->Int32Value(),
+								a2,
+								info[3]->Int32Value(),
+								*a4,
+								info[5]->Uint32Value()
+							);
+							return;
+						}
+					}
+				}
+			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");

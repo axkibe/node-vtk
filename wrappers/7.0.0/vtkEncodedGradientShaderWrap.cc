@@ -61,6 +61,24 @@ void VtkEncodedGradientShaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetZeroNormalDiffuseIntensity", GetZeroNormalDiffuseIntensity);
+	Nan::SetPrototypeMethod(tpl, "getZeroNormalDiffuseIntensity", GetZeroNormalDiffuseIntensity);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroNormalDiffuseIntensityMaxValue", GetZeroNormalDiffuseIntensityMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getZeroNormalDiffuseIntensityMaxValue", GetZeroNormalDiffuseIntensityMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroNormalDiffuseIntensityMinValue", GetZeroNormalDiffuseIntensityMinValue);
+	Nan::SetPrototypeMethod(tpl, "getZeroNormalDiffuseIntensityMinValue", GetZeroNormalDiffuseIntensityMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroNormalSpecularIntensity", GetZeroNormalSpecularIntensity);
+	Nan::SetPrototypeMethod(tpl, "getZeroNormalSpecularIntensity", GetZeroNormalSpecularIntensity);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroNormalSpecularIntensityMaxValue", GetZeroNormalSpecularIntensityMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getZeroNormalSpecularIntensityMaxValue", GetZeroNormalSpecularIntensityMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroNormalSpecularIntensityMinValue", GetZeroNormalSpecularIntensityMinValue);
+	Nan::SetPrototypeMethod(tpl, "getZeroNormalSpecularIntensityMinValue", GetZeroNormalSpecularIntensityMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -72,6 +90,12 @@ void VtkEncodedGradientShaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetActiveComponent", SetActiveComponent);
 	Nan::SetPrototypeMethod(tpl, "setActiveComponent", SetActiveComponent);
+
+	Nan::SetPrototypeMethod(tpl, "SetZeroNormalDiffuseIntensity", SetZeroNormalDiffuseIntensity);
+	Nan::SetPrototypeMethod(tpl, "setZeroNormalDiffuseIntensity", SetZeroNormalDiffuseIntensity);
+
+	Nan::SetPrototypeMethod(tpl, "SetZeroNormalSpecularIntensity", SetZeroNormalSpecularIntensity);
+	Nan::SetPrototypeMethod(tpl, "setZeroNormalSpecularIntensity", SetZeroNormalSpecularIntensity);
 
 	Nan::SetPrototypeMethod(tpl, "UpdateShadingTable", UpdateShadingTable);
 	Nan::SetPrototypeMethod(tpl, "updateShadingTable", UpdateShadingTable);
@@ -164,6 +188,90 @@ void VtkEncodedGradientShaderWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkEncodedGradientShaderWrap::GetZeroNormalDiffuseIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZeroNormalDiffuseIntensity();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientShaderWrap::GetZeroNormalDiffuseIntensityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZeroNormalDiffuseIntensityMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientShaderWrap::GetZeroNormalDiffuseIntensityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZeroNormalDiffuseIntensityMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientShaderWrap::GetZeroNormalSpecularIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZeroNormalSpecularIntensity();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientShaderWrap::GetZeroNormalSpecularIntensityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZeroNormalSpecularIntensityMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientShaderWrap::GetZeroNormalSpecularIntensityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZeroNormalSpecularIntensityMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkEncodedGradientShaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
@@ -253,6 +361,44 @@ void VtkEncodedGradientShaderWrap::SetActiveComponent(const Nan::FunctionCallbac
 		}
 		native->SetActiveComponent(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEncodedGradientShaderWrap::SetZeroNormalDiffuseIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetZeroNormalDiffuseIntensity(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEncodedGradientShaderWrap::SetZeroNormalSpecularIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
+	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetZeroNormalSpecularIntensity(
+			info[0]->NumberValue()
 		);
 		return;
 	}

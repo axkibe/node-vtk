@@ -40,6 +40,7 @@ class VtkChartXYWrap : public VtkChartWrap
 		static void ForceAxesToBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBarWidthFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDrawAxesAtOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetForceAxesToBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,6 +55,7 @@ class VtkChartXYWrap : public VtkChartWrap
 		static void RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutoAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBarWidthFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDrawAxesAtOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetForceAxesToBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHiddenAxisBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);

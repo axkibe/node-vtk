@@ -103,8 +103,14 @@ void VtkContextTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "PanYOnMouseWheelOn", PanYOnMouseWheelOn);
 	Nan::SetPrototypeMethod(tpl, "panYOnMouseWheelOn", PanYOnMouseWheelOn);
 
+	Nan::SetPrototypeMethod(tpl, "Rotate", Rotate);
+	Nan::SetPrototypeMethod(tpl, "rotate", Rotate);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "Scale", Scale);
+	Nan::SetPrototypeMethod(tpl, "scale", Scale);
 
 	Nan::SetPrototypeMethod(tpl, "SetPanModifier", SetPanModifier);
 	Nan::SetPrototypeMethod(tpl, "setPanModifier", SetPanModifier);
@@ -135,6 +141,9 @@ void VtkContextTransformWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetZoomOnMouseWheel", SetZoomOnMouseWheel);
 	Nan::SetPrototypeMethod(tpl, "setZoomOnMouseWheel", SetZoomOnMouseWheel);
+
+	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
+	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -457,6 +466,25 @@ void VtkContextTransformWrap::PanYOnMouseWheelOn(const Nan::FunctionCallbackInfo
 	native->PanYOnMouseWheelOn();
 }
 
+void VtkContextTransformWrap::Rotate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Rotate(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkContextTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
@@ -484,6 +512,29 @@ void VtkContextTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Scale(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -674,6 +725,29 @@ void VtkContextTransformWrap::SetZoomOnMouseWheel(const Nan::FunctionCallbackInf
 			info[0]->BooleanValue()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Translate(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

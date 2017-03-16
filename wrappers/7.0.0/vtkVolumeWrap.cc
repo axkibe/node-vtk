@@ -54,11 +54,20 @@ void VtkVolumeWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkVolumeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetArraySize", GetArraySize);
+	Nan::SetPrototypeMethod(tpl, "getArraySize", GetArraySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
 	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetGradientOpacityConstant", GetGradientOpacityConstant);
+	Nan::SetPrototypeMethod(tpl, "getGradientOpacityConstant", GetGradientOpacityConstant);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
 	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
@@ -83,6 +92,9 @@ void VtkVolumeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
 	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetRedrawMTime", GetRedrawMTime);
+	Nan::SetPrototypeMethod(tpl, "getRedrawMTime", GetRedrawMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetVolumes", GetVolumes);
 	Nan::SetPrototypeMethod(tpl, "getVolumes", GetVolumes);
@@ -113,6 +125,9 @@ void VtkVolumeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
+
+	Nan::SetPrototypeMethod(tpl, "UpdateScalarOpacityforSampleSize", UpdateScalarOpacityforSampleSize);
+	Nan::SetPrototypeMethod(tpl, "updateScalarOpacityforSampleSize", UpdateScalarOpacityforSampleSize);
 
 	Nan::SetPrototypeMethod(tpl, "UpdateTransferFunctions", UpdateTransferFunctions);
 	Nan::SetPrototypeMethod(tpl, "updateTransferFunctions", UpdateTransferFunctions);
@@ -147,6 +162,20 @@ void VtkVolumeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkVolumeWrap::GetArraySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeWrap>(info.Holder());
+	vtkVolume *native = (vtkVolume *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetArraySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkVolumeWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -227,6 +256,48 @@ void VtkVolumeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkVolumeWrap::GetGradientOpacityConstant(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeWrap>(info.Holder());
+	vtkVolume *native = (vtkVolume *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetGradientOpacityConstant(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGradientOpacityConstant();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumeWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeWrap>(info.Holder());
+	vtkVolume *native = (vtkVolume *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkVolumeWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -357,6 +428,20 @@ void VtkVolumeWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkVolumeWrap::GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeWrap>(info.Holder());
+	vtkVolume *native = (vtkVolume *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRedrawMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkVolumeWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -567,6 +652,30 @@ void VtkVolumeWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	native->Update();
+}
+
+void VtkVolumeWrap::UpdateScalarOpacityforSampleSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeWrap>(info.Holder());
+	vtkVolume *native = (vtkVolume *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->UpdateScalarOpacityforSampleSize(
+				(vtkRenderer *) a0->native.GetPointer(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkVolumeWrap::UpdateTransferFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info)

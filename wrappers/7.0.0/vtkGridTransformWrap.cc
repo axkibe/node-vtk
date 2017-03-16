@@ -68,6 +68,9 @@ void VtkGridTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolationModeAsString", GetInterpolationModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getInterpolationModeAsString", GetInterpolationModeAsString);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -227,6 +230,20 @@ void VtkGridTransformWrap::GetInterpolationModeAsString(const Nan::FunctionCallb
 	}
 	r = native->GetInterpolationModeAsString();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGridTransformWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGridTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGridTransformWrap>(info.Holder());
+	vtkGridTransform *native = (vtkGridTransform *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGridTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

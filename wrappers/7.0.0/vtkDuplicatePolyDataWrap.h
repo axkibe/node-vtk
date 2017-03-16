@@ -33,6 +33,7 @@ class VtkDuplicatePolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClientFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSocketController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSynchronous(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeSchedule(const Nan::FunctionCallbackInfo<v8::Value>& info);

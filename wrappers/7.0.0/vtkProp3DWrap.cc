@@ -73,6 +73,9 @@ void VtkProp3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLength", GetLength);
 	Nan::SetPrototypeMethod(tpl, "getLength", GetLength);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMatrix", GetMatrix);
 	Nan::SetPrototypeMethod(tpl, "getMatrix", GetMatrix);
 
@@ -96,6 +99,9 @@ void VtkProp3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUserTransform", GetUserTransform);
 	Nan::SetPrototypeMethod(tpl, "getUserTransform", GetUserTransform);
+
+	Nan::SetPrototypeMethod(tpl, "GetUserTransformMatrixMTime", GetUserTransformMatrixMTime);
+	Nan::SetPrototypeMethod(tpl, "getUserTransformMatrixMTime", GetUserTransformMatrixMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetXRange", GetXRange);
 	Nan::SetPrototypeMethod(tpl, "getXRange", GetXRange);
@@ -464,6 +470,20 @@ void VtkProp3DWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkProp3DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkProp3DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
@@ -727,6 +747,20 @@ void VtkProp3DWrap::GetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkProp3DWrap::GetUserTransformMatrixMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUserTransformMatrixMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkProp3DWrap::GetXRange(const Nan::FunctionCallbackInfo<v8::Value>& info)

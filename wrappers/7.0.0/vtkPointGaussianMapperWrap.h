@@ -42,6 +42,7 @@ class VtkPointGaussianMapperWrap : public VtkPolyDataMapperWrap
 		static void GetScaleFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSplatShaderCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTriangleScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,6 +55,7 @@ class VtkPointGaussianMapperWrap : public VtkPolyDataMapperWrap
 		static void SetScaleFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplatShaderCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTriangleScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_CLASSDEF

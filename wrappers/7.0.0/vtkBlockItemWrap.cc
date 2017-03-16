@@ -51,6 +51,9 @@ void VtkBlockItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
+	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -62,6 +65,9 @@ void VtkBlockItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDimensions", SetDimensions);
+	Nan::SetPrototypeMethod(tpl, "setDimensions", SetDimensions);
 
 #ifdef VTK_NODE_PLUS_VTKBLOCKITEMWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKBLOCKITEMWRAP_INITPTPL
@@ -107,6 +113,23 @@ void VtkBlockItemWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkBlockItemWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBlockItemWrap *wrapper = ObjectWrap::Unwrap<VtkBlockItemWrap>(info.Holder());
+	vtkBlockItem *native = (vtkBlockItem *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkBlockItemWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -203,6 +226,86 @@ void VtkBlockItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBlockItemWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBlockItemWrap *wrapper = ObjectWrap::Unwrap<VtkBlockItemWrap>(info.Holder());
+	vtkBlockItem *native = (vtkBlockItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDimensions(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDimensions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetDimensions(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

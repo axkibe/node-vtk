@@ -72,6 +72,9 @@ void VtkExtractPolyDataGeometryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImplicitFunction", GetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "getImplicitFunction", GetImplicitFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPassPoints", GetPassPoints);
 	Nan::SetPrototypeMethod(tpl, "getPassPoints", GetPassPoints);
 
@@ -245,6 +248,20 @@ void VtkExtractPolyDataGeometryWrap::GetImplicitFunction(const Nan::FunctionCall
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkExtractPolyDataGeometryWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
+	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExtractPolyDataGeometryWrap::GetPassPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)

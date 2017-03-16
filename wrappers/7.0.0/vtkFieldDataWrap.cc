@@ -76,6 +76,9 @@ void VtkFieldDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAbstractArray", GetAbstractArray);
 	Nan::SetPrototypeMethod(tpl, "getAbstractArray", GetAbstractArray);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetArray", GetArray);
 	Nan::SetPrototypeMethod(tpl, "getArray", GetArray);
 
@@ -87,6 +90,9 @@ void VtkFieldDataWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetField", GetField);
 	Nan::SetPrototypeMethod(tpl, "getField", GetField);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfArrays", GetNumberOfArrays);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfArrays", GetNumberOfArrays);
@@ -369,6 +375,20 @@ void VtkFieldDataWrap::GetAbstractArray(const Nan::FunctionCallbackInfo<v8::Valu
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkFieldDataWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
+	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkFieldDataWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
@@ -481,6 +501,20 @@ void VtkFieldDataWrap::GetField(const Nan::FunctionCallbackInfo<v8::Value>& info
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFieldDataWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
+	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkFieldDataWrap::GetNumberOfArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)

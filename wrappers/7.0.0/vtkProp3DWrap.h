@@ -38,6 +38,7 @@ class VtkProp3DWrap : public VtkPropWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -46,6 +47,7 @@ class VtkProp3DWrap : public VtkPropWrap
 		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUserTransformMatrixMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZRange(const Nan::FunctionCallbackInfo<v8::Value>& info);

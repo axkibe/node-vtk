@@ -60,6 +60,8 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		static void Reduce(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllRMICallbacks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveFirstRMI(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveRMI(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveRMICallback(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Scatter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Send(const Nan::FunctionCallbackInfo<v8::Value>& info);

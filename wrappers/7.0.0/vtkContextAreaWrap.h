@@ -35,6 +35,7 @@ class VtkContextAreaWrap : public VtkAbstractContextItemWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDrawAreaItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFillViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFixedAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFixedMarginsArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkContextAreaWrap : public VtkAbstractContextItemWrap
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFillViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFixedAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFixedMargins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFixedRect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShowGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);

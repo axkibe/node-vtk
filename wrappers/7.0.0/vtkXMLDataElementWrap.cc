@@ -160,6 +160,9 @@ void VtkXMLDataElementWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDoubleAttribute", SetDoubleAttribute);
 	Nan::SetPrototypeMethod(tpl, "setDoubleAttribute", SetDoubleAttribute);
 
+	Nan::SetPrototypeMethod(tpl, "SetFloatAttribute", SetFloatAttribute);
+	Nan::SetPrototypeMethod(tpl, "setFloatAttribute", SetFloatAttribute);
+
 	Nan::SetPrototypeMethod(tpl, "SetId", SetId);
 	Nan::SetPrototypeMethod(tpl, "setId", SetId);
 
@@ -171,6 +174,9 @@ void VtkXMLDataElementWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetParent", SetParent);
 	Nan::SetPrototypeMethod(tpl, "setParent", SetParent);
+
+	Nan::SetPrototypeMethod(tpl, "SetUnsignedLongAttribute", SetUnsignedLongAttribute);
+	Nan::SetPrototypeMethod(tpl, "setUnsignedLongAttribute", SetUnsignedLongAttribute);
 
 #ifdef VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_INITPTPL
@@ -1018,6 +1024,30 @@ void VtkXMLDataElementWrap::SetDoubleAttribute(const Nan::FunctionCallbackInfo<v
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkXMLDataElementWrap::SetFloatAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
+	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetFloatAttribute(
+				*a0,
+				info[1]->NumberValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkXMLDataElementWrap::SetId(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
@@ -1098,6 +1128,30 @@ void VtkXMLDataElementWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>
 			(vtkXMLDataElement *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLDataElementWrap::SetUnsignedLongAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
+	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetUnsignedLongAttribute(
+				*a0,
+				info[1]->Uint32Value()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

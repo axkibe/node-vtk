@@ -30,6 +30,7 @@ class VtkGenericDataSetWrap : public VtkDataObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +39,7 @@ class VtkGenericDataSetWrap : public VtkDataObjectWrap
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTessellator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

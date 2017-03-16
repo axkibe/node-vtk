@@ -65,8 +65,17 @@ void VtkDICOMImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileExtensions", GetFileExtensions);
 	Nan::SetPrototypeMethod(tpl, "getFileExtensions", GetFileExtensions);
 
+	Nan::SetPrototypeMethod(tpl, "GetGantryAngle", GetGantryAngle);
+	Nan::SetPrototypeMethod(tpl, "getGantryAngle", GetGantryAngle);
+
 	Nan::SetPrototypeMethod(tpl, "GetHeight", GetHeight);
 	Nan::SetPrototypeMethod(tpl, "getHeight", GetHeight);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageOrientationPatient", GetImageOrientationPatient);
+	Nan::SetPrototypeMethod(tpl, "getImageOrientationPatient", GetImageOrientationPatient);
+
+	Nan::SetPrototypeMethod(tpl, "GetImagePositionPatient", GetImagePositionPatient);
+	Nan::SetPrototypeMethod(tpl, "getImagePositionPatient", GetImagePositionPatient);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfComponents", GetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfComponents", GetNumberOfComponents);
@@ -79,6 +88,12 @@ void VtkDICOMImageReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetPixelSpacing", GetPixelSpacing);
 	Nan::SetPrototypeMethod(tpl, "getPixelSpacing", GetPixelSpacing);
+
+	Nan::SetPrototypeMethod(tpl, "GetRescaleOffset", GetRescaleOffset);
+	Nan::SetPrototypeMethod(tpl, "getRescaleOffset", GetRescaleOffset);
+
+	Nan::SetPrototypeMethod(tpl, "GetRescaleSlope", GetRescaleSlope);
+	Nan::SetPrototypeMethod(tpl, "getRescaleSlope", GetRescaleSlope);
 
 	Nan::SetPrototypeMethod(tpl, "GetStudyID", GetStudyID);
 	Nan::SetPrototypeMethod(tpl, "getStudyID", GetStudyID);
@@ -231,6 +246,20 @@ void VtkDICOMImageReaderWrap::GetFileExtensions(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkDICOMImageReaderWrap::GetGantryAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
+	vtkDICOMImageReader *native = (vtkDICOMImageReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGantryAngle();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDICOMImageReaderWrap::GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
@@ -243,6 +272,40 @@ void VtkDICOMImageReaderWrap::GetHeight(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetHeight();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDICOMImageReaderWrap::GetImageOrientationPatient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
+	vtkDICOMImageReader *native = (vtkDICOMImageReader *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageOrientationPatient();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkDICOMImageReaderWrap::GetImagePositionPatient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
+	vtkDICOMImageReader *native = (vtkDICOMImageReader *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImagePositionPatient();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDICOMImageReaderWrap::GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -302,6 +365,34 @@ void VtkDICOMImageReaderWrap::GetPixelSpacing(const Nan::FunctionCallbackInfo<v8
 	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
 	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkDICOMImageReaderWrap::GetRescaleOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
+	vtkDICOMImageReader *native = (vtkDICOMImageReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRescaleOffset();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDICOMImageReaderWrap::GetRescaleSlope(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
+	vtkDICOMImageReader *native = (vtkDICOMImageReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRescaleSlope();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDICOMImageReaderWrap::GetStudyID(const Nan::FunctionCallbackInfo<v8::Value>& info)

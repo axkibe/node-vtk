@@ -37,6 +37,7 @@ class VtkBSplineTransformWrap : public VtkWarpTransformWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoefficientData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplacementScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

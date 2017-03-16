@@ -78,6 +78,9 @@ void VtkBandedPolyDataContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGenerateContourEdges", GetGenerateContourEdges);
 	Nan::SetPrototypeMethod(tpl, "getGenerateContourEdges", GetGenerateContourEdges);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -360,6 +363,20 @@ void VtkBandedPolyDataContourFilterWrap::GetGenerateContourEdges(const Nan::Func
 		return;
 	}
 	r = native->GetGenerateContourEdges();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkBandedPolyDataContourFilterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
+	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

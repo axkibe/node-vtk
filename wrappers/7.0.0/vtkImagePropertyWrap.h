@@ -55,6 +55,7 @@ class VtkImagePropertyWrap : public VtkObjectWrap
 		static void GetInterpolationTypeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayerNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

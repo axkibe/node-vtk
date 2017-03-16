@@ -65,6 +65,9 @@ void VtkAnnotationLinkWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDomainMap", GetDomainMap);
 	Nan::SetPrototypeMethod(tpl, "getDomainMap", GetDomainMap);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfDomainMaps", GetNumberOfDomainMaps);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfDomainMaps", GetNumberOfDomainMaps);
 
@@ -229,6 +232,20 @@ void VtkAnnotationLinkWrap::GetDomainMap(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAnnotationLinkWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAnnotationLinkWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLinkWrap>(info.Holder());
+	vtkAnnotationLink *native = (vtkAnnotationLink *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAnnotationLinkWrap::GetNumberOfDomainMaps(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -54,6 +54,9 @@ void VtkTexturedActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetTexture", GetTexture);
 	Nan::SetPrototypeMethod(tpl, "getTexture", GetTexture);
 
@@ -128,6 +131,20 @@ void VtkTexturedActor2DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTexturedActor2DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTexturedActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedActor2DWrap>(info.Holder());
+	vtkTexturedActor2D *native = (vtkTexturedActor2D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTexturedActor2DWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -49,6 +49,7 @@ class VtkAbstractWidgetWrap : public VtkInteractorObserverWrap
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetManagesCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPriority(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProcessEvents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKABSTRACTWIDGETWRAP_CLASSDEF

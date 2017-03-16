@@ -107,6 +107,12 @@ void VtkAxisWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPen", GetPen);
 	Nan::SetPrototypeMethod(tpl, "getPen", GetPen);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint1", GetPoint1);
+	Nan::SetPrototypeMethod(tpl, "getPoint1", GetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2", GetPoint2);
+	Nan::SetPrototypeMethod(tpl, "getPoint2", GetPoint2);
+
 	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
 	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
 
@@ -214,6 +220,12 @@ void VtkAxisWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfTicks", SetNumberOfTicks);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfTicks", SetNumberOfTicks);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint1", SetPoint1);
+	Nan::SetPrototypeMethod(tpl, "setPoint1", SetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint2", SetPoint2);
+	Nan::SetPrototypeMethod(tpl, "setPoint2", SetPoint2);
 
 	Nan::SetPrototypeMethod(tpl, "SetPosition", SetPosition);
 	Nan::SetPrototypeMethod(tpl, "setPosition", SetPosition);
@@ -567,6 +579,40 @@ void VtkAxisWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAxisWrap::GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint1();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkAxisWrap::GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAxisWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1278,6 +1324,52 @@ void VtkAxisWrap::SetNumberOfTicks(const Nan::FunctionCallbackInfo<v8::Value>& i
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPoint1(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPoint2(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

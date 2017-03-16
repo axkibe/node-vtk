@@ -39,9 +39,11 @@ class VtkPlotBarWrap : public VtkPlotWrap
 		static void GetDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,8 +53,10 @@ class VtkPlotBarWrap : public VtkPlotWrap
 		static void SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKPLOTBARWRAP_CLASSDEF

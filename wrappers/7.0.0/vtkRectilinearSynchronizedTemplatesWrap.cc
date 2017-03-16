@@ -96,6 +96,9 @@ void VtkRectilinearSynchronizedTemplatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGenerateTriangles", GetGenerateTriangles);
 	Nan::SetPrototypeMethod(tpl, "getGenerateTriangles", GetGenerateTriangles);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -586,6 +589,20 @@ void VtkRectilinearSynchronizedTemplatesWrap::GetGenerateTriangles(const Nan::Fu
 		return;
 	}
 	r = native->GetGenerateTriangles();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRectilinearSynchronizedTemplatesWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
+	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

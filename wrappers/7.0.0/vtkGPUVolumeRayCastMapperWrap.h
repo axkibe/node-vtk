@@ -40,10 +40,28 @@ class VtkGPUVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaskBlendFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaskBlendFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaskBlendFactorMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxMemoryFractionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxMemoryFractionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderToImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReportProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsRenderSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -53,12 +71,20 @@ class VtkGPUVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void RenderToImageOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutoAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaskBlendFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskTypeToBinary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskTypeToLabelMap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderToImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReportProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKGPUVOLUMERAYCASTMAPPERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKGPUVOLUMERAYCASTMAPPERWRAP_CLASSDEF

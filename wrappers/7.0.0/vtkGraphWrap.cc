@@ -110,6 +110,9 @@ void VtkGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInducedEdges", GetInducedEdges);
 	Nan::SetPrototypeMethod(tpl, "getInducedEdges", GetInducedEdges);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoints", GetPoints);
 	Nan::SetPrototypeMethod(tpl, "getPoints", GetPoints);
 
@@ -606,6 +609,20 @@ void VtkGraphWrap::GetInducedEdges(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
+	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)

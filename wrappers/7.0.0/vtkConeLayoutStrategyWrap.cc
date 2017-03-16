@@ -56,8 +56,14 @@ void VtkConeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCompactness", GetCompactness);
+	Nan::SetPrototypeMethod(tpl, "getCompactness", GetCompactness);
+
 	Nan::SetPrototypeMethod(tpl, "GetCompression", GetCompression);
 	Nan::SetPrototypeMethod(tpl, "getCompression", GetCompression);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpacing", GetSpacing);
+	Nan::SetPrototypeMethod(tpl, "getSpacing", GetSpacing);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -71,8 +77,14 @@ void VtkConeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetCompactness", SetCompactness);
+	Nan::SetPrototypeMethod(tpl, "setCompactness", SetCompactness);
+
 	Nan::SetPrototypeMethod(tpl, "SetCompression", SetCompression);
 	Nan::SetPrototypeMethod(tpl, "setCompression", SetCompression);
+
+	Nan::SetPrototypeMethod(tpl, "SetSpacing", SetSpacing);
+	Nan::SetPrototypeMethod(tpl, "setSpacing", SetSpacing);
 
 #ifdef VTK_NODE_PLUS_VTKCONELAYOUTSTRATEGYWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKCONELAYOUTSTRATEGYWRAP_INITPTPL
@@ -144,6 +156,20 @@ void VtkConeLayoutStrategyWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkConeLayoutStrategyWrap::GetCompactness(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
+	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCompactness();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkConeLayoutStrategyWrap::GetCompression(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
@@ -155,6 +181,20 @@ void VtkConeLayoutStrategyWrap::GetCompression(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetCompression();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeLayoutStrategyWrap::GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
+	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSpacing();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -246,6 +286,25 @@ void VtkConeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkConeLayoutStrategyWrap::SetCompactness(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
+	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCompactness(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkConeLayoutStrategyWrap::SetCompression(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
@@ -259,6 +318,25 @@ void VtkConeLayoutStrategyWrap::SetCompression(const Nan::FunctionCallbackInfo<v
 		}
 		native->SetCompression(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkConeLayoutStrategyWrap::SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
+	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSpacing(
+			info[0]->NumberValue()
 		);
 		return;
 	}

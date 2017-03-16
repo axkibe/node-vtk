@@ -167,6 +167,9 @@ void VtkRendererWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLights", GetLights);
 	Nan::SetPrototypeMethod(tpl, "getLights", GetLights);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfPeels", GetMaximumNumberOfPeels);
 	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfPeels", GetMaximumNumberOfPeels);
 
@@ -1058,6 +1061,20 @@ void VtkRendererWrap::GetLights(const Nan::FunctionCallbackInfo<v8::Value>& info
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkRendererWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRendererWrap::GetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info)

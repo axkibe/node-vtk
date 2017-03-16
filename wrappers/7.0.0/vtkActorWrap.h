@@ -41,8 +41,10 @@ class VtkActorWrap : public VtkProp3DWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetForceOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetForceTranslucent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);

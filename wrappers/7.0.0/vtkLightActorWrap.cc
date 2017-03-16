@@ -59,6 +59,9 @@ void VtkLightActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLight", GetLight);
 	Nan::SetPrototypeMethod(tpl, "getLight", GetLight);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 
@@ -167,6 +170,20 @@ void VtkLightActorWrap::GetLight(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLightActorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightActorWrap *wrapper = ObjectWrap::Unwrap<VtkLightActorWrap>(info.Holder());
+	vtkLightActor *native = (vtkLightActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkLightActorWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)

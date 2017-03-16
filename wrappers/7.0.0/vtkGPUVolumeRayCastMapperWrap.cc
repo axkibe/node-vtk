@@ -83,17 +83,71 @@ void VtkGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDepthImage", GetDepthImage);
 	Nan::SetPrototypeMethod(tpl, "getDepthImage", GetDepthImage);
 
+	Nan::SetPrototypeMethod(tpl, "GetFinalColorLevel", GetFinalColorLevel);
+	Nan::SetPrototypeMethod(tpl, "getFinalColorLevel", GetFinalColorLevel);
+
+	Nan::SetPrototypeMethod(tpl, "GetFinalColorWindow", GetFinalColorWindow);
+	Nan::SetPrototypeMethod(tpl, "getFinalColorWindow", GetFinalColorWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistance", GetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistance", GetImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistanceMaxValue", GetImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistanceMaxValue", GetImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageSampleDistanceMinValue", GetImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getImageSampleDistanceMinValue", GetImageSampleDistanceMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaskBlendFactor", GetMaskBlendFactor);
+	Nan::SetPrototypeMethod(tpl, "getMaskBlendFactor", GetMaskBlendFactor);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaskBlendFactorMaxValue", GetMaskBlendFactorMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaskBlendFactorMaxValue", GetMaskBlendFactorMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaskBlendFactorMinValue", GetMaskBlendFactorMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaskBlendFactorMinValue", GetMaskBlendFactorMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaskInput", GetMaskInput);
 	Nan::SetPrototypeMethod(tpl, "getMaskInput", GetMaskInput);
 
 	Nan::SetPrototypeMethod(tpl, "GetMaskType", GetMaskType);
 	Nan::SetPrototypeMethod(tpl, "getMaskType", GetMaskType);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxMemoryFraction", GetMaxMemoryFraction);
+	Nan::SetPrototypeMethod(tpl, "getMaxMemoryFraction", GetMaxMemoryFraction);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaxMemoryFractionMaxValue", GetMaxMemoryFractionMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaxMemoryFractionMaxValue", GetMaxMemoryFractionMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaxMemoryFractionMinValue", GetMaxMemoryFractionMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaxMemoryFractionMinValue", GetMaxMemoryFractionMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistance", GetMaximumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistance", GetMaximumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistanceMaxValue", GetMaximumImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistanceMaxValue", GetMaximumImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumImageSampleDistanceMinValue", GetMaximumImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumImageSampleDistanceMinValue", GetMaximumImageSampleDistanceMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistance", GetMinimumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistance", GetMinimumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistanceMaxValue", GetMinimumImageSampleDistanceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistanceMaxValue", GetMinimumImageSampleDistanceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumImageSampleDistanceMinValue", GetMinimumImageSampleDistanceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumImageSampleDistanceMinValue", GetMinimumImageSampleDistanceMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderToImage", GetRenderToImage);
 	Nan::SetPrototypeMethod(tpl, "getRenderToImage", GetRenderToImage);
 
 	Nan::SetPrototypeMethod(tpl, "GetReportProgress", GetReportProgress);
 	Nan::SetPrototypeMethod(tpl, "getReportProgress", GetReportProgress);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDistance", GetSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "getSampleDistance", GetSampleDistance);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -122,6 +176,18 @@ void VtkGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 	Nan::SetPrototypeMethod(tpl, "setAutoAdjustSampleDistances", SetAutoAdjustSampleDistances);
 
+	Nan::SetPrototypeMethod(tpl, "SetFinalColorLevel", SetFinalColorLevel);
+	Nan::SetPrototypeMethod(tpl, "setFinalColorLevel", SetFinalColorLevel);
+
+	Nan::SetPrototypeMethod(tpl, "SetFinalColorWindow", SetFinalColorWindow);
+	Nan::SetPrototypeMethod(tpl, "setFinalColorWindow", SetFinalColorWindow);
+
+	Nan::SetPrototypeMethod(tpl, "SetImageSampleDistance", SetImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setImageSampleDistance", SetImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "SetMaskBlendFactor", SetMaskBlendFactor);
+	Nan::SetPrototypeMethod(tpl, "setMaskBlendFactor", SetMaskBlendFactor);
+
 	Nan::SetPrototypeMethod(tpl, "SetMaskInput", SetMaskInput);
 	Nan::SetPrototypeMethod(tpl, "setMaskInput", SetMaskInput);
 
@@ -134,11 +200,23 @@ void VtkGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaskTypeToLabelMap", SetMaskTypeToLabelMap);
 	Nan::SetPrototypeMethod(tpl, "setMaskTypeToLabelMap", SetMaskTypeToLabelMap);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaxMemoryFraction", SetMaxMemoryFraction);
+	Nan::SetPrototypeMethod(tpl, "setMaxMemoryFraction", SetMaxMemoryFraction);
+
+	Nan::SetPrototypeMethod(tpl, "SetMaximumImageSampleDistance", SetMaximumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setMaximumImageSampleDistance", SetMaximumImageSampleDistance);
+
+	Nan::SetPrototypeMethod(tpl, "SetMinimumImageSampleDistance", SetMinimumImageSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setMinimumImageSampleDistance", SetMinimumImageSampleDistance);
+
 	Nan::SetPrototypeMethod(tpl, "SetRenderToImage", SetRenderToImage);
 	Nan::SetPrototypeMethod(tpl, "setRenderToImage", SetRenderToImage);
 
 	Nan::SetPrototypeMethod(tpl, "SetReportProgress", SetReportProgress);
 	Nan::SetPrototypeMethod(tpl, "setReportProgress", SetReportProgress);
+
+	Nan::SetPrototypeMethod(tpl, "SetSampleDistance", SetSampleDistance);
+	Nan::SetPrototypeMethod(tpl, "setSampleDistance", SetSampleDistance);
 
 #ifdef VTK_NODE_PLUS_VTKGPUVOLUMERAYCASTMAPPERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKGPUVOLUMERAYCASTMAPPERWRAP_INITPTPL
@@ -486,6 +564,118 @@ void VtkGPUVolumeRayCastMapperWrap::GetDepthImage(const Nan::FunctionCallbackInf
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGPUVolumeRayCastMapperWrap::GetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFinalColorLevel();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFinalColorWindow();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaskBlendFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaskBlendFactor();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaskBlendFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaskBlendFactorMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaskBlendFactorMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaskBlendFactorMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGPUVolumeRayCastMapperWrap::GetMaskInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
@@ -523,6 +713,132 @@ void VtkGPUVolumeRayCastMapperWrap::GetMaskType(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGPUVolumeRayCastMapperWrap::GetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxMemoryFraction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaxMemoryFractionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxMemoryFractionMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaxMemoryFractionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxMemoryFractionMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaximumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMaximumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMinimumImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistanceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetMinimumImageSampleDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumImageSampleDistanceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGPUVolumeRayCastMapperWrap::GetRenderToImage(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
@@ -548,6 +864,20 @@ void VtkGPUVolumeRayCastMapperWrap::GetReportProgress(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetReportProgress();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDistance();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -742,6 +1072,82 @@ void VtkGPUVolumeRayCastMapperWrap::SetAutoAdjustSampleDistances(const Nan::Func
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGPUVolumeRayCastMapperWrap::SetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFinalColorLevel(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGPUVolumeRayCastMapperWrap::SetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFinalColorWindow(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGPUVolumeRayCastMapperWrap::SetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGPUVolumeRayCastMapperWrap::SetMaskBlendFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaskBlendFactor(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGPUVolumeRayCastMapperWrap::SetMaskInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
@@ -805,6 +1211,63 @@ void VtkGPUVolumeRayCastMapperWrap::SetMaskTypeToLabelMap(const Nan::FunctionCal
 	native->SetMaskTypeToLabelMap();
 }
 
+void VtkGPUVolumeRayCastMapperWrap::SetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaxMemoryFraction(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGPUVolumeRayCastMapperWrap::SetMaximumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGPUVolumeRayCastMapperWrap::SetMinimumImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMinimumImageSampleDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGPUVolumeRayCastMapperWrap::SetRenderToImage(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
@@ -837,6 +1300,25 @@ void VtkGPUVolumeRayCastMapperWrap::SetReportProgress(const Nan::FunctionCallbac
 		}
 		native->SetReportProgress(
 			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGPUVolumeRayCastMapperWrap::SetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSampleDistance(
+			info[0]->NumberValue()
 		);
 		return;
 	}

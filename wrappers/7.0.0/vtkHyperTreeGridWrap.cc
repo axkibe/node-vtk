@@ -67,6 +67,9 @@ void VtkHyperTreeGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GenerateTrees", GenerateTrees);
 	Nan::SetPrototypeMethod(tpl, "generateTrees", GenerateTrees);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetBranchFactor", GetBranchFactor);
 	Nan::SetPrototypeMethod(tpl, "getBranchFactor", GetBranchFactor);
 
@@ -281,6 +284,20 @@ void VtkHyperTreeGridWrap::GenerateTrees(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	native->GenerateTrees();
+}
+
+void VtkHyperTreeGridWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
+	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperTreeGridWrap::GetBranchFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)

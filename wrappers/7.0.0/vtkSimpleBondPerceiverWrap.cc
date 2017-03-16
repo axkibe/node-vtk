@@ -50,6 +50,9 @@ void VtkSimpleBondPerceiverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetTolerance", GetTolerance);
+	Nan::SetPrototypeMethod(tpl, "getTolerance", GetTolerance);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -58,6 +61,9 @@ void VtkSimpleBondPerceiverWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
+	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
 #ifdef VTK_NODE_PLUS_VTKSIMPLEBONDPERCEIVERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKSIMPLEBONDPERCEIVERWRAP_INITPTPL
@@ -103,6 +109,20 @@ void VtkSimpleBondPerceiverWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSimpleBondPerceiverWrap::GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSimpleBondPerceiverWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleBondPerceiverWrap>(info.Holder());
+	vtkSimpleBondPerceiver *native = (vtkSimpleBondPerceiver *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTolerance();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSimpleBondPerceiverWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +196,25 @@ void VtkSimpleBondPerceiverWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSimpleBondPerceiverWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSimpleBondPerceiverWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleBondPerceiverWrap>(info.Holder());
+	vtkSimpleBondPerceiver *native = (vtkSimpleBondPerceiver *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTolerance(
+			info[0]->NumberValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

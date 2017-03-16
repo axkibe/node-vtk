@@ -65,6 +65,9 @@ void VtkFlyingEdges2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetComputeScalars", GetComputeScalars);
 	Nan::SetPrototypeMethod(tpl, "getComputeScalars", GetComputeScalars);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -265,6 +268,20 @@ void VtkFlyingEdges2DWrap::GetComputeScalars(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetComputeScalars();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFlyingEdges2DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFlyingEdges2DWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdges2DWrap>(info.Holder());
+	vtkFlyingEdges2D *native = (vtkFlyingEdges2D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

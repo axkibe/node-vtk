@@ -56,6 +56,9 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCutFunction", GetCutFunction);
 	Nan::SetPrototypeMethod(tpl, "getCutFunction", GetCutFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
 
@@ -150,6 +153,20 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::GetCutFunction(const Nan::Fun
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkThreadedSynchronizedTemplatesCutter3DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkThreadedSynchronizedTemplatesCutter3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplatesCutter3DWrap>(info.Holder());
+	vtkThreadedSynchronizedTemplatesCutter3D *native = (vtkThreadedSynchronizedTemplatesCutter3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkThreadedSynchronizedTemplatesCutter3DWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)

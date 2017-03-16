@@ -37,9 +37,11 @@ class VtkKCoreLayoutWrap : public VtkGraphAlgorithmWrap
 		static void GetCartesianCoordsXArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCartesianCoordsYArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEpsilon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolarCoordsAngleArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolarCoordsRadiusArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUnitRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PolarOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,11 +50,13 @@ class VtkKCoreLayoutWrap : public VtkGraphAlgorithmWrap
 		static void SetCartesian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCartesianCoordsXArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCartesianCoordsYArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEpsilon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKCoreLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolarCoordsAngleArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolarCoordsRadiusArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUnitRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_CLASSDEF

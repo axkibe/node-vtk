@@ -33,6 +33,9 @@ class VtkMergeCellsWrap : public VtkObjectWrap
 		static void Finish(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMergeDuplicatePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointMergeToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointMergeToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTotalNumberOfDataSets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseGlobalCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +47,7 @@ class VtkMergeCellsWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMergeDuplicatePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPointMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTotalNumberOfDataSets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseGlobalCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);

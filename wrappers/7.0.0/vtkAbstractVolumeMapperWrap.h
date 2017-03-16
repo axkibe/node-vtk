@@ -37,6 +37,8 @@ class VtkAbstractVolumeMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGradientMagnitudeBias(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGradientMagnitudeScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -37,6 +37,7 @@ class VtkCameraInterpolatorWrap : public VtkObjectWrap
 		static void GetInterpolationType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationTypeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationTypeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumT(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumT(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCameras(const Nan::FunctionCallbackInfo<v8::Value>& info);

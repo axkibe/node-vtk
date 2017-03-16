@@ -68,10 +68,12 @@ class VtkXMLDataElementWrap : public VtkObjectWrap
 		static void SetCharacterData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCharacterDataWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDoubleAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFloatAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUnsignedLongAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_CLASSDEF

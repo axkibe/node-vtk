@@ -39,6 +39,7 @@ class VtkDiscretizableColorTransferFunctionWrap : public VtkColorTransferFunctio
 		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiscretize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableOpacityMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfIndexedColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);

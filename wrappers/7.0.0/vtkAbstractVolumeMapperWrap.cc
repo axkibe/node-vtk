@@ -71,6 +71,12 @@ void VtkAbstractVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataSetInput", GetDataSetInput);
 	Nan::SetPrototypeMethod(tpl, "getDataSetInput", GetDataSetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetGradientMagnitudeBias", GetGradientMagnitudeBias);
+	Nan::SetPrototypeMethod(tpl, "getGradientMagnitudeBias", GetGradientMagnitudeBias);
+
+	Nan::SetPrototypeMethod(tpl, "GetGradientMagnitudeScale", GetGradientMagnitudeScale);
+	Nan::SetPrototypeMethod(tpl, "getGradientMagnitudeScale", GetGradientMagnitudeScale);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarMode", GetScalarMode);
 	Nan::SetPrototypeMethod(tpl, "getScalarMode", GetScalarMode);
 
@@ -307,6 +313,62 @@ void VtkAbstractVolumeMapperWrap::GetDataSetInput(const Nan::FunctionCallbackInf
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAbstractVolumeMapperWrap::GetGradientMagnitudeBias(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info.Holder());
+	vtkAbstractVolumeMapper *native = (vtkAbstractVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetGradientMagnitudeBias(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGradientMagnitudeBias();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAbstractVolumeMapperWrap::GetGradientMagnitudeScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info.Holder());
+	vtkAbstractVolumeMapper *native = (vtkAbstractVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetGradientMagnitudeScale(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGradientMagnitudeScale();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAbstractVolumeMapperWrap::GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info)

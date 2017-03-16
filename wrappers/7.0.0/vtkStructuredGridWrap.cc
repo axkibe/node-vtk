@@ -57,6 +57,9 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellDims", GetCellDims);
 	Nan::SetPrototypeMethod(tpl, "getCellDims", GetCellDims);
 
@@ -184,6 +187,20 @@ void VtkStructuredGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredGridWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
+	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStructuredGridWrap::GetCellDims(const Nan::FunctionCallbackInfo<v8::Value>& info)

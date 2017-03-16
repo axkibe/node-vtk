@@ -37,6 +37,7 @@ class VtkDataSetWrap : public VtkDataObjectWrap
 		static void CopyAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateGhostArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributesAsFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +48,7 @@ class VtkDataSetWrap : public VtkDataObjectWrap
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointGhostArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -37,6 +37,7 @@ class VtkExtractSelectedFrustumWrap : public VtkExtractSelectionBaseWrap
 		static void GetFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrustum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsideOutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsideOutOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

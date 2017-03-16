@@ -50,8 +50,14 @@ void VtkProteinRibbonFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCoilWidth", GetCoilWidth);
+	Nan::SetPrototypeMethod(tpl, "getCoilWidth", GetCoilWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetDrawSmallMoleculesAsSpheres", GetDrawSmallMoleculesAsSpheres);
 	Nan::SetPrototypeMethod(tpl, "getDrawSmallMoleculesAsSpheres", GetDrawSmallMoleculesAsSpheres);
+
+	Nan::SetPrototypeMethod(tpl, "GetHelixWidth", GetHelixWidth);
+	Nan::SetPrototypeMethod(tpl, "getHelixWidth", GetHelixWidth);
 
 	Nan::SetPrototypeMethod(tpl, "GetSphereResolution", GetSphereResolution);
 	Nan::SetPrototypeMethod(tpl, "getSphereResolution", GetSphereResolution);
@@ -68,8 +74,14 @@ void VtkProteinRibbonFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetCoilWidth", SetCoilWidth);
+	Nan::SetPrototypeMethod(tpl, "setCoilWidth", SetCoilWidth);
+
 	Nan::SetPrototypeMethod(tpl, "SetDrawSmallMoleculesAsSpheres", SetDrawSmallMoleculesAsSpheres);
 	Nan::SetPrototypeMethod(tpl, "setDrawSmallMoleculesAsSpheres", SetDrawSmallMoleculesAsSpheres);
+
+	Nan::SetPrototypeMethod(tpl, "SetHelixWidth", SetHelixWidth);
+	Nan::SetPrototypeMethod(tpl, "setHelixWidth", SetHelixWidth);
 
 	Nan::SetPrototypeMethod(tpl, "SetSphereResolution", SetSphereResolution);
 	Nan::SetPrototypeMethod(tpl, "setSphereResolution", SetSphereResolution);
@@ -123,6 +135,20 @@ void VtkProteinRibbonFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkProteinRibbonFilterWrap::GetCoilWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
+	vtkProteinRibbonFilter *native = (vtkProteinRibbonFilter *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCoilWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkProteinRibbonFilterWrap::GetDrawSmallMoleculesAsSpheres(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
@@ -134,6 +160,20 @@ void VtkProteinRibbonFilterWrap::GetDrawSmallMoleculesAsSpheres(const Nan::Funct
 		return;
 	}
 	r = native->GetDrawSmallMoleculesAsSpheres();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkProteinRibbonFilterWrap::GetHelixWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
+	vtkProteinRibbonFilter *native = (vtkProteinRibbonFilter *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHelixWidth();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -241,6 +281,25 @@ void VtkProteinRibbonFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkProteinRibbonFilterWrap::SetCoilWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
+	vtkProteinRibbonFilter *native = (vtkProteinRibbonFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCoilWidth(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkProteinRibbonFilterWrap::SetDrawSmallMoleculesAsSpheres(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
@@ -254,6 +313,25 @@ void VtkProteinRibbonFilterWrap::SetDrawSmallMoleculesAsSpheres(const Nan::Funct
 		}
 		native->SetDrawSmallMoleculesAsSpheres(
 			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProteinRibbonFilterWrap::SetHelixWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
+	vtkProteinRibbonFilter *native = (vtkProteinRibbonFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHelixWidth(
+			info[0]->NumberValue()
 		);
 		return;
 	}

@@ -8,6 +8,7 @@
 #include "vtkVolumeRayCastFunctionWrap.h"
 #include "vtkVolumeRayCastMIPFunctionWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkVolumeWrap.h"
 #include "../../plus/plus.h"
 
 using namespace v8;
@@ -61,6 +62,9 @@ void VtkVolumeRayCastMIPFunctionWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMaximizeMethodMinValue", GetMaximizeMethodMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaximizeMethodMinValue", GetMaximizeMethodMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroOpacityThreshold", GetZeroOpacityThreshold);
+	Nan::SetPrototypeMethod(tpl, "getZeroOpacityThreshold", GetZeroOpacityThreshold);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -180,6 +184,28 @@ void VtkVolumeRayCastMIPFunctionWrap::GetMaximizeMethodMinValue(const Nan::Funct
 	}
 	r = native->GetMaximizeMethodMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumeRayCastMIPFunctionWrap::GetZeroOpacityThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastMIPFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMIPFunctionWrap>(info.Holder());
+	vtkVolumeRayCastMIPFunction *native = (vtkVolumeRayCastMIPFunction *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetZeroOpacityThreshold(
+			(vtkVolume *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkVolumeRayCastMIPFunctionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

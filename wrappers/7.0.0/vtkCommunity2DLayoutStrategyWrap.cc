@@ -53,6 +53,15 @@ void VtkCommunity2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCommunityArrayName", GetCommunityArrayName);
 	Nan::SetPrototypeMethod(tpl, "getCommunityArrayName", GetCommunityArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCommunityStrength", GetCommunityStrength);
+	Nan::SetPrototypeMethod(tpl, "getCommunityStrength", GetCommunityStrength);
+
+	Nan::SetPrototypeMethod(tpl, "GetCommunityStrengthMaxValue", GetCommunityStrengthMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getCommunityStrengthMaxValue", GetCommunityStrengthMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetCommunityStrengthMinValue", GetCommunityStrengthMinValue);
+	Nan::SetPrototypeMethod(tpl, "getCommunityStrengthMinValue", GetCommunityStrengthMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetCoolDownRate", GetCoolDownRate);
 	Nan::SetPrototypeMethod(tpl, "getCoolDownRate", GetCoolDownRate);
 
@@ -61,6 +70,15 @@ void VtkCommunity2DLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetCoolDownRateMinValue", GetCoolDownRateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCoolDownRateMinValue", GetCoolDownRateMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperature", GetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperature", GetInitialTemperature);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMaxValue", GetInitialTemperatureMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialTemperatureMinValue", GetInitialTemperatureMinValue);
+	Nan::SetPrototypeMethod(tpl, "getInitialTemperatureMinValue", GetInitialTemperatureMinValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetIterationsPerLayout", GetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "getIterationsPerLayout", GetIterationsPerLayout);
@@ -89,6 +107,9 @@ void VtkCommunity2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRandomSeedMinValue", GetRandomSeedMinValue);
 	Nan::SetPrototypeMethod(tpl, "getRandomSeedMinValue", GetRandomSeedMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetRestDistance", GetRestDistance);
+	Nan::SetPrototypeMethod(tpl, "getRestDistance", GetRestDistance);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -110,8 +131,14 @@ void VtkCommunity2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCommunityArrayName", SetCommunityArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCommunityArrayName", SetCommunityArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "SetCommunityStrength", SetCommunityStrength);
+	Nan::SetPrototypeMethod(tpl, "setCommunityStrength", SetCommunityStrength);
+
 	Nan::SetPrototypeMethod(tpl, "SetCoolDownRate", SetCoolDownRate);
 	Nan::SetPrototypeMethod(tpl, "setCoolDownRate", SetCoolDownRate);
+
+	Nan::SetPrototypeMethod(tpl, "SetInitialTemperature", SetInitialTemperature);
+	Nan::SetPrototypeMethod(tpl, "setInitialTemperature", SetInitialTemperature);
 
 	Nan::SetPrototypeMethod(tpl, "SetIterationsPerLayout", SetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "setIterationsPerLayout", SetIterationsPerLayout);
@@ -121,6 +148,9 @@ void VtkCommunity2DLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
+
+	Nan::SetPrototypeMethod(tpl, "SetRestDistance", SetRestDistance);
+	Nan::SetPrototypeMethod(tpl, "setRestDistance", SetRestDistance);
 
 #ifdef VTK_NODE_PLUS_VTKCOMMUNITY2DLAYOUTSTRATEGYWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKCOMMUNITY2DLAYOUTSTRATEGYWRAP_INITPTPL
@@ -182,6 +212,48 @@ void VtkCommunity2DLayoutStrategyWrap::GetCommunityArrayName(const Nan::Function
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCommunity2DLayoutStrategyWrap::GetCommunityStrength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCommunityStrength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCommunity2DLayoutStrategyWrap::GetCommunityStrengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCommunityStrengthMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCommunity2DLayoutStrategyWrap::GetCommunityStrengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCommunityStrengthMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkCommunity2DLayoutStrategyWrap::GetCoolDownRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
@@ -221,6 +293,48 @@ void VtkCommunity2DLayoutStrategyWrap::GetCoolDownRateMinValue(const Nan::Functi
 		return;
 	}
 	r = native->GetCoolDownRateMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCommunity2DLayoutStrategyWrap::GetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperature();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCommunity2DLayoutStrategyWrap::GetInitialTemperatureMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCommunity2DLayoutStrategyWrap::GetInitialTemperatureMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInitialTemperatureMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -347,6 +461,20 @@ void VtkCommunity2DLayoutStrategyWrap::GetRandomSeedMinValue(const Nan::Function
 		return;
 	}
 	r = native->GetRandomSeedMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCommunity2DLayoutStrategyWrap::GetRestDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRestDistance();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -484,6 +612,25 @@ void VtkCommunity2DLayoutStrategyWrap::SetCommunityArrayName(const Nan::Function
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkCommunity2DLayoutStrategyWrap::SetCommunityStrength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCommunityStrength(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCommunity2DLayoutStrategyWrap::SetCoolDownRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
@@ -496,6 +643,25 @@ void VtkCommunity2DLayoutStrategyWrap::SetCoolDownRate(const Nan::FunctionCallba
 			return;
 		}
 		native->SetCoolDownRate(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCommunity2DLayoutStrategyWrap::SetInitialTemperature(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInitialTemperature(
 			info[0]->NumberValue()
 		);
 		return;
@@ -554,6 +720,25 @@ void VtkCommunity2DLayoutStrategyWrap::SetRandomSeed(const Nan::FunctionCallback
 		}
 		native->SetRandomSeed(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCommunity2DLayoutStrategyWrap::SetRestDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
+	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRestDistance(
+			info[0]->NumberValue()
 		);
 		return;
 	}

@@ -39,6 +39,7 @@ class VtkPerspectiveTransformWrap : public VtkHomogeneousTransformWrap
 		static void GetConcatenatedTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverseFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfConcatenatedTransforms(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Identity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info);

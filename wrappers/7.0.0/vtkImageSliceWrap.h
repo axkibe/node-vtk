@@ -33,6 +33,7 @@ class VtkImageSliceWrap : public VtkProp3DWrap
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImages(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxXBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxYBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,7 @@ class VtkImageSliceWrap : public VtkProp3DWrap
 		static void GetMinYBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinZBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

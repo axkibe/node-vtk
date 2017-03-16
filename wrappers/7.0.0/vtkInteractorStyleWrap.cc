@@ -115,6 +115,15 @@ void VtkInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTDxStyle", GetTDxStyle);
 	Nan::SetPrototypeMethod(tpl, "getTDxStyle", GetTDxStyle);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimerDuration", GetTimerDuration);
+	Nan::SetPrototypeMethod(tpl, "getTimerDuration", GetTimerDuration);
+
+	Nan::SetPrototypeMethod(tpl, "GetTimerDurationMaxValue", GetTimerDurationMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getTimerDurationMaxValue", GetTimerDurationMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetTimerDurationMinValue", GetTimerDurationMinValue);
+	Nan::SetPrototypeMethod(tpl, "getTimerDurationMinValue", GetTimerDurationMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetUseTimers", GetUseTimers);
 	Nan::SetPrototypeMethod(tpl, "getUseTimers", GetUseTimers);
 
@@ -225,6 +234,9 @@ void VtkInteractorStyleWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetTDxStyle", SetTDxStyle);
 	Nan::SetPrototypeMethod(tpl, "setTDxStyle", SetTDxStyle);
+
+	Nan::SetPrototypeMethod(tpl, "SetTimerDuration", SetTimerDuration);
+	Nan::SetPrototypeMethod(tpl, "setTimerDuration", SetTimerDuration);
 
 	Nan::SetPrototypeMethod(tpl, "SetUseTimers", SetUseTimers);
 	Nan::SetPrototypeMethod(tpl, "setUseTimers", SetUseTimers);
@@ -603,6 +615,48 @@ void VtkInteractorStyleWrap::GetTDxStyle(const Nan::FunctionCallbackInfo<v8::Val
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkInteractorStyleWrap::GetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
+	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimerDuration();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorStyleWrap::GetTimerDurationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
+	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimerDurationMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorStyleWrap::GetTimerDurationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
+	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimerDurationMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkInteractorStyleWrap::GetUseTimers(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1217,6 +1271,25 @@ void VtkInteractorStyleWrap::SetTDxStyle(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetTDxStyle(
 			(vtkTDxInteractorStyle *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorStyleWrap::SetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
+	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTimerDuration(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

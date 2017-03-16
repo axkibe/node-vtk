@@ -89,6 +89,9 @@ void VtkGridSynchronizedTemplates3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGenerateTriangles", GetGenerateTriangles);
 	Nan::SetPrototypeMethod(tpl, "getGenerateTriangles", GetGenerateTriangles);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfContours", GetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfContours", GetNumberOfContours);
 
@@ -124,6 +127,9 @@ void VtkGridSynchronizedTemplates3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetGenerateTriangles", SetGenerateTriangles);
 	Nan::SetPrototypeMethod(tpl, "setGenerateTriangles", SetGenerateTriangles);
+
+	Nan::SetPrototypeMethod(tpl, "SetInputMemoryLimit", SetInputMemoryLimit);
+	Nan::SetPrototypeMethod(tpl, "setInputMemoryLimit", SetInputMemoryLimit);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfContours", SetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfContours", SetNumberOfContours);
@@ -410,6 +416,20 @@ void VtkGridSynchronizedTemplates3DWrap::GetGenerateTriangles(const Nan::Functio
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGridSynchronizedTemplates3DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
+	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGridSynchronizedTemplates3DWrap::GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
@@ -632,6 +652,25 @@ void VtkGridSynchronizedTemplates3DWrap::SetGenerateTriangles(const Nan::Functio
 			return;
 		}
 		native->SetGenerateTriangles(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGridSynchronizedTemplates3DWrap::SetInputMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
+	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInputMemoryLimit(
 			info[0]->Int32Value()
 		);
 		return;

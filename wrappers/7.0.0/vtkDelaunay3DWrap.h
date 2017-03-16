@@ -52,6 +52,7 @@ class VtkDelaunay3DWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetBoundingTriangulation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffsetMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffsetMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

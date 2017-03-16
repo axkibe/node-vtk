@@ -85,6 +85,9 @@ void VtkPolyDataMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarMode", GetScalarMode);
 	Nan::SetPrototypeMethod(tpl, "getScalarMode", GetScalarMode);
 
@@ -413,6 +416,20 @@ void VtkPolyDataMapper2DWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPolyDataMapper2DWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
+	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPolyDataMapper2DWrap::GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info)

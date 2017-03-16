@@ -48,6 +48,8 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void GetNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTicks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRangeLabelsVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -84,6 +86,8 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void SetMinimumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfTicks(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -54,6 +54,9 @@ void VtkSTLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMerging", GetMerging);
 	Nan::SetPrototypeMethod(tpl, "getMerging", GetMerging);
 
@@ -157,6 +160,20 @@ void VtkSTLReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkSTLReaderWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSTLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSTLReaderWrap>(info.Holder());
+	vtkSTLReader *native = (vtkSTLReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSTLReaderWrap::GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info)

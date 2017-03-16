@@ -36,6 +36,7 @@ class VtkPenWrap : public VtkObjectWrap
 		static void GetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +45,7 @@ class VtkPenWrap : public VtkObjectWrap
 		static void SetLineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacityF(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKPENWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKPENWRAP_CLASSDEF

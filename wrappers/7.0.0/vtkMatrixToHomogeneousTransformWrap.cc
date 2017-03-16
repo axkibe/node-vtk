@@ -55,6 +55,9 @@ void VtkMatrixToHomogeneousTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "Inverse", Inverse);
 	Nan::SetPrototypeMethod(tpl, "inverse", Inverse);
 
@@ -140,6 +143,20 @@ void VtkMatrixToHomogeneousTransformWrap::GetInput(const Nan::FunctionCallbackIn
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkMatrixToHomogeneousTransformWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMatrixToHomogeneousTransformWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixToHomogeneousTransformWrap>(info.Holder());
+	vtkMatrixToHomogeneousTransform *native = (vtkMatrixToHomogeneousTransform *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMatrixToHomogeneousTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info)

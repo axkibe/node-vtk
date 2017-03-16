@@ -52,6 +52,9 @@ void VtkFunctionParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFunction", GetFunction);
 	Nan::SetPrototypeMethod(tpl, "getFunction", GetFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfScalarVariables", GetNumberOfScalarVariables);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfScalarVariables", GetNumberOfScalarVariables);
 
@@ -188,6 +191,20 @@ void VtkFunctionParserWrap::GetFunction(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetFunction();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkFunctionParserWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
+	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkFunctionParserWrap::GetNumberOfScalarVariables(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -49,6 +49,12 @@ void VtkWidgetEventWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEventIdFromString", GetEventIdFromString);
+	Nan::SetPrototypeMethod(tpl, "getEventIdFromString", GetEventIdFromString);
+
+	Nan::SetPrototypeMethod(tpl, "GetStringFromEventId", GetStringFromEventId);
+	Nan::SetPrototypeMethod(tpl, "getStringFromEventId", GetStringFromEventId);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -102,6 +108,49 @@ void VtkWidgetEventWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkWidgetEventWrap::GetEventIdFromString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetEventWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetEventWrap>(info.Holder());
+	vtkWidgetEvent *native = (vtkWidgetEvent *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEventIdFromString(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWidgetEventWrap::GetStringFromEventId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetEventWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetEventWrap>(info.Holder());
+	vtkWidgetEvent *native = (vtkWidgetEvent *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetStringFromEventId(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkWidgetEventWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

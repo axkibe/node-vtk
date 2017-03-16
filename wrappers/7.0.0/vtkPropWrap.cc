@@ -118,6 +118,9 @@ void VtkPropWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPropertyKeys", GetPropertyKeys);
 	Nan::SetPrototypeMethod(tpl, "getPropertyKeys", GetPropertyKeys);
 
+	Nan::SetPrototypeMethod(tpl, "GetRedrawMTime", GetRedrawMTime);
+	Nan::SetPrototypeMethod(tpl, "getRedrawMTime", GetRedrawMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderTimeMultiplier", GetRenderTimeMultiplier);
 	Nan::SetPrototypeMethod(tpl, "getRenderTimeMultiplier", GetRenderTimeMultiplier);
 
@@ -675,6 +678,20 @@ void VtkPropWrap::GetPropertyKeys(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPropWrap::GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRedrawMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPropWrap::GetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Value>& info)

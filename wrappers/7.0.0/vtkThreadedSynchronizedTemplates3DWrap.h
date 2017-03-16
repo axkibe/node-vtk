@@ -45,6 +45,8 @@ class VtkThreadedSynchronizedTemplates3DWrap : public VtkMultiBlockDataSetAlgori
 		static void GetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInputMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +57,7 @@ class VtkThreadedSynchronizedTemplates3DWrap : public VtkMultiBlockDataSetAlgori
 		static void SetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInputMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreadedExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);

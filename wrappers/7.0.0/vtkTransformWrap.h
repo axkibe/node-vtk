@@ -37,6 +37,7 @@ class VtkTransformWrap : public VtkLinearTransformWrap
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverseFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfConcatenatedTransforms(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info);

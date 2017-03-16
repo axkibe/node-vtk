@@ -57,6 +57,9 @@ void VtkMoleculeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetAtomicRadiusScaleFactor", GetAtomicRadiusScaleFactor);
+	Nan::SetPrototypeMethod(tpl, "getAtomicRadiusScaleFactor", GetAtomicRadiusScaleFactor);
+
 	Nan::SetPrototypeMethod(tpl, "GetAtomicRadiusType", GetAtomicRadiusType);
 	Nan::SetPrototypeMethod(tpl, "getAtomicRadiusType", GetAtomicRadiusType);
 
@@ -71,6 +74,9 @@ void VtkMoleculeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetBondColorModeAsString", GetBondColorModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getBondColorModeAsString", GetBondColorModeAsString);
+
+	Nan::SetPrototypeMethod(tpl, "GetBondRadius", GetBondRadius);
+	Nan::SetPrototypeMethod(tpl, "getBondRadius", GetBondRadius);
 
 	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
 	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
@@ -129,6 +135,9 @@ void VtkMoleculeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAtomicRadiusScaleFactor", SetAtomicRadiusScaleFactor);
+	Nan::SetPrototypeMethod(tpl, "setAtomicRadiusScaleFactor", SetAtomicRadiusScaleFactor);
+
 	Nan::SetPrototypeMethod(tpl, "SetAtomicRadiusType", SetAtomicRadiusType);
 	Nan::SetPrototypeMethod(tpl, "setAtomicRadiusType", SetAtomicRadiusType);
 
@@ -152,6 +161,9 @@ void VtkMoleculeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetBondColorModeToSingleColor", SetBondColorModeToSingleColor);
 	Nan::SetPrototypeMethod(tpl, "setBondColorModeToSingleColor", SetBondColorModeToSingleColor);
+
+	Nan::SetPrototypeMethod(tpl, "SetBondRadius", SetBondRadius);
+	Nan::SetPrototypeMethod(tpl, "setBondRadius", SetBondRadius);
 
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
@@ -241,6 +253,20 @@ void VtkMoleculeMapperWrap::FillInputPortInformation(const Nan::FunctionCallback
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkMoleculeMapperWrap::GetAtomicRadiusScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAtomicRadiusScaleFactor();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkMoleculeMapperWrap::GetAtomicRadiusType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
@@ -312,6 +338,20 @@ void VtkMoleculeMapperWrap::GetBondColorModeAsString(const Nan::FunctionCallback
 	}
 	r = native->GetBondColorModeAsString();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMoleculeMapperWrap::GetBondRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBondRadius();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMoleculeMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -712,6 +752,25 @@ void VtkMoleculeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkMoleculeMapperWrap::SetAtomicRadiusScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAtomicRadiusScaleFactor(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkMoleculeMapperWrap::SetAtomicRadiusType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
@@ -884,6 +943,25 @@ void VtkMoleculeMapperWrap::SetBondColorModeToSingleColor(const Nan::FunctionCal
 		return;
 	}
 	native->SetBondColorModeToSingleColor();
+}
+
+void VtkMoleculeMapperWrap::SetBondRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBondRadius(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMoleculeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info)

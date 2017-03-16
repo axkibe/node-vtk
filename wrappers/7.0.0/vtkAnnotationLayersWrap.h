@@ -37,6 +37,7 @@ class VtkAnnotationLayersWrap : public VtkDataObjectWrap
 		static void GetCurrentAnnotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfAnnotations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

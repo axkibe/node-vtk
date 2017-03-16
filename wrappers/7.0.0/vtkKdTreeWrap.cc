@@ -66,6 +66,9 @@ void VtkKdTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BuildLocatorFromPoints", BuildLocatorFromPoints);
 	Nan::SetPrototypeMethod(tpl, "buildLocatorFromPoints", BuildLocatorFromPoints);
 
+	Nan::SetPrototypeMethod(tpl, "BuildMapForDuplicatePoints", BuildMapForDuplicatePoints);
+	Nan::SetPrototypeMethod(tpl, "buildMapForDuplicatePoints", BuildMapForDuplicatePoints);
+
 	Nan::SetPrototypeMethod(tpl, "CopyTree", CopyTree);
 	Nan::SetPrototypeMethod(tpl, "copyTree", CopyTree);
 
@@ -347,6 +350,36 @@ void VtkKdTreeWrap::BuildLocatorFromPoints(const Nan::FunctionCallbackInfo<v8::V
 		native->BuildLocatorFromPoints(
 			(vtkPointSet *) a0->native.GetPointer()
 		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkKdTreeWrap::BuildMapForDuplicatePoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
+	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		vtkIdTypeArray * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->BuildMapForDuplicatePoints(
+			info[0]->NumberValue()
+		);
+		VtkIdTypeArrayWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -76,6 +76,9 @@ void VtkDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GenerateGhostArray", GenerateGhostArray);
 	Nan::SetPrototypeMethod(tpl, "generateGhostArray", GenerateGhostArray);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetAttributesAsFieldData", GetAttributesAsFieldData);
 	Nan::SetPrototypeMethod(tpl, "getAttributesAsFieldData", GetAttributesAsFieldData);
 
@@ -105,6 +108,9 @@ void VtkDataSetWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetLength", GetLength);
 	Nan::SetPrototypeMethod(tpl, "getLength", GetLength);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetPointData", GetPointData);
 	Nan::SetPrototypeMethod(tpl, "getPointData", GetPointData);
@@ -407,6 +413,20 @@ void VtkDataSetWrap::GenerateGhostArray(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDataSetWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetWrap>(info.Holder());
+	vtkDataSet *native = (vtkDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataSetWrap::GetAttributesAsFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -735,6 +755,20 @@ void VtkDataSetWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDataSetWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetWrap>(info.Holder());
+	vtkDataSet *native = (vtkDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

@@ -36,6 +36,7 @@ class VtkWeightedTransformFilterWrap : public VtkPointSetAlgorithmWrap
 		static void GetCellDataTransformIndexArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellDataWeightArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTransforms(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransformIndexArray(const Nan::FunctionCallbackInfo<v8::Value>& info);

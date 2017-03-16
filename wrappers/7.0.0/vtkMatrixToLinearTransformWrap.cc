@@ -55,6 +55,9 @@ void VtkMatrixToLinearTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "Inverse", Inverse);
 	Nan::SetPrototypeMethod(tpl, "inverse", Inverse);
 
@@ -140,6 +143,20 @@ void VtkMatrixToLinearTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkMatrixToLinearTransformWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMatrixToLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixToLinearTransformWrap>(info.Holder());
+	vtkMatrixToLinearTransform *native = (vtkMatrixToLinearTransform *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMatrixToLinearTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info)

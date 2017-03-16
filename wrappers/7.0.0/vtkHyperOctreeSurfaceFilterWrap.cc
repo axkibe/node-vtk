@@ -54,6 +54,9 @@ void VtkHyperOctreeSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMerging", GetMerging);
 	Nan::SetPrototypeMethod(tpl, "getMerging", GetMerging);
 
@@ -157,6 +160,20 @@ void VtkHyperOctreeSurfaceFilterWrap::GetLocator(const Nan::FunctionCallbackInfo
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHyperOctreeSurfaceFilterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSurfaceFilterWrap>(info.Holder());
+	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperOctreeSurfaceFilterWrap::GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info)

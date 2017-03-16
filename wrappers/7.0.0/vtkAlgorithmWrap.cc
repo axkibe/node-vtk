@@ -78,6 +78,9 @@ void VtkAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetErrorCode", GetErrorCode);
+	Nan::SetPrototypeMethod(tpl, "getErrorCode", GetErrorCode);
+
 	Nan::SetPrototypeMethod(tpl, "GetExecutive", GetExecutive);
 	Nan::SetPrototypeMethod(tpl, "getExecutive", GetExecutive);
 
@@ -468,6 +471,20 @@ void VtkAlgorithmWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAlgorithmWrap::GetErrorCode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetErrorCode();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAlgorithmWrap::GetExecutive(const Nan::FunctionCallbackInfo<v8::Value>& info)

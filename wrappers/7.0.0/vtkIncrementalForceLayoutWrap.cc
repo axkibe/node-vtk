@@ -47,11 +47,32 @@ void VtkIncrementalForceLayoutWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkIncrementalForceLayoutWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetAlpha", GetAlpha);
+	Nan::SetPrototypeMethod(tpl, "getAlpha", GetAlpha);
+
+	Nan::SetPrototypeMethod(tpl, "GetCharge", GetCharge);
+	Nan::SetPrototypeMethod(tpl, "getCharge", GetCharge);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDistance", GetDistance);
+	Nan::SetPrototypeMethod(tpl, "getDistance", GetDistance);
+
+	Nan::SetPrototypeMethod(tpl, "GetFriction", GetFriction);
+	Nan::SetPrototypeMethod(tpl, "getFriction", GetFriction);
+
 	Nan::SetPrototypeMethod(tpl, "GetGraph", GetGraph);
 	Nan::SetPrototypeMethod(tpl, "getGraph", GetGraph);
+
+	Nan::SetPrototypeMethod(tpl, "GetGravity", GetGravity);
+	Nan::SetPrototypeMethod(tpl, "getGravity", GetGravity);
+
+	Nan::SetPrototypeMethod(tpl, "GetStrength", GetStrength);
+	Nan::SetPrototypeMethod(tpl, "getStrength", GetStrength);
+
+	Nan::SetPrototypeMethod(tpl, "GetTheta", GetTheta);
+	Nan::SetPrototypeMethod(tpl, "getTheta", GetTheta);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -62,8 +83,29 @@ void VtkIncrementalForceLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAlpha", SetAlpha);
+	Nan::SetPrototypeMethod(tpl, "setAlpha", SetAlpha);
+
+	Nan::SetPrototypeMethod(tpl, "SetCharge", SetCharge);
+	Nan::SetPrototypeMethod(tpl, "setCharge", SetCharge);
+
+	Nan::SetPrototypeMethod(tpl, "SetDistance", SetDistance);
+	Nan::SetPrototypeMethod(tpl, "setDistance", SetDistance);
+
+	Nan::SetPrototypeMethod(tpl, "SetFriction", SetFriction);
+	Nan::SetPrototypeMethod(tpl, "setFriction", SetFriction);
+
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
+
+	Nan::SetPrototypeMethod(tpl, "SetGravity", SetGravity);
+	Nan::SetPrototypeMethod(tpl, "setGravity", SetGravity);
+
+	Nan::SetPrototypeMethod(tpl, "SetStrength", SetStrength);
+	Nan::SetPrototypeMethod(tpl, "setStrength", SetStrength);
+
+	Nan::SetPrototypeMethod(tpl, "SetTheta", SetTheta);
+	Nan::SetPrototypeMethod(tpl, "setTheta", SetTheta);
 
 	Nan::SetPrototypeMethod(tpl, "UpdatePositions", UpdatePositions);
 	Nan::SetPrototypeMethod(tpl, "updatePositions", UpdatePositions);
@@ -100,6 +142,34 @@ void VtkIncrementalForceLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkIncrementalForceLayoutWrap::GetAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAlpha();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIncrementalForceLayoutWrap::GetCharge(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCharge();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkIncrementalForceLayoutWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
@@ -112,6 +182,34 @@ void VtkIncrementalForceLayoutWrap::GetClassName(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkIncrementalForceLayoutWrap::GetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDistance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIncrementalForceLayoutWrap::GetFriction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFriction();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkIncrementalForceLayoutWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +233,48 @@ void VtkIncrementalForceLayoutWrap::GetGraph(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkIncrementalForceLayoutWrap::GetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGravity();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIncrementalForceLayoutWrap::GetStrength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStrength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIncrementalForceLayoutWrap::GetTheta(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTheta();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkIncrementalForceLayoutWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -213,6 +353,82 @@ void VtkIncrementalForceLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkIncrementalForceLayoutWrap::SetAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAlpha(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIncrementalForceLayoutWrap::SetCharge(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCharge(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIncrementalForceLayoutWrap::SetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDistance(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIncrementalForceLayoutWrap::SetFriction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFriction(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkIncrementalForceLayoutWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
@@ -227,6 +443,63 @@ void VtkIncrementalForceLayoutWrap::SetGraph(const Nan::FunctionCallbackInfo<v8:
 		}
 		native->SetGraph(
 			(vtkGraph *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIncrementalForceLayoutWrap::SetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGravity(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIncrementalForceLayoutWrap::SetStrength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetStrength(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIncrementalForceLayoutWrap::SetTheta(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
+	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTheta(
+			info[0]->NumberValue()
 		);
 		return;
 	}

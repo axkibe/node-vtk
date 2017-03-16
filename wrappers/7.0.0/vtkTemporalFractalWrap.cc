@@ -80,6 +80,9 @@ void VtkTemporalFractalWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDiscreteTimeSteps", GetDiscreteTimeSteps);
 	Nan::SetPrototypeMethod(tpl, "getDiscreteTimeSteps", GetDiscreteTimeSteps);
 
+	Nan::SetPrototypeMethod(tpl, "GetFractalValue", GetFractalValue);
+	Nan::SetPrototypeMethod(tpl, "getFractalValue", GetFractalValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetGenerateRectilinearGrids", GetGenerateRectilinearGrids);
 	Nan::SetPrototypeMethod(tpl, "getGenerateRectilinearGrids", GetGenerateRectilinearGrids);
 
@@ -118,6 +121,9 @@ void VtkTemporalFractalWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetDiscreteTimeSteps", SetDiscreteTimeSteps);
 	Nan::SetPrototypeMethod(tpl, "setDiscreteTimeSteps", SetDiscreteTimeSteps);
+
+	Nan::SetPrototypeMethod(tpl, "SetFractalValue", SetFractalValue);
+	Nan::SetPrototypeMethod(tpl, "setFractalValue", SetFractalValue);
 
 	Nan::SetPrototypeMethod(tpl, "SetGenerateRectilinearGrids", SetGenerateRectilinearGrids);
 	Nan::SetPrototypeMethod(tpl, "setGenerateRectilinearGrids", SetGenerateRectilinearGrids);
@@ -308,6 +314,20 @@ void VtkTemporalFractalWrap::GetDiscreteTimeSteps(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetDiscreteTimeSteps();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTemporalFractalWrap::GetFractalValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
+	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFractalValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -537,6 +557,25 @@ void VtkTemporalFractalWrap::SetDiscreteTimeSteps(const Nan::FunctionCallbackInf
 		}
 		native->SetDiscreteTimeSteps(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTemporalFractalWrap::SetFractalValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
+	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFractalValue(
+			info[0]->NumberValue()
 		);
 		return;
 	}

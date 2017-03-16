@@ -79,6 +79,9 @@ void VtkBoxClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfOutputs", GetNumberOfOutputs);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfOutputs", GetNumberOfOutputs);
 
@@ -287,6 +290,20 @@ void VtkBoxClipDataSetWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkBoxClipDataSetWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBoxClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkBoxClipDataSetWrap>(info.Holder());
+	vtkBoxClipDataSet *native = (vtkBoxClipDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkBoxClipDataSetWrap::GetNumberOfOutputs(const Nan::FunctionCallbackInfo<v8::Value>& info)

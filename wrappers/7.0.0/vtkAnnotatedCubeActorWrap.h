@@ -38,6 +38,7 @@ class VtkAnnotatedCubeActorWrap : public VtkProp3DWrap
 		static void GetCubeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFaceTextScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFaceTextVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextEdgesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextEdgesVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXFaceTextRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -51,6 +51,9 @@ class VtkInteractorStyleWrap : public VtkInteractorObserverWrap
 		static void GetPickColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTDxStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimerDurationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimerDurationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseTimers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HandleObserversOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HandleObserversOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -88,6 +91,7 @@ class VtkInteractorStyleWrap : public VtkInteractorObserverWrap
 		static void SetMouseWheelMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPickColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTDxStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseTimers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Spin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartAnimate(const Nan::FunctionCallbackInfo<v8::Value>& info);

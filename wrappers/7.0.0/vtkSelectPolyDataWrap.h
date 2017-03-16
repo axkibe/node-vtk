@@ -40,6 +40,7 @@ class VtkSelectPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void GetGenerateUnselectedOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLoop(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);

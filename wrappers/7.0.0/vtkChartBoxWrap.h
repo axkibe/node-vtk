@@ -34,6 +34,7 @@ class VtkChartBoxWrap : public VtkChartWrap
 		static void GetSelectedColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisibleColumns(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

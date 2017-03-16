@@ -34,6 +34,7 @@ class VtkOpenGLRenderWindowWrap : public VtkRenderWindowWrap
 		static void GetBackLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetContextCreationTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContextSupportsOpenGL32(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDefaultTextureInternalFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,7 @@ class VtkOpenGLRenderWindowWrap : public VtkRenderWindowWrap
 		static void GetFrontLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrontRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalMaximumNumberOfMultiSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumHardwareLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRGBACharPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRGBAPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);

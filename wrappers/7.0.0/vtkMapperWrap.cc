@@ -113,6 +113,9 @@ void VtkMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderTime", GetRenderTime);
 	Nan::SetPrototypeMethod(tpl, "getRenderTime", GetRenderTime);
 
@@ -744,6 +747,20 @@ void VtkMapperWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMapperWrap::GetRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)

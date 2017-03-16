@@ -78,6 +78,9 @@ void VtkPlotBarWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetOffset", GetOffset);
+	Nan::SetPrototypeMethod(tpl, "getOffset", GetOffset);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
 	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
 
@@ -86,6 +89,9 @@ void VtkPlotBarWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUnscaledInputBounds", GetUnscaledInputBounds);
 	Nan::SetPrototypeMethod(tpl, "getUnscaledInputBounds", GetUnscaledInputBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetWidth", GetWidth);
+	Nan::SetPrototypeMethod(tpl, "getWidth", GetWidth);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -114,11 +120,17 @@ void VtkPlotBarWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLookupTable", SetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "setLookupTable", SetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "SetOffset", SetOffset);
+	Nan::SetPrototypeMethod(tpl, "setOffset", SetOffset);
+
 	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
 	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
 
 	Nan::SetPrototypeMethod(tpl, "SetScalarVisibility", SetScalarVisibility);
 	Nan::SetPrototypeMethod(tpl, "setScalarVisibility", SetScalarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
+	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -488,6 +500,20 @@ void VtkPlotBarWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkPlotBarWrap::GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOffset();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPlotBarWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
@@ -570,6 +596,20 @@ void VtkPlotBarWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotBarWrap::GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWidth();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotBarWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -785,6 +825,25 @@ void VtkPlotBarWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPlotBarWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOffset(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPlotBarWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
@@ -817,6 +876,25 @@ void VtkPlotBarWrap::SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetScalarVisibility(
 			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotBarWrap::SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWidth(
+			info[0]->NumberValue()
 		);
 		return;
 	}

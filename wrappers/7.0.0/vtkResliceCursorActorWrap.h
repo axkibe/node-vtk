@@ -34,6 +34,7 @@ class VtkResliceCursorActorWrap : public VtkProp3DWrap
 		static void GetCenterlineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickSlabProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

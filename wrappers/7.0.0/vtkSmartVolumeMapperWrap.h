@@ -37,6 +37,8 @@ class VtkSmartVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void GetAutoAdjustSampleDistancesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustSampleDistancesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractiveAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractiveAdjustSampleDistancesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractiveAdjustSampleDistancesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,7 +49,11 @@ class VtkSmartVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void GetInterpolationModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationModeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLastUsedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxMemoryFractionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxMemoryFractionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRequestedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InteractiveAdjustSampleDistancesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InteractiveAdjustSampleDistancesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,16 +62,20 @@ class VtkSmartVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutoAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFinalColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFinalColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractiveAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractiveUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationModeToCubic(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationModeToLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationModeToNearestNeighbor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaxMemoryFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRequestedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRequestedRenderModeToDefault(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRequestedRenderModeToGPU(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRequestedRenderModeToRayCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_CLASSDEF

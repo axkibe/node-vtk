@@ -41,6 +41,7 @@ class VtkPolyDataMapper2DWrap : public VtkMapper2DWrap
 		static void GetColorModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

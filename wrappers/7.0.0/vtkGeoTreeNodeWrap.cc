@@ -61,6 +61,9 @@ void VtkGeoTreeNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetId", GetId);
+	Nan::SetPrototypeMethod(tpl, "getId", GetId);
+
 	Nan::SetPrototypeMethod(tpl, "GetLatitudeRange", GetLatitudeRange);
 	Nan::SetPrototypeMethod(tpl, "getLatitudeRange", GetLatitudeRange);
 
@@ -99,6 +102,9 @@ void VtkGeoTreeNodeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetChild", SetChild);
 	Nan::SetPrototypeMethod(tpl, "setChild", SetChild);
+
+	Nan::SetPrototypeMethod(tpl, "SetId", SetId);
+	Nan::SetPrototypeMethod(tpl, "setId", SetId);
 
 	Nan::SetPrototypeMethod(tpl, "SetLatitudeRange", SetLatitudeRange);
 	Nan::SetPrototypeMethod(tpl, "setLatitudeRange", SetLatitudeRange);
@@ -241,6 +247,20 @@ void VtkGeoTreeNodeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGeoTreeNodeWrap::GetId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
+	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetId();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGeoTreeNodeWrap::GetLatitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -506,6 +526,25 @@ void VtkGeoTreeNodeWrap::SetChild(const Nan::FunctionCallbackInfo<v8::Value>& in
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoTreeNodeWrap::SetId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
+	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetId(
+			info[0]->Uint32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

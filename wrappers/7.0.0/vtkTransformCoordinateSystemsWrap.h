@@ -32,6 +32,7 @@ class VtkTransformCoordinateSystemsWrap : public VtkPointSetAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputCoordinateSystem(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputCoordinateSystem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

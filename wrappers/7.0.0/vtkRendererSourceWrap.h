@@ -38,6 +38,7 @@ class VtkRendererSourceWrap : public VtkAlgorithmWrap
 		static void GetDepthValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthValuesInScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWholeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);

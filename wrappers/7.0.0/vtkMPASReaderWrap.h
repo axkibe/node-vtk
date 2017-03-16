@@ -45,6 +45,7 @@ class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetIsZeroCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayerThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayerThicknessRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -60,6 +60,9 @@ void VtkAbstractMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClippingPlanes", GetClippingPlanes);
 	Nan::SetPrototypeMethod(tpl, "getClippingPlanes", GetClippingPlanes);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetTimeToDraw", GetTimeToDraw);
 	Nan::SetPrototypeMethod(tpl, "getTimeToDraw", GetTimeToDraw);
 
@@ -173,6 +176,20 @@ void VtkAbstractMapperWrap::GetClippingPlanes(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAbstractMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAbstractMapperWrap::GetTimeToDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)

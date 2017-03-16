@@ -70,6 +70,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEpsilon", GetEpsilon);
+	Nan::SetPrototypeMethod(tpl, "getEpsilon", GetEpsilon);
+
 	Nan::SetPrototypeMethod(tpl, "GetPolar", GetPolar);
 	Nan::SetPrototypeMethod(tpl, "getPolar", GetPolar);
 
@@ -78,6 +81,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetPolarCoordsRadiusArrayName", GetPolarCoordsRadiusArrayName);
 	Nan::SetPrototypeMethod(tpl, "getPolarCoordsRadiusArrayName", GetPolarCoordsRadiusArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetUnitRadius", GetUnitRadius);
+	Nan::SetPrototypeMethod(tpl, "getUnitRadius", GetUnitRadius);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -103,6 +109,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCartesianCoordsYArrayName", SetCartesianCoordsYArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCartesianCoordsYArrayName", SetCartesianCoordsYArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "SetEpsilon", SetEpsilon);
+	Nan::SetPrototypeMethod(tpl, "setEpsilon", SetEpsilon);
+
 	Nan::SetPrototypeMethod(tpl, "SetGraphConnection", SetGraphConnection);
 	Nan::SetPrototypeMethod(tpl, "setGraphConnection", SetGraphConnection);
 
@@ -117,6 +126,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "SetUnitRadius", SetUnitRadius);
+	Nan::SetPrototypeMethod(tpl, "setUnitRadius", SetUnitRadius);
 
 #ifdef VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_INITPTPL
@@ -256,6 +268,20 @@ void VtkKCoreLayoutWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkKCoreLayoutWrap::GetEpsilon(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEpsilon();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkKCoreLayoutWrap::GetPolar(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
@@ -296,6 +322,20 @@ void VtkKCoreLayoutWrap::GetPolarCoordsRadiusArrayName(const Nan::FunctionCallba
 	}
 	r = native->GetPolarCoordsRadiusArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkKCoreLayoutWrap::GetUnitRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUnitRadius();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkKCoreLayoutWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -457,6 +497,25 @@ void VtkKCoreLayoutWrap::SetCartesianCoordsYArrayName(const Nan::FunctionCallbac
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkKCoreLayoutWrap::SetEpsilon(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEpsilon(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkKCoreLayoutWrap::SetGraphConnection(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
@@ -550,6 +609,25 @@ void VtkKCoreLayoutWrap::SetPolarCoordsRadiusArrayName(const Nan::FunctionCallba
 		}
 		native->SetPolarCoordsRadiusArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkKCoreLayoutWrap::SetUnitRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUnitRadius(
+			info[0]->NumberValue()
 		);
 		return;
 	}

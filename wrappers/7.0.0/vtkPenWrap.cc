@@ -64,6 +64,9 @@ void VtkPenWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
 	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
 
+	Nan::SetPrototypeMethod(tpl, "GetWidth", GetWidth);
+	Nan::SetPrototypeMethod(tpl, "getWidth", GetWidth);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -87,6 +90,9 @@ void VtkPenWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetOpacityF", SetOpacityF);
 	Nan::SetPrototypeMethod(tpl, "setOpacityF", SetOpacityF);
+
+	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
+	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
 #ifdef VTK_NODE_PLUS_VTKPENWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKPENWRAP_INITPTPL
@@ -291,6 +297,20 @@ void VtkPenWrap::GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetOpacity();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPenWrap::GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPenWrap *wrapper = ObjectWrap::Unwrap<VtkPenWrap>(info.Holder());
+	vtkPen *native = (vtkPen *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWidth();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -602,6 +622,25 @@ void VtkPenWrap::SetOpacityF(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 		native->SetOpacityF(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPenWrap::SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPenWrap *wrapper = ObjectWrap::Unwrap<VtkPenWrap>(info.Holder());
+	vtkPen *native = (vtkPen *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWidth(
 			info[0]->NumberValue()
 		);
 		return;

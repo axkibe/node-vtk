@@ -40,7 +40,13 @@ class VtkProperty2DWrap : public VtkObjectWrap
 		static void GetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineStippleRepeatFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineStippleRepeatFactorMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineWidthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineWidthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointSizeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointSizeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,7 +57,9 @@ class VtkProperty2DWrap : public VtkObjectWrap
 		static void SetDisplayLocationToForeground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineStipplePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKPROPERTY2DWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKPROPERTY2DWRAP_CLASSDEF

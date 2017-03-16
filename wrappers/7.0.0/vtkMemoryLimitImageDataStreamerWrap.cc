@@ -50,6 +50,9 @@ void VtkMemoryLimitImageDataStreamerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMemoryLimit", GetMemoryLimit);
+	Nan::SetPrototypeMethod(tpl, "getMemoryLimit", GetMemoryLimit);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -58,6 +61,9 @@ void VtkMemoryLimitImageDataStreamerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetMemoryLimit", SetMemoryLimit);
+	Nan::SetPrototypeMethod(tpl, "setMemoryLimit", SetMemoryLimit);
 
 #ifdef VTK_NODE_PLUS_VTKMEMORYLIMITIMAGEDATASTREAMERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKMEMORYLIMITIMAGEDATASTREAMERWRAP_INITPTPL
@@ -103,6 +109,20 @@ void VtkMemoryLimitImageDataStreamerWrap::GetClassName(const Nan::FunctionCallba
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMemoryLimitImageDataStreamerWrap::GetMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMemoryLimitImageDataStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkMemoryLimitImageDataStreamerWrap>(info.Holder());
+	vtkMemoryLimitImageDataStreamer *native = (vtkMemoryLimitImageDataStreamer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMemoryLimit();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMemoryLimitImageDataStreamerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +196,25 @@ void VtkMemoryLimitImageDataStreamerWrap::SafeDownCast(const Nan::FunctionCallba
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMemoryLimitImageDataStreamerWrap::SetMemoryLimit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMemoryLimitImageDataStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkMemoryLimitImageDataStreamerWrap>(info.Holder());
+	vtkMemoryLimitImageDataStreamer *native = (vtkMemoryLimitImageDataStreamer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMemoryLimit(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

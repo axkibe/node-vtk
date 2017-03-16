@@ -78,6 +78,7 @@ class VtkCameraWrap : public VtkObjectWrap
 		static void GetViewTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewTransformObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetViewingRaysMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -111,6 +111,9 @@ void VtkImageResliceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolator", GetInterpolator);
 	Nan::SetPrototypeMethod(tpl, "getInterpolator", GetInterpolator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMirror", GetMirror);
 	Nan::SetPrototypeMethod(tpl, "getMirror", GetMirror);
 
@@ -659,6 +662,20 @@ void VtkImageResliceWrap::GetInterpolator(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageResliceWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
+	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageResliceWrap::GetMirror(const Nan::FunctionCallbackInfo<v8::Value>& info)

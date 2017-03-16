@@ -85,6 +85,9 @@ void VtkSelectionNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFieldType", GetFieldType);
 	Nan::SetPrototypeMethod(tpl, "getFieldType", GetFieldType);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetProperties", GetProperties);
 	Nan::SetPrototypeMethod(tpl, "getProperties", GetProperties);
 
@@ -450,6 +453,20 @@ void VtkSelectionNodeWrap::GetFieldType(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetFieldType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSelectionNodeWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
+	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

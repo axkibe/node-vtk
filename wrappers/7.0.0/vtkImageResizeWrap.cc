@@ -78,6 +78,9 @@ void VtkImageResizeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolator", GetInterpolator);
 	Nan::SetPrototypeMethod(tpl, "getInterpolator", GetInterpolator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMagnificationFactors", GetMagnificationFactors);
 	Nan::SetPrototypeMethod(tpl, "getMagnificationFactors", GetMagnificationFactors);
 
@@ -324,6 +327,20 @@ void VtkImageResizeWrap::GetInterpolator(const Nan::FunctionCallbackInfo<v8::Val
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageResizeWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageResizeWrap *wrapper = ObjectWrap::Unwrap<VtkImageResizeWrap>(info.Holder());
+	vtkImageResize *native = (vtkImageResize *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageResizeWrap::GetMagnificationFactors(const Nan::FunctionCallbackInfo<v8::Value>& info)

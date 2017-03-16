@@ -34,6 +34,7 @@ class VtkUGFacetReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfParts(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPartColorIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);

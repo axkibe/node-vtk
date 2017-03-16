@@ -92,10 +92,12 @@ extern void vtkRenderingLODNodeJsInit(v8::Local<v8::Object>);
 extern void vtkRenderingVolumeOpenGL2NodeJsInit(v8::Local<v8::Object>);
 extern void vtkViewsContext2DNodeJsInit(v8::Local<v8::Object>);
 extern void vtkViewsInfovisNodeJsInit(v8::Local<v8::Object>);
+extern void vtkNodeJsPlusInit(v8::Local<v8::Object>);
 
 void init( Local<Object> exports )
 {
 	vtkNodeJsNoWrap.Reset( Nan::New<v8::Object>() );
+
 	
 	vtkCommonCoreNodeJsInit(exports);
 	vtkCommonMathNodeJsInit(exports);
@@ -181,6 +183,7 @@ void init( Local<Object> exports )
 	vtkRenderingVolumeOpenGL2NodeJsInit(exports);
 	vtkViewsContext2DNodeJsInit(exports);
 	vtkViewsInfovisNodeJsInit(exports);
+	vtkNodeJsPlusInit(exports);
 }
 
 NODE_MODULE( addon, init )

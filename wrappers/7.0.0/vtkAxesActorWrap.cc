@@ -108,6 +108,9 @@ void VtkAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCylinderResolutionMinValue", GetCylinderResolutionMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCylinderResolutionMinValue", GetCylinderResolutionMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormalizedLabelPosition", GetNormalizedLabelPosition);
 	Nan::SetPrototypeMethod(tpl, "getNormalizedLabelPosition", GetNormalizedLabelPosition);
 
@@ -116,6 +119,9 @@ void VtkAxesActorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNormalizedTipLength", GetNormalizedTipLength);
 	Nan::SetPrototypeMethod(tpl, "getNormalizedTipLength", GetNormalizedTipLength);
+
+	Nan::SetPrototypeMethod(tpl, "GetRedrawMTime", GetRedrawMTime);
+	Nan::SetPrototypeMethod(tpl, "getRedrawMTime", GetRedrawMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetShaftType", GetShaftType);
 	Nan::SetPrototypeMethod(tpl, "getShaftType", GetShaftType);
@@ -623,6 +629,20 @@ void VtkAxesActorWrap::GetCylinderResolutionMinValue(const Nan::FunctionCallback
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAxesActorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxesActorWrap>(info.Holder());
+	vtkAxesActor *native = (vtkAxesActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAxesActorWrap::GetNormalizedLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxesActorWrap>(info.Holder());
@@ -672,6 +692,20 @@ void VtkAxesActorWrap::GetNormalizedTipLength(const Nan::FunctionCallbackInfo<v8
 	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
 	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkAxesActorWrap::GetRedrawMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxesActorWrap>(info.Holder());
+	vtkAxesActor *native = (vtkAxesActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRedrawMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAxesActorWrap::GetShaftType(const Nan::FunctionCallbackInfo<v8::Value>& info)

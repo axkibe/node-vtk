@@ -13,6 +13,9 @@
 #include "vtkDataArrayWrap.h"
 #include "vtkAbstractArrayWrap.h"
 #include "vtkIntArrayWrap.h"
+#include "vtkLabelHierarchyIteratorWrap.h"
+#include "vtkRendererWrap.h"
+#include "vtkCameraWrap.h"
 #include "vtkCoincidentPointsWrap.h"
 #include "../../plus/plus.h"
 
@@ -103,6 +106,9 @@ void VtkLabelHierarchyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "NewIterator", NewIterator);
+	Nan::SetPrototypeMethod(tpl, "newIterator", NewIterator);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -641,6 +647,221 @@ void VtkLabelHierarchyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLabelHierarchyWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyWrap>(info.Holder());
+	vtkLabelHierarchy *native = (vtkLabelHierarchy *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkCameraWrap *a2 = ObjectWrap::Unwrap<VtkCameraWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 24 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsBoolean())
+					{
+						if(info.Length() > 5 && info[5]->IsFloat32Array())
+						{
+							v8::Local<v8::Float32Array>a5(v8::Local<v8::Float32Array>::Cast(info[5]->ToObject()));
+							if( a5->Length() < 2 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							vtkLabelHierarchyIterator * r;
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							r = native->NewIterator(
+								info[0]->Int32Value(),
+								(vtkRenderer *) a1->native.GetPointer(),
+								(vtkCamera *) a2->native.GetPointer(),
+								(double *)(a3->Buffer()->GetContents().Data()),
+								info[4]->BooleanValue(),
+								(float *)(a5->Buffer()->GetContents().Data())
+							);
+							VtkLabelHierarchyIteratorWrap::InitPtpl();
+							v8::Local<v8::Value> argv[1] =
+								{ Nan::New(vtkNodeJsNoWrap) };
+							v8::Local<v8::Function> cons =
+								Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl)->GetFunction();
+							v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+							VtkLabelHierarchyIteratorWrap *w = new VtkLabelHierarchyIteratorWrap();
+							w->native = r;
+							w->Wrap(wo);
+							info.GetReturnValue().Set(wo);
+							return;
+						}
+						else if(info.Length() > 5 && info[5]->IsArray())
+						{
+							v8::Local<v8::Array>a5(v8::Local<v8::Array>::Cast(info[5]->ToObject()));
+							float b5[2];
+							if( a5->Length() < 2 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							for( i = 0; i < 2; i++ )
+							{
+								if( !a5->Get(i)->IsNumber() )
+								{
+									Nan::ThrowError("Array contents invalid.");
+									return;
+								}
+								b5[i] = a5->Get(i)->NumberValue();
+							}
+							vtkLabelHierarchyIterator * r;
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							r = native->NewIterator(
+								info[0]->Int32Value(),
+								(vtkRenderer *) a1->native.GetPointer(),
+								(vtkCamera *) a2->native.GetPointer(),
+								(double *)(a3->Buffer()->GetContents().Data()),
+								info[4]->BooleanValue(),
+								b5
+							);
+							VtkLabelHierarchyIteratorWrap::InitPtpl();
+							v8::Local<v8::Value> argv[1] =
+								{ Nan::New(vtkNodeJsNoWrap) };
+							v8::Local<v8::Function> cons =
+								Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl)->GetFunction();
+							v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+							VtkLabelHierarchyIteratorWrap *w = new VtkLabelHierarchyIteratorWrap();
+							w->native = r;
+							w->Wrap(wo);
+							info.GetReturnValue().Set(wo);
+							return;
+						}
+					}
+				}
+				else if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[24];
+					if( a3->Length() < 24 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 24; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsBoolean())
+					{
+						if(info.Length() > 5 && info[5]->IsArray())
+						{
+							v8::Local<v8::Array>a5(v8::Local<v8::Array>::Cast(info[5]->ToObject()));
+							float b5[2];
+							if( a5->Length() < 2 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							for( i = 0; i < 2; i++ )
+							{
+								if( !a5->Get(i)->IsNumber() )
+								{
+									Nan::ThrowError("Array contents invalid.");
+									return;
+								}
+								b5[i] = a5->Get(i)->NumberValue();
+							}
+							vtkLabelHierarchyIterator * r;
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							r = native->NewIterator(
+								info[0]->Int32Value(),
+								(vtkRenderer *) a1->native.GetPointer(),
+								(vtkCamera *) a2->native.GetPointer(),
+								b3,
+								info[4]->BooleanValue(),
+								b5
+							);
+							VtkLabelHierarchyIteratorWrap::InitPtpl();
+							v8::Local<v8::Value> argv[1] =
+								{ Nan::New(vtkNodeJsNoWrap) };
+							v8::Local<v8::Function> cons =
+								Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl)->GetFunction();
+							v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+							VtkLabelHierarchyIteratorWrap *w = new VtkLabelHierarchyIteratorWrap();
+							w->native = r;
+							w->Wrap(wo);
+							info.GetReturnValue().Set(wo);
+							return;
+						}
+						else if(info.Length() > 5 && info[5]->IsFloat32Array())
+						{
+							v8::Local<v8::Float32Array>a5(v8::Local<v8::Float32Array>::Cast(info[5]->ToObject()));
+							if( a5->Length() < 2 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							vtkLabelHierarchyIterator * r;
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							r = native->NewIterator(
+								info[0]->Int32Value(),
+								(vtkRenderer *) a1->native.GetPointer(),
+								(vtkCamera *) a2->native.GetPointer(),
+								b3,
+								info[4]->BooleanValue(),
+								(float *)(a5->Buffer()->GetContents().Data())
+							);
+							VtkLabelHierarchyIteratorWrap::InitPtpl();
+							v8::Local<v8::Value> argv[1] =
+								{ Nan::New(vtkNodeJsNoWrap) };
+							v8::Local<v8::Function> cons =
+								Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl)->GetFunction();
+							v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+							VtkLabelHierarchyIteratorWrap *w = new VtkLabelHierarchyIteratorWrap();
+							w->native = r;
+							w->Wrap(wo);
+							info.GetReturnValue().Set(wo);
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkLabelHierarchyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

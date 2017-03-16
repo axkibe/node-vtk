@@ -48,6 +48,7 @@ class VtkVolumePropertyWrap : public VtkObjectWrap
 		static void GetInterpolationTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationTypeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationTypeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRGBTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarOpacityUnitDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);

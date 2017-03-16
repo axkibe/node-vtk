@@ -12,7 +12,6 @@
 #include "vtkRendererCollectionWrap.h"
 #include "vtkCollectionWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
-#include "vtkPainterDeviceAdapterWrap.h"
 #include "../../plus/plus.h"
 
 using namespace v8;
@@ -100,6 +99,15 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAnaglyphColorMask", GetAnaglyphColorMask);
 	Nan::SetPrototypeMethod(tpl, "getAnaglyphColorMask", GetAnaglyphColorMask);
 
+	Nan::SetPrototypeMethod(tpl, "GetAnaglyphColorSaturation", GetAnaglyphColorSaturation);
+	Nan::SetPrototypeMethod(tpl, "getAnaglyphColorSaturation", GetAnaglyphColorSaturation);
+
+	Nan::SetPrototypeMethod(tpl, "GetAnaglyphColorSaturationMaxValue", GetAnaglyphColorSaturationMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getAnaglyphColorSaturationMaxValue", GetAnaglyphColorSaturationMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetAnaglyphColorSaturationMinValue", GetAnaglyphColorSaturationMinValue);
+	Nan::SetPrototypeMethod(tpl, "getAnaglyphColorSaturationMinValue", GetAnaglyphColorSaturationMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetBorders", GetBorders);
 	Nan::SetPrototypeMethod(tpl, "getBorders", GetBorders);
 
@@ -154,9 +162,6 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayersMinValue", GetNumberOfLayersMinValue);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfLayersMinValue", GetNumberOfLayersMinValue);
 
-	Nan::SetPrototypeMethod(tpl, "GetPainterDeviceAdapter", GetPainterDeviceAdapter);
-	Nan::SetPrototypeMethod(tpl, "getPainterDeviceAdapter", GetPainterDeviceAdapter);
-
 	Nan::SetPrototypeMethod(tpl, "GetPointSmoothing", GetPointSmoothing);
 	Nan::SetPrototypeMethod(tpl, "getPointSmoothing", GetPointSmoothing);
 
@@ -192,6 +197,9 @@ void VtkRenderWindowWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUseConstantFDOffsets", GetUseConstantFDOffsets);
 	Nan::SetPrototypeMethod(tpl, "getUseConstantFDOffsets", GetUseConstantFDOffsets);
+
+	Nan::SetPrototypeMethod(tpl, "GetZbufferDataAtPoint", GetZbufferDataAtPoint);
+	Nan::SetPrototypeMethod(tpl, "getZbufferDataAtPoint", GetZbufferDataAtPoint);
 
 	Nan::SetPrototypeMethod(tpl, "HasRenderer", HasRenderer);
 	Nan::SetPrototypeMethod(tpl, "hasRenderer", HasRenderer);
@@ -261,6 +269,9 @@ void VtkRenderWindowWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetAnaglyphColorMask", SetAnaglyphColorMask);
 	Nan::SetPrototypeMethod(tpl, "setAnaglyphColorMask", SetAnaglyphColorMask);
+
+	Nan::SetPrototypeMethod(tpl, "SetAnaglyphColorSaturation", SetAnaglyphColorSaturation);
+	Nan::SetPrototypeMethod(tpl, "setAnaglyphColorSaturation", SetAnaglyphColorSaturation);
 
 	Nan::SetPrototypeMethod(tpl, "SetBorders", SetBorders);
 	Nan::SetPrototypeMethod(tpl, "setBorders", SetBorders);
@@ -649,6 +660,48 @@ void VtkRenderWindowWrap::GetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(at);
 }
 
+void VtkRenderWindowWrap::GetAnaglyphColorSaturation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAnaglyphColorSaturation();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowWrap::GetAnaglyphColorSaturationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAnaglyphColorSaturationMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowWrap::GetAnaglyphColorSaturationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAnaglyphColorSaturationMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderWindowWrap::GetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -910,29 +963,6 @@ void VtkRenderWindowWrap::GetNumberOfLayersMinValue(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkRenderWindowWrap::GetPainterDeviceAdapter(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	vtkPainterDeviceAdapter * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetPainterDeviceAdapter();
-	VtkPainterDeviceAdapterWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkPainterDeviceAdapterWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkPainterDeviceAdapterWrap *w = new VtkPainterDeviceAdapterWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
 void VtkRenderWindowWrap::GetPointSmoothing(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -1108,6 +1138,31 @@ void VtkRenderWindowWrap::GetUseConstantFDOffsets(const Nan::FunctionCallbackInf
 	}
 	r = native->GetUseConstantFDOffsets();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowWrap::GetZbufferDataAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			float r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetZbufferDataAtPoint(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRenderWindowWrap::HasRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1540,6 +1595,25 @@ void VtkRenderWindowWrap::SetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderWindowWrap::SetAnaglyphColorSaturation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAnaglyphColorSaturation(
+			info[0]->NumberValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -45,6 +45,7 @@ class VtkCleanPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void GetConvertPolysToLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConvertStripsToPolys(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPieceInvariant(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);

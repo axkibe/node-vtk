@@ -8,6 +8,7 @@
 #include "vtkSocketWrap.h"
 #include "vtkServerSocketWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkClientSocketWrap.h"
 #include "../../plus/plus.h"
 
 using namespace v8;
@@ -64,6 +65,9 @@ void VtkServerSocketWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "WaitForConnection", WaitForConnection);
+	Nan::SetPrototypeMethod(tpl, "waitForConnection", WaitForConnection);
 
 #ifdef VTK_NODE_PLUS_VTKSERVERSOCKETWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKSERVERSOCKETWRAP_INITPTPL
@@ -214,6 +218,36 @@ void VtkServerSocketWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 			Nan::New<v8::FunctionTemplate>(VtkServerSocketWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkServerSocketWrap *w = new VtkServerSocketWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkServerSocketWrap::WaitForConnection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkServerSocketWrap *wrapper = ObjectWrap::Unwrap<VtkServerSocketWrap>(info.Holder());
+	vtkServerSocket *native = (vtkServerSocket *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkClientSocket * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->WaitForConnection(
+			info[0]->Uint32Value()
+		);
+		VtkClientSocketWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkClientSocketWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkClientSocketWrap *w = new VtkClientSocketWrap();
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);

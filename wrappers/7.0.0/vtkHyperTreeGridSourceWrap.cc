@@ -83,6 +83,9 @@ void VtkHyperTreeGridSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGridSize", GetGridSize);
 	Nan::SetPrototypeMethod(tpl, "getGridSize", GetGridSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaterialMask", GetMaterialMask);
 	Nan::SetPrototypeMethod(tpl, "getMaterialMask", GetMaterialMask);
 
@@ -384,6 +387,20 @@ void VtkHyperTreeGridSourceWrap::GetGridSize(const Nan::FunctionCallbackInfo<v8:
 	Local<v8::Uint32Array> at = v8::Uint32Array::New(ab, 0, 3);
 	memcpy(ab->GetContents().Data(), r, 3 * sizeof(unsigned int));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkHyperTreeGridSourceWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
+	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperTreeGridSourceWrap::GetMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info)

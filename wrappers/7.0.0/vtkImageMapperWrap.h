@@ -37,6 +37,7 @@ class VtkImageMapperWrap : public VtkMapper2DWrap
 		static void GetColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCustomDisplayExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderToRectangle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseCustomExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWholeZMax(const Nan::FunctionCallbackInfo<v8::Value>& info);

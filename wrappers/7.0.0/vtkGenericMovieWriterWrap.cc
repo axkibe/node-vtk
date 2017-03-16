@@ -56,6 +56,9 @@ void VtkGenericMovieWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetStringFromErrorCode", GetStringFromErrorCode);
+	Nan::SetPrototypeMethod(tpl, "getStringFromErrorCode", GetStringFromErrorCode);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -139,6 +142,27 @@ void VtkGenericMovieWriterWrap::GetFileName(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGenericMovieWriterWrap::GetStringFromErrorCode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericMovieWriterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericMovieWriterWrap>(info.Holder());
+	vtkGenericMovieWriter *native = (vtkGenericMovieWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetStringFromErrorCode(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGenericMovieWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

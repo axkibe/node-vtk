@@ -61,6 +61,9 @@ void VtkTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Dump", Dump);
 	Nan::SetPrototypeMethod(tpl, "dump", Dump);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetAttributesAsFieldData", GetAttributesAsFieldData);
 	Nan::SetPrototypeMethod(tpl, "getAttributesAsFieldData", GetAttributesAsFieldData);
 
@@ -193,6 +196,20 @@ void VtkTableWrap::Dump(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTableWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableWrap *wrapper = ObjectWrap::Unwrap<VtkTableWrap>(info.Holder());
+	vtkTable *native = (vtkTable *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTableWrap::GetAttributesAsFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -85,6 +85,15 @@ void VtkInteractorObserverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPickingManaged", GetPickingManaged);
 	Nan::SetPrototypeMethod(tpl, "getPickingManaged", GetPickingManaged);
 
+	Nan::SetPrototypeMethod(tpl, "GetPriority", GetPriority);
+	Nan::SetPrototypeMethod(tpl, "getPriority", GetPriority);
+
+	Nan::SetPrototypeMethod(tpl, "GetPriorityMaxValue", GetPriorityMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getPriorityMaxValue", GetPriorityMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetPriorityMinValue", GetPriorityMinValue);
+	Nan::SetPrototypeMethod(tpl, "getPriorityMinValue", GetPriorityMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GrabFocus", GrabFocus);
 	Nan::SetPrototypeMethod(tpl, "grabFocus", GrabFocus);
 
@@ -141,6 +150,9 @@ void VtkInteractorObserverWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPickingManaged", SetPickingManaged);
 	Nan::SetPrototypeMethod(tpl, "setPickingManaged", SetPickingManaged);
+
+	Nan::SetPrototypeMethod(tpl, "SetPriority", SetPriority);
+	Nan::SetPrototypeMethod(tpl, "setPriority", SetPriority);
 
 #ifdef VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_INITPTPL
@@ -490,6 +502,48 @@ void VtkInteractorObserverWrap::GetPickingManaged(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkInteractorObserverWrap::GetPriority(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPriority();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorObserverWrap::GetPriorityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPriorityMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorObserverWrap::GetPriorityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPriorityMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkInteractorObserverWrap::GrabFocus(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
@@ -823,6 +877,25 @@ void VtkInteractorObserverWrap::SetPickingManaged(const Nan::FunctionCallbackInf
 		}
 		native->SetPickingManaged(
 			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorObserverWrap::SetPriority(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPriority(
+			info[0]->NumberValue()
 		);
 		return;
 	}

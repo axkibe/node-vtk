@@ -55,6 +55,9 @@ void VtkDemandDrivenPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetPipelineMTime", GetPipelineMTime);
+	Nan::SetPrototypeMethod(tpl, "getPipelineMTime", GetPipelineMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetReleaseDataFlag", GetReleaseDataFlag);
 	Nan::SetPrototypeMethod(tpl, "getReleaseDataFlag", GetReleaseDataFlag);
 
@@ -165,6 +168,20 @@ void VtkDemandDrivenPipelineWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkDemandDrivenPipelineWrap::GetPipelineMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkDemandDrivenPipelineWrap>(info.Holder());
+	vtkDemandDrivenPipeline *native = (vtkDemandDrivenPipeline *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPipelineMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDemandDrivenPipelineWrap::GetReleaseDataFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)

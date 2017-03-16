@@ -68,6 +68,9 @@ void VtkSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataObjectType", GetDataObjectType);
 	Nan::SetPrototypeMethod(tpl, "getDataObjectType", GetDataObjectType);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNode", GetNode);
 	Nan::SetPrototypeMethod(tpl, "getNode", GetNode);
 
@@ -269,6 +272,20 @@ void VtkSelectionWrap::GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetDataObjectType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSelectionWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionWrap>(info.Holder());
+	vtkSelection *native = (vtkSelection *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

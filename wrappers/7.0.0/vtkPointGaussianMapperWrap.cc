@@ -84,6 +84,9 @@ void VtkPointGaussianMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSplatShaderCode", GetSplatShaderCode);
 	Nan::SetPrototypeMethod(tpl, "getSplatShaderCode", GetSplatShaderCode);
 
+	Nan::SetPrototypeMethod(tpl, "GetTriangleScale", GetTriangleScale);
+	Nan::SetPrototypeMethod(tpl, "getTriangleScale", GetTriangleScale);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -119,6 +122,9 @@ void VtkPointGaussianMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetSplatShaderCode", SetSplatShaderCode);
 	Nan::SetPrototypeMethod(tpl, "setSplatShaderCode", SetSplatShaderCode);
+
+	Nan::SetPrototypeMethod(tpl, "SetTriangleScale", SetTriangleScale);
+	Nan::SetPrototypeMethod(tpl, "setTriangleScale", SetTriangleScale);
 
 #ifdef VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_INITPTPL
@@ -332,6 +338,20 @@ void VtkPointGaussianMapperWrap::GetSplatShaderCode(const Nan::FunctionCallbackI
 	}
 	r = native->GetSplatShaderCode();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPointGaussianMapperWrap::GetTriangleScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointGaussianMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPointGaussianMapperWrap>(info.Holder());
+	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTriangleScale();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPointGaussianMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -580,6 +600,25 @@ void VtkPointGaussianMapperWrap::SetSplatShaderCode(const Nan::FunctionCallbackI
 		}
 		native->SetSplatShaderCode(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPointGaussianMapperWrap::SetTriangleScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointGaussianMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPointGaussianMapperWrap>(info.Holder());
+	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTriangleScale(
+			info[0]->NumberValue()
 		);
 		return;
 	}

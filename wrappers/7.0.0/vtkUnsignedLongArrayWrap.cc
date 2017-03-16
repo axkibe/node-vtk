@@ -53,6 +53,12 @@ void VtkUnsignedLongArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
 	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMax", GetDataTypeValueMax);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMax", GetDataTypeValueMax);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMin", GetDataTypeValueMin);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMin", GetDataTypeValueMin);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -119,6 +125,34 @@ void VtkUnsignedLongArrayWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetDataType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnsignedLongArrayWrap::GetDataTypeValueMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnsignedLongArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnsignedLongArrayWrap>(info.Holder());
+	vtkUnsignedLongArray *native = (vtkUnsignedLongArray *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMax();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnsignedLongArrayWrap::GetDataTypeValueMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnsignedLongArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnsignedLongArrayWrap>(info.Holder());
+	vtkUnsignedLongArray *native = (vtkUnsignedLongArray *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMin();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

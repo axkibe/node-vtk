@@ -87,6 +87,9 @@ void VtkTreeHeatmapItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTree", GetTree);
 	Nan::SetPrototypeMethod(tpl, "getTree", GetTree);
 
+	Nan::SetPrototypeMethod(tpl, "GetTreeLineWidth", GetTreeLineWidth);
+	Nan::SetPrototypeMethod(tpl, "getTreeLineWidth", GetTreeLineWidth);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -125,6 +128,9 @@ void VtkTreeHeatmapItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetTreeColorArray", SetTreeColorArray);
 	Nan::SetPrototypeMethod(tpl, "setTreeColorArray", SetTreeColorArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetTreeLineWidth", SetTreeLineWidth);
+	Nan::SetPrototypeMethod(tpl, "setTreeLineWidth", SetTreeLineWidth);
 
 #ifdef VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_INITPTPL
@@ -511,6 +517,20 @@ void VtkTreeHeatmapItemWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkTreeHeatmapItemWrap::GetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
+	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTreeLineWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkTreeHeatmapItemWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
@@ -756,6 +776,25 @@ void VtkTreeHeatmapItemWrap::SetTreeColorArray(const Nan::FunctionCallbackInfo<v
 		}
 		native->SetTreeColorArray(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeHeatmapItemWrap::SetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
+	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTreeLineWidth(
+			info[0]->NumberValue()
 		);
 		return;
 	}

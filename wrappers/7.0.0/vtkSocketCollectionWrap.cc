@@ -75,6 +75,9 @@ void VtkSocketCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SelectSockets", SelectSockets);
+	Nan::SetPrototypeMethod(tpl, "selectSockets", SelectSockets);
+
 #ifdef VTK_NODE_PLUS_VTKSOCKETCOLLECTIONWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKSOCKETCOLLECTIONWRAP_INITPTPL
 #endif
@@ -303,6 +306,27 @@ void VtkSocketCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSocketCollectionWrap::SelectSockets(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSocketCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCollectionWrap>(info.Holder());
+	vtkSocketCollection *native = (vtkSocketCollection *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SelectSockets(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

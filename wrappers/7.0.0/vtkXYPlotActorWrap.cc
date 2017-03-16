@@ -187,6 +187,9 @@ void VtkXYPlotActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLogx", GetLogx);
 	Nan::SetPrototypeMethod(tpl, "getLogx", GetLogx);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfXLabels", GetNumberOfXLabels);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfXLabels", GetNumberOfXLabels);
 
@@ -1456,6 +1459,20 @@ void VtkXYPlotActorWrap::GetLogx(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetLogx();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXYPlotActorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

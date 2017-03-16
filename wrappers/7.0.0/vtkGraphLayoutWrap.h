@@ -32,6 +32,7 @@ class VtkGraphLayoutWrap : public VtkGraphAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZRange(const Nan::FunctionCallbackInfo<v8::Value>& info);

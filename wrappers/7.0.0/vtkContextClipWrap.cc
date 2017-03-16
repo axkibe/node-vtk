@@ -51,6 +51,21 @@ void VtkContextClipWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetHeight", GetHeight);
+	Nan::SetPrototypeMethod(tpl, "getHeight", GetHeight);
+
+	Nan::SetPrototypeMethod(tpl, "GetRect", GetRect);
+	Nan::SetPrototypeMethod(tpl, "getRect", GetRect);
+
+	Nan::SetPrototypeMethod(tpl, "GetWidth", GetWidth);
+	Nan::SetPrototypeMethod(tpl, "getWidth", GetWidth);
+
+	Nan::SetPrototypeMethod(tpl, "GetX", GetX);
+	Nan::SetPrototypeMethod(tpl, "getX", GetX);
+
+	Nan::SetPrototypeMethod(tpl, "GetY", GetY);
+	Nan::SetPrototypeMethod(tpl, "getY", GetY);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -62,6 +77,9 @@ void VtkContextClipWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetClip", SetClip);
+	Nan::SetPrototypeMethod(tpl, "setClip", SetClip);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -110,6 +128,118 @@ void VtkContextClipWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkContextClipWrap::GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextClipWrap *wrapper = ObjectWrap::Unwrap<VtkContextClipWrap>(info.Holder());
+	vtkContextClip *native = (vtkContextClip *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHeight();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextClipWrap::GetRect(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextClipWrap *wrapper = ObjectWrap::Unwrap<VtkContextClipWrap>(info.Holder());
+	vtkContextClip *native = (vtkContextClip *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetRect(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetRect(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextClipWrap::GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextClipWrap *wrapper = ObjectWrap::Unwrap<VtkContextClipWrap>(info.Holder());
+	vtkContextClip *native = (vtkContextClip *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextClipWrap::GetX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextClipWrap *wrapper = ObjectWrap::Unwrap<VtkContextClipWrap>(info.Holder());
+	vtkContextClip *native = (vtkContextClip *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetX();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextClipWrap::GetY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextClipWrap *wrapper = ObjectWrap::Unwrap<VtkContextClipWrap>(info.Holder());
+	vtkContextClip *native = (vtkContextClip *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetY();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkContextClipWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -206,6 +336,37 @@ void VtkContextClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextClipWrap::SetClip(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextClipWrap *wrapper = ObjectWrap::Unwrap<VtkContextClipWrap>(info.Holder());
+	vtkContextClip *native = (vtkContextClip *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetClip(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

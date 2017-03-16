@@ -34,6 +34,7 @@ class VtkImplicitPolyDataDistanceWrap : public VtkImplicitFunctionWrap
 		static void EvaluateFunctionAndGetClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNoClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNoGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNoValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

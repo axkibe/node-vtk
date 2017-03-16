@@ -34,10 +34,18 @@ class VtkEncodedGradientShaderWrap : public VtkObjectWrap
 		static void GetActiveComponentMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveComponentMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroNormalDiffuseIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroNormalDiffuseIntensityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroNormalDiffuseIntensityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroNormalSpecularIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroNormalSpecularIntensityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroNormalSpecularIntensityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetActiveComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetZeroNormalDiffuseIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetZeroNormalSpecularIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateShadingTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKENCODEDGRADIENTSHADERWRAP_CLASSDEF

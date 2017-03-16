@@ -32,6 +32,7 @@ class VtkVolumeRayCastIsosurfaceFunctionWrap : public VtkVolumeRayCastFunctionWr
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsoValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroOpacityThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -30,12 +30,26 @@ class VtkIncrementalForceLayoutWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCharge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFriction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTheta(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCharge(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFriction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTheta(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdatePositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKINCREMENTALFORCELAYOUTWRAP_CLASSDEF

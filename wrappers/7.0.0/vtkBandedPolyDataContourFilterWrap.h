@@ -40,6 +40,7 @@ class VtkBandedPolyDataContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClipping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContourEdgesOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateContourEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -49,6 +49,7 @@ class VtkPlotWrap : public VtkContextItemWrap
 		static void GetTooltipPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -72,6 +73,7 @@ class VtkPlotWrap : public VtkContextItemWrap
 		static void SetTooltipNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTooltipPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateCache(const Nan::FunctionCallbackInfo<v8::Value>& info);

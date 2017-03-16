@@ -86,6 +86,9 @@ void VtkTableBasedClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMergeTolerance", GetMergeTolerance);
 	Nan::SetPrototypeMethod(tpl, "getMergeTolerance", GetMergeTolerance);
 
@@ -373,6 +376,20 @@ void VtkTableBasedClipDataSetWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTableBasedClipDataSetWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
+	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTableBasedClipDataSetWrap::GetMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)

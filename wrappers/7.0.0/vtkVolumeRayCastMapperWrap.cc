@@ -74,6 +74,12 @@ void VtkVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGradientEstimator", GetGradientEstimator);
 	Nan::SetPrototypeMethod(tpl, "getGradientEstimator", GetGradientEstimator);
 
+	Nan::SetPrototypeMethod(tpl, "GetGradientMagnitudeBias", GetGradientMagnitudeBias);
+	Nan::SetPrototypeMethod(tpl, "getGradientMagnitudeBias", GetGradientMagnitudeBias);
+
+	Nan::SetPrototypeMethod(tpl, "GetGradientMagnitudeScale", GetGradientMagnitudeScale);
+	Nan::SetPrototypeMethod(tpl, "getGradientMagnitudeScale", GetGradientMagnitudeScale);
+
 	Nan::SetPrototypeMethod(tpl, "GetGradientShader", GetGradientShader);
 	Nan::SetPrototypeMethod(tpl, "getGradientShader", GetGradientShader);
 
@@ -121,6 +127,9 @@ void VtkVolumeRayCastMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetVolumeRayCastFunction", GetVolumeRayCastFunction);
 	Nan::SetPrototypeMethod(tpl, "getVolumeRayCastFunction", GetVolumeRayCastFunction);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroOpacityThreshold", GetZeroOpacityThreshold);
+	Nan::SetPrototypeMethod(tpl, "getZeroOpacityThreshold", GetZeroOpacityThreshold);
 
 	Nan::SetPrototypeMethod(tpl, "IntermixIntersectingGeometryOff", IntermixIntersectingGeometryOff);
 	Nan::SetPrototypeMethod(tpl, "intermixIntersectingGeometryOff", IntermixIntersectingGeometryOff);
@@ -303,6 +312,62 @@ void VtkVolumeRayCastMapperWrap::GetGradientEstimator(const Nan::FunctionCallbac
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkVolumeRayCastMapperWrap::GetGradientMagnitudeBias(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
+	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetGradientMagnitudeBias(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGradientMagnitudeBias();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumeRayCastMapperWrap::GetGradientMagnitudeScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
+	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetGradientMagnitudeScale(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGradientMagnitudeScale();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkVolumeRayCastMapperWrap::GetGradientShader(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -545,6 +610,28 @@ void VtkVolumeRayCastMapperWrap::GetVolumeRayCastFunction(const Nan::FunctionCal
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkVolumeRayCastMapperWrap::GetZeroOpacityThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
+	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
+		float r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetZeroOpacityThreshold(
+			(vtkVolume *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkVolumeRayCastMapperWrap::IntermixIntersectingGeometryOff(const Nan::FunctionCallbackInfo<v8::Value>& info)

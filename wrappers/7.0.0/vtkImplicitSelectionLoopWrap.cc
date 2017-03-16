@@ -69,6 +69,9 @@ void VtkImplicitSelectionLoopWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLoop", GetLoop);
 	Nan::SetPrototypeMethod(tpl, "getLoop", GetLoop);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
 	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
 
@@ -415,6 +418,20 @@ void VtkImplicitSelectionLoopWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitSelectionLoopWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitSelectionLoopWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSelectionLoopWrap>(info.Holder());
+	vtkImplicitSelectionLoop *native = (vtkImplicitSelectionLoop *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImplicitSelectionLoopWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)

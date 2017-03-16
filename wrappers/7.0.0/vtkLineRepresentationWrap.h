@@ -47,6 +47,7 @@ class VtkLineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetInteractionStateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineHandleRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint1Representation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);

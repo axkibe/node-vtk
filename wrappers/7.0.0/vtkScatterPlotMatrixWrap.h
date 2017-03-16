@@ -65,6 +65,7 @@ class VtkScatterPlotMatrixWrap : public VtkChartMatrixWrap
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPlotMarkerSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlotMarkerStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

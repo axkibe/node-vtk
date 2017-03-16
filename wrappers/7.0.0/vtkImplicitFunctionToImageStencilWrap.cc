@@ -54,6 +54,9 @@ void VtkImplicitFunctionToImageStencilWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetThreshold", GetThreshold);
 	Nan::SetPrototypeMethod(tpl, "getThreshold", GetThreshold);
 
@@ -139,6 +142,20 @@ void VtkImplicitFunctionToImageStencilWrap::GetInput(const Nan::FunctionCallback
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitFunctionToImageStencilWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitFunctionToImageStencilWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitFunctionToImageStencilWrap>(info.Holder());
+	vtkImplicitFunctionToImageStencil *native = (vtkImplicitFunctionToImageStencil *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImplicitFunctionToImageStencilWrap::GetThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)

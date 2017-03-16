@@ -63,6 +63,9 @@ void VtkContextAreaWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFillViewport", GetFillViewport);
 	Nan::SetPrototypeMethod(tpl, "getFillViewport", GetFillViewport);
 
+	Nan::SetPrototypeMethod(tpl, "GetFixedAspect", GetFixedAspect);
+	Nan::SetPrototypeMethod(tpl, "getFixedAspect", GetFixedAspect);
+
 	Nan::SetPrototypeMethod(tpl, "GetFixedMarginsArray", GetFixedMarginsArray);
 	Nan::SetPrototypeMethod(tpl, "getFixedMarginsArray", GetFixedMarginsArray);
 
@@ -83,6 +86,9 @@ void VtkContextAreaWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFillViewport", SetFillViewport);
 	Nan::SetPrototypeMethod(tpl, "setFillViewport", SetFillViewport);
+
+	Nan::SetPrototypeMethod(tpl, "SetFixedAspect", SetFixedAspect);
+	Nan::SetPrototypeMethod(tpl, "setFixedAspect", SetFixedAspect);
 
 	Nan::SetPrototypeMethod(tpl, "SetFixedMargins", SetFixedMargins);
 	Nan::SetPrototypeMethod(tpl, "setFixedMargins", SetFixedMargins);
@@ -203,6 +209,20 @@ void VtkContextAreaWrap::GetFillViewport(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetFillViewport();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextAreaWrap::GetFixedAspect(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextAreaWrap *wrapper = ObjectWrap::Unwrap<VtkContextAreaWrap>(info.Holder());
+	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFixedAspect();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -387,6 +407,25 @@ void VtkContextAreaWrap::SetFillViewport(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetFillViewport(
 			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextAreaWrap::SetFixedAspect(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextAreaWrap *wrapper = ObjectWrap::Unwrap<VtkContextAreaWrap>(info.Holder());
+	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFixedAspect(
+			info[0]->NumberValue()
 		);
 		return;
 	}

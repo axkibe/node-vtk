@@ -35,6 +35,7 @@ class VtkPKdTreeWrap : public VtkKdTreeWrap
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateGlobalDataArrayBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateProcessCellCountData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAllProcessesBorderingOnPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellArrayGlobalRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);

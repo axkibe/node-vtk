@@ -94,6 +94,9 @@ void VtkCleanPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
 
@@ -424,6 +427,20 @@ void VtkCleanPolyDataWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkCleanPolyDataWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
+	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCleanPolyDataWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)

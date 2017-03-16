@@ -54,6 +54,9 @@ void VtkPoints2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualMemorySize", GetActualMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getActualMemorySize", GetActualMemorySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
 	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
 
@@ -191,6 +194,20 @@ void VtkPoints2DWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPoints2DWrap::GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPoints2DWrap *wrapper = ObjectWrap::Unwrap<VtkPoints2DWrap>(info.Holder());
+	vtkPoints2D *native = (vtkPoints2D *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualMemorySize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPoints2DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -65,6 +65,9 @@ void VtkResliceCursorActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCursorAlgorithm", GetCursorAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "getCursorAlgorithm", GetCursorAlgorithm);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetThickSlabProperty", GetThickSlabProperty);
 	Nan::SetPrototypeMethod(tpl, "getThickSlabProperty", GetThickSlabProperty);
 
@@ -216,6 +219,20 @@ void VtkResliceCursorActorWrap::GetCursorAlgorithm(const Nan::FunctionCallbackIn
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkResliceCursorActorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorActorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorActorWrap>(info.Holder());
+	vtkResliceCursorActor *native = (vtkResliceCursorActor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkResliceCursorActorWrap::GetThickSlabProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)

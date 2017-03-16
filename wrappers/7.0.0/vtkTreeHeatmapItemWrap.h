@@ -42,6 +42,7 @@ class VtkTreeHeatmapItemWrap : public VtkContextItemWrap
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReorderTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +56,7 @@ class VtkTreeHeatmapItemWrap : public VtkContextItemWrap
 		static void SetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTreeColorArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTreeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_CLASSDEF

@@ -36,6 +36,7 @@ class VtkGridTransformWrap : public VtkWarpTransformWrap
 		static void GetDisplacementShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

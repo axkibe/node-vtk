@@ -91,11 +91,20 @@ void VtkDendrogramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetExtendLeafNodes", GetExtendLeafNodes);
 	Nan::SetPrototypeMethod(tpl, "getExtendLeafNodes", GetExtendLeafNodes);
 
+	Nan::SetPrototypeMethod(tpl, "GetLabelWidth", GetLabelWidth);
+	Nan::SetPrototypeMethod(tpl, "getLabelWidth", GetLabelWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetLeafSpacing", GetLeafSpacing);
 	Nan::SetPrototypeMethod(tpl, "getLeafSpacing", GetLeafSpacing);
 
+	Nan::SetPrototypeMethod(tpl, "GetLineWidth", GetLineWidth);
+	Nan::SetPrototypeMethod(tpl, "getLineWidth", GetLineWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
 	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetPrunedTree", GetPrunedTree);
 	Nan::SetPrototypeMethod(tpl, "getPrunedTree", GetPrunedTree);
@@ -136,8 +145,14 @@ void VtkDendrogramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLeafSpacing", SetLeafSpacing);
 	Nan::SetPrototypeMethod(tpl, "setLeafSpacing", SetLeafSpacing);
 
+	Nan::SetPrototypeMethod(tpl, "SetLineWidth", SetLineWidth);
+	Nan::SetPrototypeMethod(tpl, "setLineWidth", SetLineWidth);
+
 	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
 	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "SetPosition", SetPosition);
+	Nan::SetPrototypeMethod(tpl, "setPosition", SetPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetTree", SetTree);
 	Nan::SetPrototypeMethod(tpl, "setTree", SetTree);
@@ -418,6 +433,20 @@ void VtkDendrogramItemWrap::GetExtendLeafNodes(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDendrogramItemWrap::GetLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLabelWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDendrogramItemWrap::GetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
@@ -429,6 +458,20 @@ void VtkDendrogramItemWrap::GetLeafSpacing(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLeafSpacing();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDendrogramItemWrap::GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLineWidth();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -444,6 +487,23 @@ void VtkDendrogramItemWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetOrientation();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDendrogramItemWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDendrogramItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -727,6 +787,25 @@ void VtkDendrogramItemWrap::SetLeafSpacing(const Nan::FunctionCallbackInfo<v8::V
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkDendrogramItemWrap::SetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLineWidth(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDendrogramItemWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
@@ -742,6 +821,78 @@ void VtkDendrogramItemWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::V
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDendrogramItemWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPosition(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

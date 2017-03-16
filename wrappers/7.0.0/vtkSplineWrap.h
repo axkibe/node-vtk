@@ -43,6 +43,7 @@ class VtkSplineWrap : public VtkObjectWrap
 		static void GetLeftConstraintMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeftConstraintMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeftValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParametricRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRightConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info);

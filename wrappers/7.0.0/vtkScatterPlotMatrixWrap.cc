@@ -161,6 +161,9 @@ void VtkScatterPlotMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfFrames", SetNumberOfFrames);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfFrames", SetNumberOfFrames);
 
+	Nan::SetPrototypeMethod(tpl, "SetPlotMarkerSize", SetPlotMarkerSize);
+	Nan::SetPrototypeMethod(tpl, "setPlotMarkerSize", SetPlotMarkerSize);
+
 	Nan::SetPrototypeMethod(tpl, "SetPlotMarkerStyle", SetPlotMarkerStyle);
 	Nan::SetPrototypeMethod(tpl, "setPlotMarkerStyle", SetPlotMarkerStyle);
 
@@ -954,6 +957,29 @@ void VtkScatterPlotMatrixWrap::SetNumberOfFrames(const Nan::FunctionCallbackInfo
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkScatterPlotMatrixWrap::SetPlotMarkerSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPlotMarkerSize(
+				info[0]->Int32Value(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

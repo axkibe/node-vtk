@@ -65,6 +65,12 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultPicker", CreateDefaultPicker);
 	Nan::SetPrototypeMethod(tpl, "createDefaultPicker", CreateDefaultPicker);
 
+	Nan::SetPrototypeMethod(tpl, "CreateOneShotTimer", CreateOneShotTimer);
+	Nan::SetPrototypeMethod(tpl, "createOneShotTimer", CreateOneShotTimer);
+
+	Nan::SetPrototypeMethod(tpl, "CreateRepeatingTimer", CreateRepeatingTimer);
+	Nan::SetPrototypeMethod(tpl, "createRepeatingTimer", CreateRepeatingTimer);
+
 	Nan::SetPrototypeMethod(tpl, "CreateTimer", CreateTimer);
 	Nan::SetPrototypeMethod(tpl, "createTimer", CreateTimer);
 
@@ -199,6 +205,15 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetStillUpdateRateMinValue", GetStillUpdateRateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getStillUpdateRateMinValue", GetStillUpdateRateMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetTimerDuration", GetTimerDuration);
+	Nan::SetPrototypeMethod(tpl, "getTimerDuration", GetTimerDuration);
+
+	Nan::SetPrototypeMethod(tpl, "GetTimerDurationMaxValue", GetTimerDurationMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getTimerDurationMaxValue", GetTimerDurationMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetTimerDurationMinValue", GetTimerDurationMinValue);
+	Nan::SetPrototypeMethod(tpl, "getTimerDurationMinValue", GetTimerDurationMinValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetTimerEventDuration", GetTimerEventDuration);
 	Nan::SetPrototypeMethod(tpl, "getTimerEventDuration", GetTimerEventDuration);
@@ -365,6 +380,9 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStillUpdateRate", SetStillUpdateRate);
 	Nan::SetPrototypeMethod(tpl, "setStillUpdateRate", SetStillUpdateRate);
 
+	Nan::SetPrototypeMethod(tpl, "SetTimerDuration", SetTimerDuration);
+	Nan::SetPrototypeMethod(tpl, "setTimerDuration", SetTimerDuration);
+
 	Nan::SetPrototypeMethod(tpl, "SetTimerEventDuration", SetTimerEventDuration);
 	Nan::SetPrototypeMethod(tpl, "setTimerEventDuration", SetTimerEventDuration);
 
@@ -494,6 +512,48 @@ void VtkRenderWindowInteractorWrap::CreateDefaultPicker(const Nan::FunctionCallb
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkRenderWindowInteractorWrap::CreateOneShotTimer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CreateOneShotTimer(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderWindowInteractorWrap::CreateRepeatingTimer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CreateRepeatingTimer(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRenderWindowInteractorWrap::CreateTimer(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1235,6 +1295,62 @@ void VtkRenderWindowInteractorWrap::GetStillUpdateRateMinValue(const Nan::Functi
 		return;
 	}
 	r = native->GetStillUpdateRateMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowInteractorWrap::GetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetTimerDuration(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimerDuration();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowInteractorWrap::GetTimerDurationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimerDurationMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowInteractorWrap::GetTimerDurationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimerDurationMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -2692,6 +2808,25 @@ void VtkRenderWindowInteractorWrap::SetStillUpdateRate(const Nan::FunctionCallba
 		}
 		native->SetStillUpdateRate(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderWindowInteractorWrap::SetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTimerDuration(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

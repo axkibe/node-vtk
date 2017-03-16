@@ -49,10 +49,14 @@ class VtkShaderProgramWrap : public VtkObjectWrap
 		static void SetFragmentShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGeometryShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfOutputs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUniform2f(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniform2i(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUniform3f(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniform3uc(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUniform4f(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniform4uc(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUniformf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniformi(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void isBound(const Nan::FunctionCallbackInfo<v8::Value>& info);

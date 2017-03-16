@@ -65,6 +65,9 @@ void VtkAssemblyPathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLastNode", GetLastNode);
 	Nan::SetPrototypeMethod(tpl, "getLastNode", GetLastNode);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetNextNode", GetNextNode);
 	Nan::SetPrototypeMethod(tpl, "getNextNode", GetNextNode);
 
@@ -207,6 +210,20 @@ void VtkAssemblyPathWrap::GetLastNode(const Nan::FunctionCallbackInfo<v8::Value>
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAssemblyPathWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAssemblyPathWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info.Holder());
+	vtkAssemblyPath *native = (vtkAssemblyPath *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAssemblyPathWrap::GetNextNode(const Nan::FunctionCallbackInfo<v8::Value>& info)

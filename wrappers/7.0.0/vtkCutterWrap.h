@@ -41,6 +41,7 @@ class VtkCutterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetGenerateCutScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecisionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

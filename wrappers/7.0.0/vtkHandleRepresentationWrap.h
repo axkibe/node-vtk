@@ -42,6 +42,7 @@ class VtkHandleRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionStateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionStateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointPlacer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

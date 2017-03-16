@@ -40,7 +40,11 @@ class VtkVolumeRayCastSpaceLeapingImageFilterWrap : public VtkThreadedImageAlgor
 		static void GetComputeMinMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIndependentComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastMinMaxBuildTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastMinMaxFlagTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfIndependentComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTableScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTableShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdateGradientOpacityFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +55,8 @@ class VtkVolumeRayCastSpaceLeapingImageFilterWrap : public VtkThreadedImageAlgor
 		static void SetComputeMinMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurrentScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIndependentComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTableScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTableShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpdateGradientOpacityFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateGradientOpacityFlagsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

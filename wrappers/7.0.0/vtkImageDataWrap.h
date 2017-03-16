@@ -38,6 +38,7 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void CopyInformationToPipeline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActualMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +51,7 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarComponentAsDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalarComponentAsFloat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -69,6 +71,7 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void SetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarComponentFromDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScalarComponentFromFloat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);

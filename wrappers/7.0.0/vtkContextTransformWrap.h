@@ -48,7 +48,9 @@ class VtkContextTransformWrap : public VtkAbstractContextItemWrap
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PanYOnMouseWheelOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PanYOnMouseWheelOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Rotate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Scale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPanModifier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPanMouseButton(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPanYOnMouseWheel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,6 +61,7 @@ class VtkContextTransformWrap : public VtkAbstractContextItemWrap
 		static void SetZoomModifier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZoomMouseButton(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZoomOnMouseWheel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Translate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZoomOnMouseWheelOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZoomOnMouseWheelOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

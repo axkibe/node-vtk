@@ -47,6 +47,7 @@ class VtkGraphMapperWrap : public VtkMapperWrap
 		static void GetColorEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEdgeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -57,10 +58,12 @@ class VtkGraphMapperWrap : public VtkMapperWrap
 		static void GetIconTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIconVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaledGlyphs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalingArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVertexColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVertexLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVertexPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IconVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IconVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -73,6 +76,7 @@ class VtkGraphMapperWrap : public VtkMapperWrap
 		static void SetColorEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEdgeLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnableEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnableVerticesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -86,6 +90,7 @@ class VtkGraphMapperWrap : public VtkMapperWrap
 		static void SetScaledGlyphs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalingArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetVertexPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKGRAPHMAPPERWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKGRAPHMAPPERWRAP_CLASSDEF

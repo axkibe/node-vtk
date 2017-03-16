@@ -32,6 +32,7 @@ class VtkFunctionParserWrap : public VtkObjectWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfScalarVariables(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfVectorVariables(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReplaceInvalidValues(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -54,6 +54,9 @@ void VtkKdTreeSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetKdTree", GetKdTree);
 	Nan::SetPrototypeMethod(tpl, "getKdTree", GetKdTree);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectionAttribute", GetSelectionAttribute);
 	Nan::SetPrototypeMethod(tpl, "getSelectionAttribute", GetSelectionAttribute);
 
@@ -169,6 +172,20 @@ void VtkKdTreeSelectorWrap::GetKdTree(const Nan::FunctionCallbackInfo<v8::Value>
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkKdTreeSelectorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdTreeSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeSelectorWrap>(info.Holder());
+	vtkKdTreeSelector *native = (vtkKdTreeSelector *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkKdTreeSelectorWrap::GetSelectionAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -147,6 +147,15 @@ void VtkPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLineStippleRepeatFactorMinValue", GetLineStippleRepeatFactorMinValue);
 	Nan::SetPrototypeMethod(tpl, "getLineStippleRepeatFactorMinValue", GetLineStippleRepeatFactorMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetLineWidth", GetLineWidth);
+	Nan::SetPrototypeMethod(tpl, "getLineWidth", GetLineWidth);
+
+	Nan::SetPrototypeMethod(tpl, "GetLineWidthMaxValue", GetLineWidthMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getLineWidthMaxValue", GetLineWidthMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetLineWidthMinValue", GetLineWidthMinValue);
+	Nan::SetPrototypeMethod(tpl, "getLineWidthMinValue", GetLineWidthMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaterialName", GetMaterialName);
 	Nan::SetPrototypeMethod(tpl, "getMaterialName", GetMaterialName);
 
@@ -161,6 +170,15 @@ void VtkPropertyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetOpacityMinValue", GetOpacityMinValue);
 	Nan::SetPrototypeMethod(tpl, "getOpacityMinValue", GetOpacityMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointSize", GetPointSize);
+	Nan::SetPrototypeMethod(tpl, "getPointSize", GetPointSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointSizeMaxValue", GetPointSizeMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getPointSizeMaxValue", GetPointSizeMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointSizeMinValue", GetPointSizeMinValue);
+	Nan::SetPrototypeMethod(tpl, "getPointSizeMinValue", GetPointSizeMinValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetRepresentation", GetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "getRepresentation", GetRepresentation);
@@ -282,8 +300,14 @@ void VtkPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLineStippleRepeatFactor", SetLineStippleRepeatFactor);
 	Nan::SetPrototypeMethod(tpl, "setLineStippleRepeatFactor", SetLineStippleRepeatFactor);
 
+	Nan::SetPrototypeMethod(tpl, "SetLineWidth", SetLineWidth);
+	Nan::SetPrototypeMethod(tpl, "setLineWidth", SetLineWidth);
+
 	Nan::SetPrototypeMethod(tpl, "SetOpacity", SetOpacity);
 	Nan::SetPrototypeMethod(tpl, "setOpacity", SetOpacity);
+
+	Nan::SetPrototypeMethod(tpl, "SetPointSize", SetPointSize);
+	Nan::SetPrototypeMethod(tpl, "setPointSize", SetPointSize);
 
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
@@ -438,6 +462,48 @@ void VtkPropertyWrap::AddShaderVariable(const Nan::FunctionCallbackInfo<v8::Valu
 			native->AddShaderVariable(
 				*a0,
 				info[1]->Int32Value()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->AddShaderVariable(
+						*a0,
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->AddShaderVariable(
+					*a0,
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddShaderVariable(
+				*a0,
+				info[1]->NumberValue()
 			);
 			return;
 		}
@@ -945,6 +1011,48 @@ void VtkPropertyWrap::GetLineStippleRepeatFactorMinValue(const Nan::FunctionCall
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPropertyWrap::GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLineWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropertyWrap::GetLineWidthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLineWidthMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropertyWrap::GetLineWidthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLineWidthMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPropertyWrap::GetMaterialName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
@@ -1012,6 +1120,48 @@ void VtkPropertyWrap::GetOpacityMinValue(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetOpacityMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropertyWrap::GetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropertyWrap::GetPointSizeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointSizeMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropertyWrap::GetPointSizeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointSizeMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1988,6 +2138,25 @@ void VtkPropertyWrap::SetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPropertyWrap::SetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLineWidth(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPropertyWrap::SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
@@ -2000,6 +2169,25 @@ void VtkPropertyWrap::SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 		native->SetOpacity(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropertyWrap::SetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointSize(
 			info[0]->NumberValue()
 		);
 		return;

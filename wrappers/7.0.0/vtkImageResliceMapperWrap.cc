@@ -82,6 +82,9 @@ void VtkImageResliceMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetJumpToNearestSlice", GetJumpToNearestSlice);
 	Nan::SetPrototypeMethod(tpl, "getJumpToNearestSlice", GetJumpToNearestSlice);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetResampleToScreenPixels", GetResampleToScreenPixels);
 	Nan::SetPrototypeMethod(tpl, "getResampleToScreenPixels", GetResampleToScreenPixels);
 
@@ -403,6 +406,20 @@ void VtkImageResliceMapperWrap::GetJumpToNearestSlice(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetJumpToNearestSlice();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageResliceMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
+	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

@@ -37,6 +37,8 @@ class VtkVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void GetAutoAdjustSampleDistancesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGradientEstimator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGradientMagnitudeBias(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGradientMagnitudeScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGradientShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageSampleDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -53,6 +55,7 @@ class VtkVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolumeRayCastFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZeroOpacityThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntermixIntersectingGeometryOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntermixIntersectingGeometryOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

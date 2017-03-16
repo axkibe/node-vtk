@@ -41,6 +41,7 @@ class VtkImageMarchingCubesWrap : public VtkPolyDataAlgorithmWrap
 		static void GetComputeGradients(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncrementLocatorZ(const Nan::FunctionCallbackInfo<v8::Value>& info);

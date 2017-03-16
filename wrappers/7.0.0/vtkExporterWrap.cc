@@ -53,6 +53,9 @@ void VtkExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
 
@@ -143,6 +146,20 @@ void VtkExporterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkExporterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExporterWrap *wrapper = ObjectWrap::Unwrap<VtkExporterWrap>(info.Holder());
+	vtkExporter *native = (vtkExporter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExporterWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)

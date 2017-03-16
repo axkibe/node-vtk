@@ -46,6 +46,9 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void GetAbortRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAlphaBitPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAnaglyphColorSaturation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAnaglyphColorSaturationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAnaglyphColorSaturationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCapturingGL2PSSpecialProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -64,7 +67,6 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void GetNumberOfLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLayersMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLayersMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetPainterDeviceAdapter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointSmoothing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolygonSmoothing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderLibrary(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -77,6 +79,7 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void GetSubFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwapBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseConstantFDOffsets(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZbufferDataAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeFromCurrentContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -100,6 +103,7 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void SetAbortRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAlphaBitPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAnaglyphColorSaturation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurrentCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCursorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);

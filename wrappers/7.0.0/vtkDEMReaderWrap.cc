@@ -56,6 +56,9 @@ void VtkDEMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDEMLevel", GetDEMLevel);
 	Nan::SetPrototypeMethod(tpl, "getDEMLevel", GetDEMLevel);
 
+	Nan::SetPrototypeMethod(tpl, "GetElevationBounds", GetElevationBounds);
+	Nan::SetPrototypeMethod(tpl, "getElevationBounds", GetElevationBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetElevationPattern", GetElevationPattern);
 	Nan::SetPrototypeMethod(tpl, "getElevationPattern", GetElevationPattern);
 
@@ -83,6 +86,9 @@ void VtkDEMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGroundZone", GetGroundZone);
 	Nan::SetPrototypeMethod(tpl, "getGroundZone", GetGroundZone);
 
+	Nan::SetPrototypeMethod(tpl, "GetLocalRotation", GetLocalRotation);
+	Nan::SetPrototypeMethod(tpl, "getLocalRotation", GetLocalRotation);
+
 	Nan::SetPrototypeMethod(tpl, "GetMapLabel", GetMapLabel);
 	Nan::SetPrototypeMethod(tpl, "getMapLabel", GetMapLabel);
 
@@ -94,6 +100,12 @@ void VtkDEMReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetProfileDimension", GetProfileDimension);
 	Nan::SetPrototypeMethod(tpl, "getProfileDimension", GetProfileDimension);
+
+	Nan::SetPrototypeMethod(tpl, "GetProjectionParameters", GetProjectionParameters);
+	Nan::SetPrototypeMethod(tpl, "getProjectionParameters", GetProjectionParameters);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpatialResolution", GetSpatialResolution);
+	Nan::SetPrototypeMethod(tpl, "getSpatialResolution", GetSpatialResolution);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -188,6 +200,23 @@ void VtkDEMReaderWrap::GetDEMLevel(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	r = native->GetDEMLevel();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDEMReaderWrap::GetElevationBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
+	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetElevationBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(float));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDEMReaderWrap::GetElevationPattern(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -316,6 +345,20 @@ void VtkDEMReaderWrap::GetGroundZone(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDEMReaderWrap::GetLocalRotation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
+	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLocalRotation();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDEMReaderWrap::GetMapLabel(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
@@ -372,6 +415,40 @@ void VtkDEMReaderWrap::GetProfileDimension(const Nan::FunctionCallbackInfo<v8::V
 	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
 	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
 	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkDEMReaderWrap::GetProjectionParameters(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
+	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProjectionParameters();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 15 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 15);
+	memcpy(ab->GetContents().Data(), r, 15 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkDEMReaderWrap::GetSpatialResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
+	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSpatialResolution();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(float));
 	info.GetReturnValue().Set(at);
 }
 

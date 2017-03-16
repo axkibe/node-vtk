@@ -39,6 +39,7 @@ class VtkControlPointsItemWrap : public VtkPlotWrap
 		static void GetEndPointsXMovable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEndPointsYMovable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScreenPointRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedPointBrush(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedPointPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -57,10 +58,12 @@ class VtkControlPointsItemWrap : public VtkPlotWrap
 		static void SetEndPointsXMovable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEndPointsYMovable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScreenPointRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShowLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSwitchPointsMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUserBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValidBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SpreadPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_CLASSDEF
 		VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_CLASSDEF

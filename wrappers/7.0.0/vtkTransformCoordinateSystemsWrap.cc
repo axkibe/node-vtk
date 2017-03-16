@@ -54,6 +54,9 @@ void VtkTransformCoordinateSystemsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInputCoordinateSystem", GetInputCoordinateSystem);
 	Nan::SetPrototypeMethod(tpl, "getInputCoordinateSystem", GetInputCoordinateSystem);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputCoordinateSystem", GetOutputCoordinateSystem);
 	Nan::SetPrototypeMethod(tpl, "getOutputCoordinateSystem", GetOutputCoordinateSystem);
 
@@ -153,6 +156,20 @@ void VtkTransformCoordinateSystemsWrap::GetInputCoordinateSystem(const Nan::Func
 		return;
 	}
 	r = native->GetInputCoordinateSystem();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTransformCoordinateSystemsWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
+	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

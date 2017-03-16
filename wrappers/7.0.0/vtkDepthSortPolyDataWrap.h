@@ -34,6 +34,7 @@ class VtkDepthSortPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthSortMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSortScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);

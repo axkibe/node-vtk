@@ -54,6 +54,9 @@ void VtkArcPlotterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDefaultNormal", GetDefaultNormal);
+	Nan::SetPrototypeMethod(tpl, "getDefaultNormal", GetDefaultNormal);
+
 	Nan::SetPrototypeMethod(tpl, "GetFieldDataArray", GetFieldDataArray);
 	Nan::SetPrototypeMethod(tpl, "getFieldDataArray", GetFieldDataArray);
 
@@ -71,6 +74,9 @@ void VtkArcPlotterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetHeightMinValue", GetHeightMinValue);
 	Nan::SetPrototypeMethod(tpl, "getHeightMinValue", GetHeightMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetOffset", GetOffset);
 	Nan::SetPrototypeMethod(tpl, "getOffset", GetOffset);
@@ -110,6 +116,9 @@ void VtkArcPlotterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetCamera", SetCamera);
 	Nan::SetPrototypeMethod(tpl, "setCamera", SetCamera);
+
+	Nan::SetPrototypeMethod(tpl, "SetDefaultNormal", SetDefaultNormal);
+	Nan::SetPrototypeMethod(tpl, "setDefaultNormal", SetDefaultNormal);
 
 	Nan::SetPrototypeMethod(tpl, "SetFieldDataArray", SetFieldDataArray);
 	Nan::SetPrototypeMethod(tpl, "setFieldDataArray", SetFieldDataArray);
@@ -225,6 +234,23 @@ void VtkArcPlotterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkArcPlotterWrap::GetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
+	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDefaultNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkArcPlotterWrap::GetFieldDataArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
@@ -306,6 +332,20 @@ void VtkArcPlotterWrap::GetHeightMinValue(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetHeightMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkArcPlotterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
+	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -527,6 +567,82 @@ void VtkArcPlotterWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 			(vtkCamera *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkArcPlotterWrap::SetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
+	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat32Array())
+	{
+		v8::Local<v8::Float32Array>a0(v8::Local<v8::Float32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDefaultNormal(
+			(float *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		float b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDefaultNormal(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetDefaultNormal(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

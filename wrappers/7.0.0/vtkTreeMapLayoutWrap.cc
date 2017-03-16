@@ -54,6 +54,9 @@ void VtkTreeMapLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategy", GetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategy", GetLayoutStrategy);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetRectanglesFieldName", GetRectanglesFieldName);
 	Nan::SetPrototypeMethod(tpl, "getRectanglesFieldName", GetRectanglesFieldName);
 
@@ -142,6 +145,20 @@ void VtkTreeMapLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTreeMapLayoutWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeMapLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapLayoutWrap>(info.Holder());
+	vtkTreeMapLayout *native = (vtkTreeMapLayout *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTreeMapLayoutWrap::GetRectanglesFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info)

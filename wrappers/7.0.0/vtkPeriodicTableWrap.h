@@ -32,10 +32,13 @@ class VtkPeriodicTableWrap : public VtkObjectWrap
 
 		static void GetAtomicNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCovalentRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDefaultLUT(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDefaultRGBTuple(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetElementName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfElements(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSymbol(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVDWRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

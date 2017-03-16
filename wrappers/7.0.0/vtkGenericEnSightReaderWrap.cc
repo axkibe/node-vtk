@@ -94,6 +94,12 @@ void VtkGenericEnSightReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGeometryFileName", GetGeometryFileName);
 	Nan::SetPrototypeMethod(tpl, "getGeometryFileName", GetGeometryFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumTimeValue", GetMaximumTimeValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumTimeValue", GetMaximumTimeValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumTimeValue", GetMinimumTimeValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumTimeValue", GetMinimumTimeValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfCellArrays", GetNumberOfCellArrays);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfCellArrays", GetNumberOfCellArrays);
 
@@ -163,6 +169,9 @@ void VtkGenericEnSightReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTimeSets", GetTimeSets);
 	Nan::SetPrototypeMethod(tpl, "getTimeSets", GetTimeSets);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeValue", GetTimeValue);
+	Nan::SetPrototypeMethod(tpl, "getTimeValue", GetTimeValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetVariableType", GetVariableType);
 	Nan::SetPrototypeMethod(tpl, "getVariableType", GetVariableType);
 
@@ -213,6 +222,9 @@ void VtkGenericEnSightReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetReadAllVariables", SetReadAllVariables);
 	Nan::SetPrototypeMethod(tpl, "setReadAllVariables", SetReadAllVariables);
+
+	Nan::SetPrototypeMethod(tpl, "SetTimeValue", SetTimeValue);
+	Nan::SetPrototypeMethod(tpl, "setTimeValue", SetTimeValue);
 
 #ifdef VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_INITPTPL
@@ -529,6 +541,34 @@ void VtkGenericEnSightReaderWrap::GetGeometryFileName(const Nan::FunctionCallbac
 	}
 	r = native->GetGeometryFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGenericEnSightReaderWrap::GetMaximumTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
+	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumTimeValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGenericEnSightReaderWrap::GetMinimumTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
+	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumTimeValue();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGenericEnSightReaderWrap::GetNumberOfCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -909,6 +949,20 @@ void VtkGenericEnSightReaderWrap::GetTimeSets(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkGenericEnSightReaderWrap::GetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
+	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGenericEnSightReaderWrap::GetVariableType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
@@ -1217,6 +1271,25 @@ void VtkGenericEnSightReaderWrap::SetReadAllVariables(const Nan::FunctionCallbac
 		}
 		native->SetReadAllVariables(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericEnSightReaderWrap::SetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
+	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTimeValue(
+			info[0]->NumberValue()
 		);
 		return;
 	}

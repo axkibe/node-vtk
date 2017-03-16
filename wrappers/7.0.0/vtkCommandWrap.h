@@ -34,7 +34,9 @@ class VtkCommandWrap : public VtkObjectBaseWrap
 		static void AbortFlagOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAbortFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEventIdFromString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassiveObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStringFromEventId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PassiveObserverOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

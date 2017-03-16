@@ -31,10 +31,16 @@ class VtkContextClipWrap : public VtkAbstractContextItemWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRect(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetClip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKCONTEXTCLIPWRAP_CLASSDEF

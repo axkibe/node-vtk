@@ -60,6 +60,9 @@ void VtkImplicitDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataSet", GetDataSet);
 	Nan::SetPrototypeMethod(tpl, "getDataSet", GetDataSet);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutGradient", GetOutGradient);
 	Nan::SetPrototypeMethod(tpl, "getOutGradient", GetOutGradient);
 
@@ -371,6 +374,20 @@ void VtkImplicitDataSetWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitDataSetWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitDataSetWrap>(info.Holder());
+	vtkImplicitDataSet *native = (vtkImplicitDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImplicitDataSetWrap::GetOutGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)

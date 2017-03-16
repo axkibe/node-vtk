@@ -93,11 +93,26 @@ void VtkEncodedGradientEstimatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEncodedNormalIndex", GetEncodedNormalIndex);
 	Nan::SetPrototypeMethod(tpl, "getEncodedNormalIndex", GetEncodedNormalIndex);
 
+	Nan::SetPrototypeMethod(tpl, "GetGradientMagnitudeBias", GetGradientMagnitudeBias);
+	Nan::SetPrototypeMethod(tpl, "getGradientMagnitudeBias", GetGradientMagnitudeBias);
+
+	Nan::SetPrototypeMethod(tpl, "GetGradientMagnitudeScale", GetGradientMagnitudeScale);
+	Nan::SetPrototypeMethod(tpl, "getGradientMagnitudeScale", GetGradientMagnitudeScale);
+
+	Nan::SetPrototypeMethod(tpl, "GetInputAspect", GetInputAspect);
+	Nan::SetPrototypeMethod(tpl, "getInputAspect", GetInputAspect);
+
 	Nan::SetPrototypeMethod(tpl, "GetInputData", GetInputData);
 	Nan::SetPrototypeMethod(tpl, "getInputData", GetInputData);
 
 	Nan::SetPrototypeMethod(tpl, "GetInputSize", GetInputSize);
 	Nan::SetPrototypeMethod(tpl, "getInputSize", GetInputSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetLastUpdateTimeInCPUSeconds", GetLastUpdateTimeInCPUSeconds);
+	Nan::SetPrototypeMethod(tpl, "getLastUpdateTimeInCPUSeconds", GetLastUpdateTimeInCPUSeconds);
+
+	Nan::SetPrototypeMethod(tpl, "GetLastUpdateTimeInSeconds", GetLastUpdateTimeInSeconds);
+	Nan::SetPrototypeMethod(tpl, "getLastUpdateTimeInSeconds", GetLastUpdateTimeInSeconds);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfThreads", GetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfThreads", GetNumberOfThreads);
@@ -110,6 +125,9 @@ void VtkEncodedGradientEstimatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUseCylinderClip", GetUseCylinderClip);
 	Nan::SetPrototypeMethod(tpl, "getUseCylinderClip", GetUseCylinderClip);
+
+	Nan::SetPrototypeMethod(tpl, "GetZeroNormalThreshold", GetZeroNormalThreshold);
+	Nan::SetPrototypeMethod(tpl, "getZeroNormalThreshold", GetZeroNormalThreshold);
 
 	Nan::SetPrototypeMethod(tpl, "GetZeroPad", GetZeroPad);
 	Nan::SetPrototypeMethod(tpl, "getZeroPad", GetZeroPad);
@@ -144,11 +162,20 @@ void VtkEncodedGradientEstimatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDirectionEncoder", SetDirectionEncoder);
 	Nan::SetPrototypeMethod(tpl, "setDirectionEncoder", SetDirectionEncoder);
 
+	Nan::SetPrototypeMethod(tpl, "SetGradientMagnitudeBias", SetGradientMagnitudeBias);
+	Nan::SetPrototypeMethod(tpl, "setGradientMagnitudeBias", SetGradientMagnitudeBias);
+
+	Nan::SetPrototypeMethod(tpl, "SetGradientMagnitudeScale", SetGradientMagnitudeScale);
+	Nan::SetPrototypeMethod(tpl, "setGradientMagnitudeScale", SetGradientMagnitudeScale);
+
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfThreads", SetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfThreads", SetNumberOfThreads);
+
+	Nan::SetPrototypeMethod(tpl, "SetZeroNormalThreshold", SetZeroNormalThreshold);
+	Nan::SetPrototypeMethod(tpl, "setZeroNormalThreshold", SetZeroNormalThreshold);
 
 	Nan::SetPrototypeMethod(tpl, "SetZeroPad", SetZeroPad);
 	Nan::SetPrototypeMethod(tpl, "setZeroPad", SetZeroPad);
@@ -418,6 +445,51 @@ void VtkEncodedGradientEstimatorWrap::GetEncodedNormalIndex(const Nan::FunctionC
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkEncodedGradientEstimatorWrap::GetGradientMagnitudeBias(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGradientMagnitudeBias();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientEstimatorWrap::GetGradientMagnitudeScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGradientMagnitudeScale();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientEstimatorWrap::GetInputAspect(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	float const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInputAspect();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(float));
+	Local<v8::Float32Array> at = v8::Float32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(float));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkEncodedGradientEstimatorWrap::GetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
@@ -456,6 +528,34 @@ void VtkEncodedGradientEstimatorWrap::GetInputSize(const Nan::FunctionCallbackIn
 	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
 	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkEncodedGradientEstimatorWrap::GetLastUpdateTimeInCPUSeconds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastUpdateTimeInCPUSeconds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientEstimatorWrap::GetLastUpdateTimeInSeconds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastUpdateTimeInSeconds();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkEncodedGradientEstimatorWrap::GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -511,6 +611,20 @@ void VtkEncodedGradientEstimatorWrap::GetUseCylinderClip(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetUseCylinderClip();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEncodedGradientEstimatorWrap::GetZeroNormalThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZeroNormalThreshold();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -797,6 +911,44 @@ void VtkEncodedGradientEstimatorWrap::SetDirectionEncoder(const Nan::FunctionCal
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkEncodedGradientEstimatorWrap::SetGradientMagnitudeBias(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGradientMagnitudeBias(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEncodedGradientEstimatorWrap::SetGradientMagnitudeScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGradientMagnitudeScale(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkEncodedGradientEstimatorWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
@@ -830,6 +982,25 @@ void VtkEncodedGradientEstimatorWrap::SetNumberOfThreads(const Nan::FunctionCall
 		}
 		native->SetNumberOfThreads(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEncodedGradientEstimatorWrap::SetZeroNormalThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetZeroNormalThreshold(
+			info[0]->NumberValue()
 		);
 		return;
 	}

@@ -62,11 +62,17 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void GetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineStippleRepeatFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineStippleRepeatFactorMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineWidthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineWidthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTextures(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointSizeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointSizeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepresentationAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepresentationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -107,7 +113,9 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void SetLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineStipplePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentationToPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentationToSurface(const Nan::FunctionCallbackInfo<v8::Value>& info);

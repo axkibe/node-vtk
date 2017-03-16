@@ -66,6 +66,9 @@ void VtkHyperOctreeSampleFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLevels", GetLevels);
 	Nan::SetPrototypeMethod(tpl, "getLevels", GetLevels);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMinLevels", GetMinLevels);
 	Nan::SetPrototypeMethod(tpl, "getMinLevels", GetMinLevels);
 
@@ -278,6 +281,20 @@ void VtkHyperOctreeSampleFunctionWrap::GetLevels(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLevels();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperOctreeSampleFunctionWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
+	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

@@ -75,6 +75,9 @@ void VtkUnstructuredGridGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMerging", GetMerging);
 	Nan::SetPrototypeMethod(tpl, "getMerging", GetMerging);
 
@@ -311,6 +314,20 @@ void VtkUnstructuredGridGeometryFilterWrap::GetLocator(const Nan::FunctionCallba
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkUnstructuredGridGeometryFilterWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
+	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkUnstructuredGridGeometryFilterWrap::GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info)

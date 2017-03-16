@@ -78,6 +78,9 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLabelFormat", GetLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "getLabelFormat", GetLabelFormat);
 
+	Nan::SetPrototypeMethod(tpl, "GetScreenPointRadius", GetScreenPointRadius);
+	Nan::SetPrototypeMethod(tpl, "getScreenPointRadius", GetScreenPointRadius);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectedPointBrush", GetSelectedPointBrush);
 	Nan::SetPrototypeMethod(tpl, "getSelectedPointBrush", GetSelectedPointBrush);
 
@@ -132,6 +135,9 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabelFormat", SetLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "setLabelFormat", SetLabelFormat);
 
+	Nan::SetPrototypeMethod(tpl, "SetScreenPointRadius", SetScreenPointRadius);
+	Nan::SetPrototypeMethod(tpl, "setScreenPointRadius", SetScreenPointRadius);
+
 	Nan::SetPrototypeMethod(tpl, "SetShowLabels", SetShowLabels);
 	Nan::SetPrototypeMethod(tpl, "setShowLabels", SetShowLabels);
 
@@ -143,6 +149,9 @@ void VtkControlPointsItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetValidBounds", SetValidBounds);
 	Nan::SetPrototypeMethod(tpl, "setValidBounds", SetValidBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SpreadPoints", SpreadPoints);
+	Nan::SetPrototypeMethod(tpl, "spreadPoints", SpreadPoints);
 
 #ifdef VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_INITPTPL
 	VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_INITPTPL
@@ -349,6 +358,20 @@ void VtkControlPointsItemWrap::GetLabelFormat(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetLabelFormat();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkControlPointsItemWrap::GetScreenPointRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	float r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScreenPointRadius();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkControlPointsItemWrap::GetSelectedPointBrush(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -684,6 +707,25 @@ void VtkControlPointsItemWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkControlPointsItemWrap::SetScreenPointRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScreenPointRadius(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkControlPointsItemWrap::SetShowLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
@@ -877,6 +919,43 @@ void VtkControlPointsItemWrap::SetValidBounds(const Nan::FunctionCallbackInfo<v8
 					return;
 				}
 			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkControlPointsItemWrap::SpreadPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SpreadPoints(
+				info[0]->NumberValue(),
+				(vtkIdTypeArray *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SpreadPoints(
+				info[0]->NumberValue(),
+				info[1]->BooleanValue()
+			);
+			return;
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");

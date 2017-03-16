@@ -38,6 +38,7 @@ class VtkHyperOctreeCutterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetCutFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateCutScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSortBy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSortByAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -60,6 +60,9 @@ void VtkGenericDataSetTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetMerging", GetMerging);
 	Nan::SetPrototypeMethod(tpl, "getMerging", GetMerging);
 
@@ -186,6 +189,20 @@ void VtkGenericDataSetTessellatorWrap::GetLocator(const Nan::FunctionCallbackInf
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGenericDataSetTessellatorWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericDataSetTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetTessellatorWrap>(info.Holder());
+	vtkGenericDataSetTessellator *native = (vtkGenericDataSetTessellator *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGenericDataSetTessellatorWrap::GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info)

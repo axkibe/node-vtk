@@ -106,6 +106,9 @@ void VtkLineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLineProperty", GetLineProperty);
 	Nan::SetPrototypeMethod(tpl, "getLineProperty", GetLineProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoint1DisplayPosition", GetPoint1DisplayPosition);
 	Nan::SetPrototypeMethod(tpl, "getPoint1DisplayPosition", GetPoint1DisplayPosition);
 
@@ -560,6 +563,20 @@ void VtkLineRepresentationWrap::GetLineProperty(const Nan::FunctionCallbackInfo<
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLineRepresentationWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
+	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkLineRepresentationWrap::GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)

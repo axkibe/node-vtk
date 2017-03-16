@@ -56,6 +56,7 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetCacheSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDisplacementMagnitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeBlockArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeBlockArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -112,9 +113,11 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetImplicitElementIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImplicitFaceIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImplicitNodeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialArrayID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMetadataMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModeShapeTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModeShapesRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeMapArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -212,6 +215,7 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetApplyDisplacements(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAssemblyArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCacheSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplacementMagnitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDisplayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeBlockArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeMapArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -58,6 +58,9 @@ void VtkDataSetMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPolyDataMapper", GetPolyDataMapper);
 	Nan::SetPrototypeMethod(tpl, "getPolyDataMapper", GetPolyDataMapper);
 
@@ -146,6 +149,20 @@ void VtkDataSetMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDataSetMapperWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetMapperWrap>(info.Holder());
+	vtkDataSetMapper *native = (vtkDataSetMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataSetMapperWrap::GetPolyDataMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -51,6 +51,9 @@ void VtkClipConvexPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMTime", GetMTime);
+	Nan::SetPrototypeMethod(tpl, "getMTime", GetMTime);
+
 	Nan::SetPrototypeMethod(tpl, "GetPlanes", GetPlanes);
 	Nan::SetPrototypeMethod(tpl, "getPlanes", GetPlanes);
 
@@ -110,6 +113,20 @@ void VtkClipConvexPolyDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkClipConvexPolyDataWrap::GetMTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClipConvexPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipConvexPolyDataWrap>(info.Holder());
+	vtkClipConvexPolyData *native = (vtkClipConvexPolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkClipConvexPolyDataWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
