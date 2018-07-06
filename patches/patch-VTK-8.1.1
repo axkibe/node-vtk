@@ -1,0 +1,4487 @@
+diff -Nru VTK-8.1.1.org/CMake/vtkModuleMacros.cmake VTK-8.1.1/CMake/vtkModuleMacros.cmake
+--- VTK-8.1.1.org/CMake/vtkModuleMacros.cmake	2018-05-11 16:34:24.000000000 +0200
++++ VTK-8.1.1/CMake/vtkModuleMacros.cmake	2018-07-06 11:36:58.822368685 +0200
+@@ -362,7 +362,7 @@
+       DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
+       COMPONENT Development)
+     if(NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING)
+-      if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++      if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS)
+         install(FILES ${${vtk-module}_WRAP_HIERARCHY_FILE}
+           DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
+           COMPONENT Development)
+@@ -691,7 +691,7 @@
+   # TODO: Re-order things so we do not need to duplicate this condition.
+   if(NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING AND
+       NOT ${vtk-module}_EXCLUDE_FROM_WRAP_HIERARCHY AND
+-      ( VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA ))
++      ( VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS ))
+     set(_hierarchy ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Hierarchy.stamp.txt)
+   else()
+     set(_hierarchy "")
+diff -Nru VTK-8.1.1.org/CMake/vtkModuleMacros.cmake.orig VTK-8.1.1/CMake/vtkModuleMacros.cmake.orig
+--- VTK-8.1.1.org/CMake/vtkModuleMacros.cmake.orig	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/CMake/vtkModuleMacros.cmake.orig	2018-05-11 16:34:24.000000000 +0200
+@@ -0,0 +1,1071 @@
++get_filename_component(_VTKModuleMacros_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
++
++set(_VTKModuleMacros_DEFAULT_LABEL "VTKModular")
++
++include(${_VTKModuleMacros_DIR}/vtkModuleAPI.cmake)
++include(VTKGenerateExportHeader)
++include(vtkWrapping)
++include(vtkTargetLinkLibrariesWithDynamicLookup)
++if(VTK_MAKE_INSTANTIATORS)
++  include(vtkMakeInstantiator)
++endif()
++if(UNIX AND VTK_BUILD_FORWARDING_EXECUTABLES)
++  include(vtkForwardingExecutable)
++endif()
++
++# vtk_module(<name>)
++#
++# Main function for declaring a VTK module, usually in a module.cmake file in
++# the module search path. The module name is the only required argument, all
++# others are optional named arguments that will be outlined below. The following
++# named options take one (or more) arguments, such as the names of dependent
++# modules:
++#  DEPENDS = Modules that will be publicly linked to this module
++#  PRIVATE_DEPENDS = Modules that will be privately linked to this module
++#  COMPILE_DEPENDS = Modules that are needed at compile time by this module
++#  OPTIONAL_PYTHON_LINK = Optionally link the python library to this module
++#  TEST_DEPENDS = Modules that are needed by this modules testing executables
++#  DESCRIPTION = Free text description of the module
++#  TCL_NAME = Alternative name for the TCL wrapping (cannot contain numbers)
++#  IMPLEMENTS = Modules that this module implements, using the auto init feature
++#  BACKEND = An implementation backend that this module belongs (valid with
++#            IMPLEMENTS only)
++#  GROUPS = Module groups this module should be included in
++#  TEST_LABELS = Add labels to the tests for the module
++#  LEGACY version message = This module was deprecated in VTK `version`.
++#                   `message` is a custom message printed if this module is used.
++#
++# The following options take no arguments:
++#  EXCLUDE_FROM_ALL = Exclude this module from the build all modules flag
++#  EXCLUDE_FROM_WRAPPING = Do not attempt to wrap this module in any language
++#  EXCLUDE_FROM_WRAP_HIERARCHY = Do not attempt to process with wrap hierarchy
++#
++# This macro will ensure the module name is compliant, and set the appropriate
++# module variables as declared in the module.cmake file.
++macro(vtk_module _name)
++  # do not include module if it is LEGACY and we have VTK_LEGACY_REMOVE
++  set(VTK_${_name}_LEGACY_REMOVE FALSE)
++  if (VTK_LEGACY_REMOVE)
++    foreach(arg ${ARGN})
++      if("${arg}" MATCHES "^LEGACY$")
++        set(VTK_${_name}_LEGACY_REMOVE TRUE)
++      endif()
++    endforeach()
++  endif()
++  if(NOT VTK_${_name}_LEGACY_REMOVE)
++  vtk_module_check_name(${_name})
++  set(vtk-module ${_name})
++  set(vtk-module-test ${_name}-Test)
++  set(_doing "")
++  set(${vtk-module}_DECLARED 1)
++  set(${vtk-module-test}_DECLARED 1)
++  set(${vtk-module}_DEPENDS "")
++  set(${vtk-module}_COMPILE_DEPENDS "")
++  set(${vtk-module}_OPTIONAL_PYTHON_LINK 0)
++  set(${vtk-module}_PRIVATE_DEPENDS "")
++  set(${vtk-module-test}_DEPENDS "${vtk-module}")
++  set(${vtk-module}_IMPLEMENTS "")
++  set(${vtk-module}_IMPLEMENTATION_REQUIRED_BY_BACKEND 0)
++  set(${vtk-module}_BACKEND "")
++  set(${vtk-module}_DESCRIPTION "description")
++  set(${vtk-module}_TCL_NAME "${vtk-module}")
++  set(${vtk-module}_EXCLUDE_FROM_ALL 0)
++  set(${vtk-module}_EXCLUDE_FROM_WRAPPING 0)
++  set(${vtk-module}_EXCLUDE_FROM_WRAP_HIERARCHY 0)
++  set(${vtk-module}_TEST_LABELS "${vtk-module}")
++  set(${vtk-module}_KIT "")
++  foreach(arg ${ARGN})
++    # XXX: Adding a new keyword? Update Utilities/Maintenance/WhatModulesVTK.py
++    # and Utilities/Maintenance/VisualizeModuleDependencies.py as well.
++    if("${arg}" MATCHES "^((|COMPILE_|PRIVATE_|TEST_|)DEPENDS|DESCRIPTION|TCL_NAME|IMPLEMENTS|BACKEND|DEFAULT|GROUPS|TEST_LABELS|KIT|LEGACY)$")
++      set(_doing "${arg}")
++    elseif("${arg}" STREQUAL "EXCLUDE_FROM_ALL")
++      set(_doing "")
++      set(${vtk-module}_EXCLUDE_FROM_ALL 1)
++    elseif("${arg}" STREQUAL "EXCLUDE_FROM_WRAPPING")
++      set(_doing "")
++      set(${vtk-module}_EXCLUDE_FROM_WRAPPING 1)
++    elseif("${arg}" MATCHES "^EXCLUDE_FROM_\([A-Z]+\)_WRAPPING$")
++      set(_doing "")
++      set(${vtk-module}_EXCLUDE_FROM_${CMAKE_MATCH_1}_WRAPPING 1)
++    elseif("${arg}" STREQUAL "EXCLUDE_FROM_WRAP_HIERARCHY")
++      set(_doing "")
++      set(${vtk-module}_EXCLUDE_FROM_WRAP_HIERARCHY 1)
++    elseif("${arg}" STREQUAL "IMPLEMENTATION_REQUIRED_BY_BACKEND")
++      set(_doing "")
++      set(${vtk-module}_IMPLEMENTATION_REQUIRED_BY_BACKEND 1)
++    elseif("${arg}" STREQUAL "OPTIONAL_PYTHON_LINK")
++      set(_doing "")
++      set(${vtk-module}_OPTIONAL_PYTHON_LINK 1)
++    elseif("${arg}" MATCHES "^[A-Z][A-Z][A-Z]$" AND
++           NOT "${arg}" MATCHES "^(ON|OFF|MPI)$")
++      set(_doing "")
++      message(AUTHOR_WARNING "Unknown argument [${arg}]")
++    elseif("${_doing}" STREQUAL "DEPENDS")
++      list(APPEND ${vtk-module}_DEPENDS "${arg}")
++    elseif("${_doing}" STREQUAL "TEST_LABELS")
++      list(APPEND ${vtk-module}_TEST_LABELS "${arg}")
++    elseif("${_doing}" STREQUAL "TEST_DEPENDS")
++      list(APPEND ${vtk-module-test}_DEPENDS "${arg}")
++    elseif("${_doing}" STREQUAL "COMPILE_DEPENDS")
++      list(APPEND ${vtk-module}_COMPILE_DEPENDS "${arg}")
++    elseif("${_doing}" STREQUAL "PRIVATE_DEPENDS")
++      list(APPEND ${vtk-module}_PRIVATE_DEPENDS "${arg}")
++    elseif("${_doing}" STREQUAL "DESCRIPTION")
++      set(_doing "")
++      set(${vtk-module}_DESCRIPTION "${arg}")
++    elseif("${_doing}" STREQUAL "TCL_NAME")
++      set(_doing "")
++      set(${vtk-module}_TCL_NAME "${arg}")
++    elseif("${_doing}" STREQUAL "IMPLEMENTS")
++      list(APPEND ${vtk-module}_DEPENDS "${arg}")
++      list(APPEND ${vtk-module}_IMPLEMENTS "${arg}")
++    elseif("${_doing}" STREQUAL "BACKEND")
++      # Backends control groups of implementation modules, a module may be in
++      # multiple groups, and it should be an implementation of an interface
++      # module. The current BACKENDS are OpenGL and OpenGL2 (new rendering).
++      if(NOT DEFINED VTK_BACKEND_${arg}_MODULES)
++        list(APPEND VTK_BACKENDS ${arg})
++      endif()
++      list(APPEND VTK_BACKEND_${arg}_MODULES ${vtk-module})
++      list(APPEND ${vtk-module}_BACKEND "${arg}")
++      # Being a backend implicitly excludes from all (mutual exclusivity).
++      set(${vtk-module}_EXCLUDE_FROM_ALL 1)
++    elseif("${_doing}" MATCHES "^DEFAULT")
++      message(FATAL_ERROR "Invalid argument [DEFAULT]")
++    elseif("${_doing}" STREQUAL "GROUPS")
++      # Groups control larger groups of modules.
++      if(NOT DEFINED VTK_GROUP_${arg}_MODULES)
++        list(APPEND VTK_GROUPS ${arg})
++      endif()
++      list(APPEND VTK_GROUP_${arg}_MODULES ${vtk-module})
++    elseif("${_doing}" STREQUAL "KIT")
++      set(${vtk-module}_KIT "${arg}")
++    elseif("${_doing}" STREQUAL "LEGACY")
++      if (NOT ${vtk-module}_LEGACY)
++        set(${vtk-module}_LEGACY TRUE)
++        set(${vtk-module}_LEGACY_VERSION ${arg})
++      else()
++        set(${vtk-module}_LEGACY_MESSAGE ${arg})
++      endif()
++    else()
++      set(_doing "")
++      message(AUTHOR_WARNING "Unknown argument [${arg}]")
++    endif()
++  endforeach()
++  list(SORT ${vtk-module}_DEPENDS) # Deterministic order.
++  set(${vtk-module}_LINK_DEPENDS "${${vtk-module}_DEPENDS}")
++  set(${vtk-module}_WRAP_DEPENDS
++    ${${vtk-module}_DEPENDS}
++    ${${vtk-module}_PRIVATE_DEPENDS})
++  list(APPEND ${vtk-module}_DEPENDS
++    ${${vtk-module}_COMPILE_DEPENDS}
++    ${${vtk-module}_PRIVATE_DEPENDS})
++  unset(${vtk-module}_COMPILE_DEPENDS)
++  list(SORT ${vtk-module}_DEPENDS) # Deterministic order.
++  list(SORT ${vtk-module-test}_DEPENDS) # Deterministic order.
++  list(SORT ${vtk-module}_IMPLEMENTS) # Deterministic order.
++  if(NOT (${vtk-module}_EXCLUDE_FROM_WRAPPING OR
++          ${vtk-module}_EXCLUDE_FROM_TCL_WRAPPING) AND
++      "${${vtk-module}_TCL_NAME}" MATCHES "[0-9]")
++    message(AUTHOR_WARNING "Specify a TCL_NAME with no digits.")
++  endif()
++  endif()
++endmacro()
++
++# vtk_module_check_name(<name>)
++#
++# Check if the proposed module name is compliant.
++function(vtk_module_check_name _name)
++  if(NOT "${_name}" MATCHES "^[a-zA-Z][a-zA-Z0-9]*$")
++    message(FATAL_ERROR "Invalid module name: ${_name}")
++  endif()
++endfunction()
++
++function(vtk_module_compile_warning _warning)
++  set(include_warning "\n\
++#if ! defined(VTK_LEGACY_SILENT) && ! defined(VTK_IN_VTK)\n\
++   /* We are using this module */\n\
++#  pragma message \"${_warning}\"\n\
++#endif\n\
++")
++  string(LENGTH "${${vtk-module}_EXPORT_CODE}" export_code_length)
++  if (${export_code_length})
++    string(CONCAT include_warning ${${vtk-module}_EXPORT_CODE} ${include_warning})
++  endif()
++  set(${vtk-module}_EXPORT_CODE ${include_warning} PARENT_SCOPE)
++endfunction()
++
++
++# vtk_module_impl()
++#
++# This macro provides module implementation, setting up important variables
++# necessary to build a module. It assumes we are in the directory of the module.
++macro(vtk_module_impl)
++  include(module.cmake OPTIONAL) # Load module meta-data
++
++  list(APPEND ${vtk-module}_INCLUDE_DIRS
++    ${${vtk-module}_BINARY_DIR}
++    ${${vtk-module}_SOURCE_DIR})
++  list(REMOVE_DUPLICATES ${vtk-module}_INCLUDE_DIRS)
++  if(${vtk-module}_INCLUDE_DIRS)
++    include_directories(${${vtk-module}_INCLUDE_DIRS})
++  endif()
++
++  vtk_module_config(_dep ${${vtk-module}_DEPENDS})
++  if(_dep_INCLUDE_DIRS)
++    include_directories(${_dep_INCLUDE_DIRS})
++    # This variable is used in vtkWrapping.cmake
++    set(${vtk-module}_DEPENDS_INCLUDE_DIRS ${_dep_INCLUDE_DIRS})
++  endif()
++  if(_dep_LIBRARY_DIRS)
++    link_directories(${_dep_LIBRARY_DIRS})
++  endif()
++
++  if(NOT DEFINED ${vtk-module}_LIBRARIES)
++    foreach(dep IN LISTS ${vtk-module}_LINK_DEPENDS)
++      list(APPEND ${vtk-module}_LIBRARIES "${${dep}_LIBRARIES}")
++    endforeach()
++    if(${vtk-module}_LIBRARIES)
++      list(REMOVE_DUPLICATES ${vtk-module}_LIBRARIES)
++    endif()
++  endif()
++
++  if(${vtk-module}_SYSTEM_INCLUDE_DIRS)
++    include_directories(${${vtk-module}_SYSTEM_INCLUDE_DIRS})
++  endif()
++
++  if(${vtk-module}_SYSTEM_LIBRARY_DIRS)
++    link_directories(${${vtk-module}_SYSTEM_LIBRARY_DIRS})
++  endif()
++
++  if(${vtk-module}_THIRD_PARTY)
++    vtk_module_warnings_disable(C CXX)
++  endif()
++endmacro()
++
++# vtk_module_export_code_find_package(<name>)
++#
++# Add code that runs when the module is loaded in an application
++# to find the given package in the same place VTK found it.
++# This is useful for finding external dependencies that provide
++# imported targets linked by VTK libraries.
++#
++# The <name>_DIR variable must be set to the package location.
++# The VTK_INSTALL_FIND_PACKAGE_<name>_DIR variable may be set
++# to an alternative location for the install tree to reference,
++# or to a false value to remove any default location.
++#
++# Additional arguments for find_package() call added to the module config
++# can be provided as extra arguments to this macro e.g.
++#
++#     vtk_module_export_code_find_package(Qt5 COMPONENTS Widgets)
++#
++macro(vtk_module_export_code_find_package _name)
++  string(REPLACE ";" " " _argn "${ARGN}")
++  if(${_name}_DIR)
++    if(DEFINED VTK_INSTALL_FIND_PACKAGE_${_name}_DIR)
++      set(_dir "${VTK_INSTALL_FIND_PACKAGE_${_name}_DIR}")
++    else()
++      set(_dir "${${_name}_DIR}")
++    endif()
++    if(_dir)
++      set(${vtk-module}_EXPORT_CODE_INSTALL "${${vtk-module}_EXPORT_CODE_INSTALL}
++if(NOT ${_name}_DIR)
++  set(${_name}_DIR \"${_dir}\")
++endif()")
++    endif()
++    set(${vtk-module}_EXPORT_CODE_BUILD "${${vtk-module}_EXPORT_CODE_BUILD}
++if(NOT ${_name}_DIR)
++  set(${_name}_DIR \"${${_name}_DIR}\")
++endif()
++")
++  endif()
++  set(${vtk-module}_EXPORT_CODE_INSTALL "${${vtk-module}_EXPORT_CODE_INSTALL}
++find_package(${_name} REQUIRED QUIET ${_argn})
++")
++  set(${vtk-module}_EXPORT_CODE_BUILD "${${vtk-module}_EXPORT_CODE_BUILD}
++find_package(${_name} REQUIRED QUIET ${_argn})
++")
++endmacro()
++
++# vtk_module_export_info()
++#
++# Export just the essential data from a module such as name, include directory,
++# libraries provided by the module, and any custom variables that are part of
++# the module configuration.
++macro(vtk_module_export_info)
++  vtk_module_impl()
++  # First gather and configure the high level module information.
++  set(_code "")
++  foreach(opt ${${vtk-module}_EXPORT_OPTIONS})
++    set(_code "${_code}set(${opt} \"${${opt}}\")\n")
++  endforeach()
++  if(${vtk-module}_EXCLUDE_FROM_WRAPPING)
++    set(_code "${_code}set(${vtk-module}_EXCLUDE_FROM_WRAPPING 1)\n")
++  endif()
++  if(${vtk-module}_IMPLEMENTS)
++    set(_code "${_code}set(${vtk-module}_IMPLEMENTS \"${${vtk-module}_IMPLEMENTS}\")\n")
++  endif()
++  set(vtk-module-EXPORT_CODE-build "${_code}${${vtk-module}_EXPORT_CODE_BUILD}\n")
++  set(vtk-module-EXPORT_CODE-install "${_code}${${vtk-module}_EXPORT_CODE_INSTALL}\n")
++  if(VTK_SOURCE_DIR)
++    # Uses VTKTargets.cmake
++    set(vtk-module-TARGETS_FILE-build "")
++    set(vtk-module-TARGETS_FILE-install "")
++  else()
++    set(vtk-module-TARGETS_FILE-build "${${vtk-module}_TARGETS_FILE_BUILD}")
++    set(vtk-module-TARGETS_FILE-install "${${vtk-module}_TARGETS_FILE_INSTALL}")
++  endif()
++
++  if(${vtk-module}_WRAP_HINTS)
++    set(vtk-module-EXPORT_CODE-build
++      "${vtk-module-EXPORT_CODE-build}set(${vtk-module}_WRAP_HINTS \"${${vtk-module}_WRAP_HINTS}\")\n")
++    set(vtk-module-EXPORT_CODE-install
++      "${vtk-module-EXPORT_CODE-install}set(${vtk-module}_WRAP_HINTS \"\${CMAKE_CURRENT_LIST_DIR}/${vtk-module}_hints\")\n")
++  endif()
++
++  set(vtk-module-DEPENDS "${${vtk-module}_DEPENDS}")
++  set(vtk-module-LIBRARIES "${${vtk-module}_LIBRARIES}")
++  set(vtk-module-INCLUDE_DIRS-build "${${vtk-module}_INCLUDE_DIRS}")
++  set(vtk-module-INCLUDE_DIRS-install "\${VTK_INSTALL_PREFIX}/${VTK_INSTALL_INCLUDE_DIR}")
++  if(${vtk-module}_SYSTEM_INCLUDE_DIRS)
++    list(APPEND vtk-module-INCLUDE_DIRS-build "${${vtk-module}_SYSTEM_INCLUDE_DIRS}")
++    list(APPEND vtk-module-INCLUDE_DIRS-install "${${vtk-module}_SYSTEM_INCLUDE_DIRS}")
++  endif()
++  if(WIN32)
++    set(vtk-module-RUNTIME_LIBRARY_DIRS-build "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
++    set(vtk-module-RUNTIME_LIBRARY_DIRS-install "\${VTK_INSTALL_PREFIX}/${VTK_INSTALL_RUNTIME_DIR}")
++  else()
++    set(vtk-module-RUNTIME_LIBRARY_DIRS-build "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
++    set(vtk-module-RUNTIME_LIBRARY_DIRS-install "\${VTK_INSTALL_PREFIX}/${VTK_INSTALL_LIBRARY_DIR}")
++  endif()
++  set(vtk-module-LIBRARY_DIRS "${${vtk-module}_SYSTEM_LIBRARY_DIRS}")
++  set(vtk-module-RUNTIME_LIBRARY_DIRS "${vtk-module-RUNTIME_LIBRARY_DIRS-build}")
++  set(vtk-module-INCLUDE_DIRS "${vtk-module-INCLUDE_DIRS-build}")
++  set(vtk-module-EXPORT_CODE "${vtk-module-EXPORT_CODE-build}")
++  set(vtk-module-TARGETS_FILE "${vtk-module-TARGETS_FILE-build}")
++  set(vtk-module-WRAP_HIERARCHY_FILE "${${vtk-module}_WRAP_HIERARCHY_FILE}")
++  set(vtk-module-KIT "${${vtk-module}_KIT}")
++  configure_file(${_VTKModuleMacros_DIR}/vtkModuleInfo.cmake.in
++    ${VTK_MODULES_DIR}/${vtk-module}.cmake @ONLY)
++  set(vtk-module-INCLUDE_DIRS "${vtk-module-INCLUDE_DIRS-install}")
++  set(vtk-module-RUNTIME_LIBRARY_DIRS "${vtk-module-RUNTIME_LIBRARY_DIRS-install}")
++  set(vtk-module-EXPORT_CODE "${vtk-module-EXPORT_CODE-install}")
++  set(vtk-module-TARGETS_FILE "${vtk-module-TARGETS_FILE-install}")
++  set(vtk-module-WRAP_HIERARCHY_FILE
++    "\${CMAKE_CURRENT_LIST_DIR}/${vtk-module}Hierarchy.txt")
++  configure_file(${_VTKModuleMacros_DIR}/vtkModuleInfo.cmake.in
++    CMakeFiles/${vtk-module}.cmake @ONLY)
++  if (NOT VTK_INSTALL_NO_DEVELOPMENT)
++    install(FILES ${${vtk-module}_BINARY_DIR}/CMakeFiles/${vtk-module}.cmake
++      DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
++      COMPONENT Development)
++    if(NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING)
++      if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++        install(FILES ${${vtk-module}_WRAP_HIERARCHY_FILE}
++          DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
++          COMPONENT Development)
++      endif()
++      if(${vtk-module}_WRAP_HINTS AND EXISTS "${${vtk-module}_WRAP_HINTS}")
++        install(FILES ${${vtk-module}_WRAP_HINTS}
++          RENAME ${vtk-module}_HINTS
++          DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
++          COMPONENT Development)
++      endif()
++    endif()
++  endif()
++endmacro()
++
++# vtk_module_export(<sources>)
++#
++# Export data from a module such as name, include directory and header level
++# information useful for wrapping. This calls vtk_module_export_info() and then
++# exports additional information in a supplemental file useful for wrapping
++# generators.
++function(vtk_module_export sources)
++  vtk_module_export_info()
++  # Now iterate through the headers in the module to get header level information.
++  foreach(arg ${sources})
++    get_filename_component(src "${arg}" ABSOLUTE)
++
++    string(REGEX REPLACE "\\.(cxx|txx|mm)$" ".h" hdr "${src}")
++    get_source_file_property(_skip_install ${src} SKIP_HEADER_INSTALL)
++
++    if("${hdr}" MATCHES "\\.h$" AND NOT _skip_install)
++      if(EXISTS "${hdr}")
++        get_filename_component(_filename "${hdr}" NAME)
++        string(REGEX REPLACE "\\.h$" "" _cls "${_filename}")
++
++        get_source_file_property(_wrap_exclude ${src} WRAP_EXCLUDE)
++        get_source_file_property(_wrap_exclude_python ${src} WRAP_EXCLUDE_PYTHON)
++        get_source_file_property(_abstract ${src} ABSTRACT)
++
++        list(APPEND vtk-module-HEADERS ${_cls})
++
++        if(_abstract)
++          set(vtk-module-ABSTRACT
++            "${vtk-module-ABSTRACT}set(${vtk-module}_HEADER_${_cls}_ABSTRACT 1)\n")
++        endif()
++
++        if(_wrap_exclude)
++          set(vtk-module-WRAP_EXCLUDE
++            "${vtk-module-WRAP_EXCLUDE}set(${vtk-module}_HEADER_${_cls}_WRAP_EXCLUDE 1)\n")
++        endif()
++
++        if(_wrap_exclude_python)
++          set(vtk-module-WRAP_EXCLUDE_PYTHON
++            "${vtk-module-WRAP_EXCLUDE_PYTHON}set(${vtk-module}_HEADER_${_cls}_WRAP_EXCLUDE_PYTHON 1)\n")
++        endif()
++      endif()
++    endif()
++  endforeach()
++  # Configure wrapping information for external wrapping of headers.
++  configure_file(${_VTKModuleMacros_DIR}/vtkModuleHeaders.cmake.in
++    ${VTK_MODULES_DIR}/${vtk-module}-Headers.cmake @ONLY)
++endfunction()
++
++macro(vtk_module_test)
++  if(NOT vtk_module_test_called)
++    set(vtk_module_test_called 1) # Run once in a given scope.
++    include(../../module.cmake) # Load module meta-data
++    vtk_module_config(${vtk-module-test}-Cxx ${${vtk-module-test}-Cxx_DEPENDS})
++    if(${vtk-module-test}-Cxx_INCLUDE_DIRS)
++      include_directories(${${vtk-module-test}-Cxx_INCLUDE_DIRS})
++    endif()
++    if(${vtk-module-test}-Cxx_LIBRARY_DIRS)
++      link_directories(${${vtk-module-test}-Cxx_LIBRARY_DIRS})
++    endif()
++  endif()
++endmacro()
++
++function(vtk_module_warnings_disable)
++  foreach(lang IN LISTS ARGN)
++    if(MSVC)
++      string(REGEX REPLACE "(^| )[/-]W[0-4]( |$)" " "
++        CMAKE_${lang}_FLAGS "${CMAKE_${lang}_FLAGS}")
++      set(CMAKE_${lang}_FLAGS "${CMAKE_${lang}_FLAGS} /W0")
++    elseif(BORLAND)
++      set(CMAKE_${lang}_FLAGS "${CMAKE_${lang}_FLAGS} -w-")
++    else()
++      set(CMAKE_${lang}_FLAGS "${CMAKE_${lang}_FLAGS} -w")
++    endif()
++    set(CMAKE_${lang}_FLAGS "${CMAKE_${lang}_FLAGS}" PARENT_SCOPE)
++  endforeach()
++endfunction()
++
++function(vtk_target_label _target_name)
++  if(vtk-module)
++    set(_label ${vtk-module})
++  else()
++    set(_label ${_VTKModuleMacros_DEFAULT_LABEL})
++  endif()
++  set_property(TARGET ${_target_name} PROPERTY LABELS ${_label})
++endfunction()
++
++# vtk_target_name(<name>)
++#
++# This macro does some basic checking for library naming, and also adds a suffix
++# to the output name with the VTK version by default. Setting the variable
++# VTK_CUSTOM_LIBRARY_SUFFIX will override the suffix.
++function(vtk_target_name _name)
++  get_property(_type TARGET ${_name} PROPERTY TYPE)
++  if(NOT "${_type}" STREQUAL EXECUTABLE AND NOT VTK_JAVA_INSTALL)
++    set_property(TARGET ${_name} PROPERTY VERSION 1)
++    set_property(TARGET ${_name} PROPERTY SOVERSION 1)
++  endif()
++  if("${_name}" MATCHES "^[Vv][Tt][Kk]")
++    set(_vtk "")
++  else()
++    set(_vtk "vtk")
++    #message(AUTHOR_WARNING "Target [${_name}] does not start in 'vtk'.")
++  endif()
++  # Support custom library suffix names, for other projects wanting to inject
++  # their own version numbers etc.
++  if(DEFINED VTK_CUSTOM_LIBRARY_SUFFIX)
++    set(_lib_suffix "${VTK_CUSTOM_LIBRARY_SUFFIX}")
++  else()
++    set(_lib_suffix "-${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}")
++  endif()
++  set_property(TARGET ${_name} PROPERTY OUTPUT_NAME ${_vtk}${_name}${_lib_suffix})
++endfunction()
++
++function(vtk_target_export _name)
++  set(is_insource_module 0)
++  if(VTK_SOURCE_DIR)
++    set(is_insource_module 1)
++  endif()
++  set(is_local_project 0)
++  if("${${vtk-module}-targets-build}" STREQUAL "")
++    set(is_local_project 1) # E.g Examples/Build/vtkMy or Examples/Build/vtkLocal
++  endif()
++  if(is_insource_module OR is_local_project)
++    set_property(GLOBAL APPEND PROPERTY VTK_TARGETS ${_name})
++  else()
++    export(TARGETS ${_name} APPEND FILE ${${vtk-module}-targets-build}) # External VTK module
++  endif()
++endfunction()
++
++function(vtk_target_install _name)
++  if(NOT VTK_INSTALL_NO_LIBRARIES)
++    if(APPLE AND VTK_JAVA_INSTALL)
++       set_target_properties(${_name} PROPERTIES SUFFIX ".jnilib")
++    endif()
++    if(VTK_INSTALL_NO_DEVELOPMENT)
++      # Installation for deployment does not need static libraries.
++      get_property(_type TARGET ${_name} PROPERTY TYPE)
++      if(_type STREQUAL "STATIC_LIBRARY")
++        return()
++      endif()
++      set(_archive_destination "")
++    else()
++      # Installation for development needs static libraries.
++      set(_archive_destination
++        ARCHIVE DESTINATION ${VTK_INSTALL_ARCHIVE_DIR} COMPONENT Development
++        )
++    endif()
++    install(TARGETS ${_name}
++      EXPORT ${VTK_INSTALL_EXPORT_NAME}
++      RUNTIME DESTINATION ${VTK_INSTALL_RUNTIME_DIR} COMPONENT RuntimeLibraries
++      LIBRARY DESTINATION ${VTK_INSTALL_LIBRARY_DIR} COMPONENT RuntimeLibraries
++      ${_archive_destination}
++      )
++  endif()
++endfunction()
++
++function(vtk_target _name)
++  set(_install 1)
++  foreach(arg IN LISTS ARGN)
++    if(arg STREQUAL "NO_INSTALL")
++      set(_install 0)
++    else()
++      message(FATAL_ERROR "Unknown argument [${arg}]")
++    endif()
++  endforeach()
++  vtk_target_name(${_name})
++  vtk_target_label(${_name})
++  vtk_target_export(${_name})
++  if(_install)
++    vtk_target_install(${_name})
++  endif()
++endfunction()
++
++#------------------------------------------------------------------------------
++# Export a target for a tool that used during the compilation process.
++# This is called by vtk_compile_tools_target().
++function(vtk_compile_tools_target_export _name)
++  set_property(GLOBAL APPEND PROPERTY VTK_COMPILETOOLS_TARGETS ${_name})
++endfunction()
++
++#------------------------------------------------------------------------------
++function(vtk_compile_tools_target_install _name)
++  if(NOT VTK_INSTALL_NO_DEVELOPMENT)
++    install(TARGETS ${_name}
++      EXPORT ${VTK_INSTALL_EXPORT_NAME}
++      RUNTIME DESTINATION ${VTK_INSTALL_RUNTIME_DIR} COMPONENT RuntimeLibraries
++      LIBRARY DESTINATION ${VTK_INSTALL_LIBRARY_DIR} COMPONENT RuntimeLibraries
++      ARCHIVE DESTINATION ${VTK_INSTALL_ARCHIVE_DIR} COMPONENT Development
++      )
++  endif()
++endfunction()
++
++#------------------------------------------------------------------------------
++# vtk_compile_tools_target() is used to declare a target that builds a tool that
++# is used during the building process. This macro ensures that the target is
++# added to VTK_COMPILETOOLS_TARGETS global property. This also adds install
++# rules for the target unless NO_INSTALL argument is specified or
++# VTK_INSTALL_NO_DEVELOPMENT variable is set.
++if(NOT DEFINED VTK_COMPILE_TOOLS_IMPORTED)
++  set(VTK_COMPILE_TOOLS_IMPORTED FALSE)
++endif()
++function(vtk_compile_tools_target _name)
++  if(VTK_COMPILE_TOOLS_IMPORTED)
++    message(AUTHOR_WARNING
++      "vtk_compile_tools_target is being called when VTK_COMPILE_TOOLS_IMPORTED is true. "
++      "This generally signifies a script issue. compile-tools are not expected "
++      "to be built, but rather imported when CMAKE_CROSSCOMPILING is ON and "
++      "CMAKE_CROSSCOMPILER_EMULATOR is undefined.")
++  endif ()
++  set(_install 1)
++  foreach(arg IN LISTS ARGN)
++    if(arg STREQUAL "NO_INSTALL")
++      set(_install 0)
++    else()
++      message(FATAL_ERROR "Unknown argument [${arg}]")
++    endif()
++  endforeach()
++  vtk_target_name(${_name})
++  vtk_target_label(${_name})
++  vtk_compile_tools_target_export(${_name})
++  if(_install)
++    vtk_compile_tools_target_install(${_name})
++  endif()
++endfunction()
++#------------------------------------------------------------------------------
++
++function(vtk_add_library name)
++  add_library(${name} ${ARGN} ${headers})
++  # We use compile features to specify that VTK requires C++11.
++  # We request a series of C++11 features that will conform to VTK's
++  # desired minimum requirements.
++  # - cxx_override enforces Intel 14+, and GCC 4.7+
++  # - cxx_nullptr as this a hard requirement for all compiler
++  # CMake 3.8+ introduces the concept of meta language compiler features, and
++  # also introduces the first compilers that are only meta language feature
++  # aware. So if we have CMake 3.8+ we will also set the meta feature as
++  # a private flag ( private so we don't force consumers to also use 3.8+ )
++  if(NOT VTK_IGNORE_CMAKE_CXX11_CHECKS)
++    target_compile_features(${name} PUBLIC cxx_nullptr cxx_override)
++    if(NOT CMAKE_VERSION VERSION_LESS 3.8)
++      target_compile_features(${name} PRIVATE cxx_std_11)
++    endif()
++  endif()
++  if(NOT ARGV1 STREQUAL OBJECT)
++    vtk_target(${name})
++  endif()
++endfunction()
++
++function(vtk_add_executable name)
++  if(UNIX AND VTK_BUILD_FORWARDING_EXECUTABLES)
++    vtk_add_executable_with_forwarding(VTK_EXE_SUFFIX ${name} ${ARGN})
++    set_property(GLOBAL APPEND PROPERTY VTK_TARGETS ${name})
++  else()
++    add_executable(${name} ${ARGN})
++    set_property(GLOBAL APPEND PROPERTY VTK_TARGETS ${name})
++  endif()
++endfunction()
++
++macro(vtk_module_test_executable test_exe_name)
++  vtk_module_test()
++  # No forwarding or export for test executables.
++  add_executable(${test_exe_name} MACOSX_BUNDLE ${ARGN})
++  target_link_libraries(${test_exe_name} LINK_PRIVATE ${${vtk-module-test}-Cxx_LIBRARIES})
++
++  if(${vtk-module-test}-Cxx_DEFINITIONS)
++    set_property(TARGET ${test_exe_name} APPEND PROPERTY COMPILE_DEFINITIONS
++      ${${vtk-module-test}-Cxx_DEFINITIONS})
++  endif()
++endmacro()
++
++function(vtk_module_library name)
++  if(NOT "${name}" STREQUAL "${vtk-module}")
++    message(FATAL_ERROR "vtk_module_library must be invoked with module name")
++  endif()
++
++  set(${vtk-module}_LIBRARIES ${vtk-module})
++  vtk_module_impl()
++
++  set(vtk-module-HEADERS)
++  set(vtk-module-ABSTRACT)
++
++  # Collect header files matching sources.
++  set(_hdrs ${${vtk-module}_HDRS})
++  foreach(arg ${ARGN})
++    get_filename_component(src "${arg}" ABSOLUTE)
++
++    get_source_file_property(_skip_install ${src} SKIP_HEADER_INSTALL)
++    string(REGEX REPLACE "\\.(cxx|mm)$" ".h" hdr "${src}")
++    if("${hdr}" MATCHES "\\.h$" AND EXISTS "${hdr}" AND NOT _skip_install)
++      list(APPEND _hdrs "${hdr}")
++    elseif("${src}" MATCHES "\\.txx$" AND EXISTS "${src}")
++      list(APPEND _hdrs "${src}")
++      string(REGEX REPLACE "\\.txx$" ".h" hdr "${src}")
++      if("${hdr}" MATCHES "\\.h$" AND EXISTS "${hdr}")
++        list(APPEND _hdrs "${hdr}")
++      endif()
++    endif()
++  endforeach()
++  list(APPEND _hdrs "${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Module.h")
++  list(REMOVE_DUPLICATES _hdrs)
++
++  # The instantiators are off by default, and only work on wrapped modules.
++  if(VTK_MAKE_INSTANTIATORS AND NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING)
++    string(TOUPPER "${vtk-module}_EXPORT" _export_macro)
++    vtk_make_instantiator3(${vtk-module}Instantiator _instantiator_SRCS
++      "${ARGN}" ${_export_macro} ${CMAKE_CURRENT_BINARY_DIR}
++      ${vtk-module}Module.h)
++    list(APPEND _hdrs "${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Instantiator.h")
++  endif()
++
++  # Add the vtkWrapHierarchy custom command output to the target, if any.
++  # TODO: Re-order things so we do not need to duplicate this condition.
++  if(NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING AND
++      NOT ${vtk-module}_EXCLUDE_FROM_WRAP_HIERARCHY AND
++      ( VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA ))
++    set(_hierarchy ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Hierarchy.stamp.txt)
++  else()
++    set(_hierarchy "")
++  endif()
++
++  set(target_suffix)
++  set(force_object)
++  set(export_symbol_object)
++  if(_vtk_build_as_kit)
++    # Hack up the target name to end with 'Objects' and make it an OBJECT
++    # library.
++    set(target_suffix Objects)
++    set(force_object ${target_suffix} OBJECT)
++    set(export_symbol_object ${target_suffix} BASE_NAME ${vtk-module})
++    # OBJECT libraries don't like this variable being set; clear it.
++    unset(${vtk-module}_LIB_DEPENDS CACHE)
++  endif()
++  vtk_add_library(${vtk-module}${force_object} ${ARGN} ${_hdrs} ${_instantiator_SRCS} ${_hierarchy})
++  if(_vtk_build_as_kit)
++    # Make an interface library to link with for libraries.
++    add_library(${vtk-module} INTERFACE)
++    vtk_target_export(${vtk-module})
++    vtk_target_install(${vtk-module})
++    set_target_properties(${vtk-module}
++      PROPERTIES
++        INTERFACE_LINK_LIBRARIES "${_vtk_build_as_kit}")
++    if(BUILD_SHARED_LIBS)
++      # Define a kit-wide export symbol for the objects in this module.
++      set_property(TARGET ${vtk-module}Objects APPEND
++        PROPERTY
++          COMPILE_DEFINITIONS ${${vtk-module}_KIT}_EXPORTS)
++      set_target_properties(${vtk-module}Objects
++        PROPERTIES
++          # Tell vtk_generate_export_header what kit-wide export symbol we use.
++          DEFINE_SYMBOL ${${vtk-module}_KIT}_EXPORTS
++          POSITION_INDEPENDENT_CODE TRUE)
++    endif()
++  endif()
++  foreach(dep IN LISTS ${vtk-module}_LINK_DEPENDS)
++    vtk_module_link_libraries(${vtk-module} LINK_PUBLIC ${${dep}_LIBRARIES})
++  endforeach()
++
++  # Optionally link the module to the python library
++  if(NOT _vtk_build_as_kit AND ${${vtk-module}_OPTIONAL_PYTHON_LINK})
++    vtk_target_link_libraries_with_dynamic_lookup(${vtk-module} LINK_PUBLIC ${vtkPython_LIBRARIES})
++  endif()
++
++  # Handle the private dependencies, setting up link/include directories.
++  foreach(dep IN LISTS ${vtk-module}_PRIVATE_DEPENDS)
++    if(${dep}_INCLUDE_DIRS)
++      include_directories(${${dep}_INCLUDE_DIRS})
++    endif()
++    if(${dep}_LIBRARY_DIRS)
++      link_directories(${${dep}_LIBRARY_DIRS})
++    endif()
++    vtk_module_link_libraries(${vtk-module} LINK_PRIVATE ${${dep}_LIBRARIES})
++  endforeach()
++
++  if(${vtk-module}_LEGACY)
++    set(legacy_message "")
++    string(APPEND legacy_message ${vtk-module} " module was deprecated for VTK "
++      ${${vtk-module}_LEGACY_VERSION} " and will be removed in a future version.")
++    if(${vtk-module}_LEGACY_MESSAGE)
++      string(APPEND legacy_message " " ${${vtk-module}_LEGACY_MESSAGE})
++    endif()
++    if(NOT VTK_LEGACY_SILENT)
++      message(WARNING "
++=====================================================================
++${legacy_message}
++=====================================================================
++")
++    endif()
++    # issue a warning if one compiles against our module
++    # this is for users of VTK
++    vtk_module_compile_warning(${legacy_message})
++  endif()
++
++  set(sep "")
++  if(${vtk-module}_EXPORT_CODE)
++    set(sep "\n\n")
++  endif()
++
++  # Include module headers from dependencies that need auto-init.
++  set(mod_autoinit_deps "")
++  foreach(dep IN LISTS ${vtk-module}_LINK_DEPENDS)
++    get_property(dep_autoinit GLOBAL PROPERTY ${dep}_NEEDS_AUTOINIT)
++    if(dep_autoinit)
++      set(mod_autoinit_deps "${mod_autoinit_deps}\n#include \"${dep}Module.h\"")
++    endif()
++  endforeach()
++  if(mod_autoinit_deps)
++    set(${vtk-module}_EXPORT_CODE "${${vtk-module}_EXPORT_CODE}${sep}/* AutoInit dependencies.  */${mod_autoinit_deps}")
++    set(sep "\n\n")
++    set_property(GLOBAL PROPERTY ${vtk-module}_NEEDS_AUTOINIT 1)
++  endif()
++
++  # Perform auto-init if this module has or implements an interface.
++  if(${vtk-module}_IMPLEMENTED OR ${vtk-module}_IMPLEMENTS)
++    set_property(GLOBAL PROPERTY ${vtk-module}_NEEDS_AUTOINIT 1)
++    set(${vtk-module}_EXPORT_CODE
++      "${${vtk-module}_EXPORT_CODE}${sep}/* AutoInit implementations.  */
++#if defined(${vtk-module}_INCLUDE)
++# include ${vtk-module}_INCLUDE
++#endif
++#if defined(${vtk-module}_AUTOINIT)
++# include \"vtkAutoInit.h\"
++VTK_AUTOINIT(${vtk-module})
++#endif")
++  endif()
++
++  # Generate the export macro header for symbol visibility/Windows DLL declspec
++  if(target_suffix)
++    set(${vtk-module}${target_suffix}_EXPORT_CODE
++      ${${vtk-module}_EXPORT_CODE})
++  endif()
++  vtk_generate_export_header(${vtk-module}${export_symbol_object} EXPORT_FILE_NAME ${vtk-module}Module.h)
++  if (BUILD_SHARED_LIBS)
++    # export flags are only added when building shared libs, they cause
++    # mismatched visibility warnings when building statically since not all
++    # libraries that VTK builds don't set visibility flags. Until we get a
++    # time to do that, we skip visibility flags for static libraries.
++    set_property(TARGET ${vtk-module}${target_suffix}
++                 PROPERTY CXX_VISIBILITY_PRESET "hidden")
++  endif()
++
++  if(BUILD_TESTING AND PYTHON_EXECUTABLE AND NOT ${vtk-module}_NO_HeaderTest AND VTK_SOURCE_DIR)
++    string(TOUPPER "${vtk-module}" MOD)
++    add_test(NAME ${vtk-module}-HeaderTest
++      COMMAND ${PYTHON_EXECUTABLE} ${VTK_SOURCE_DIR}/Testing/Core/HeaderTesting.py
++                                   ${CMAKE_CURRENT_SOURCE_DIR} ${MOD}_EXPORT
++      )
++    set_tests_properties(${vtk-module}-HeaderTest
++      PROPERTIES LABELS "${${vtk-module}_TEST_LABELS}"
++      )
++  endif()
++
++  if(BUILD_TESTING AND TCL_TCLSH)
++    add_test(NAME ${vtk-module}-TestSetObjectMacro
++      COMMAND ${TCL_TCLSH}
++      ${VTK_SOURCE_DIR}/Testing/Core/FindString.tcl
++      "${${vtk-module}_SOURCE_DIR}/vtk\\\\*.h"
++      # "${CMAKE_CURRENT_SOURCE_DIR}/vtk\\\\*.h"
++      "vtkSetObjectMacro"
++      ${VTK_SOURCE_DIR}/Common/Core/vtkSetGet.h
++      )
++    add_test(NAME ${vtk-module}-TestPrintSelf
++      COMMAND ${TCL_TCLSH}
++      ${VTK_SOURCE_DIR}/Testing/Core/PrintSelfCheck.tcl
++      ${${vtk-module}_SOURCE_DIR})
++    set_tests_properties(${vtk-module}-TestSetObjectMacro
++      PROPERTIES LABELS "${${vtk-module}_TEST_LABELS}"
++      )
++    set_tests_properties(${vtk-module}-TestPrintSelf
++      PROPERTIES LABELS "${${vtk-module}_TEST_LABELS}"
++      )
++  endif()
++
++  # Add the module to the list of wrapped modules if necessary
++  vtk_add_wrapping(${vtk-module} "${ARGN}" "${${vtk-module}_HDRS}")
++
++  # Export the module information.
++  vtk_module_export("${ARGN}")
++
++  # Figure out which headers to install.
++  if(NOT VTK_INSTALL_NO_DEVELOPMENT AND NOT VTK_INSTALL_NO_HEADERS AND _hdrs)
++    install(FILES ${_hdrs}
++      DESTINATION ${VTK_INSTALL_INCLUDE_DIR}
++      COMPONENT Development
++      )
++  endif()
++endfunction()
++
++function(vtk_module_link_libraries module)
++  if(VTK_ENABLE_KITS AND ${module}_KIT)
++    set_property(GLOBAL APPEND
++      PROPERTY
++        ${${module}_KIT}_LIBS ${ARGN})
++    foreach(dep IN LISTS ARGN)
++      if(TARGET ${dep}Objects)
++        add_dependencies(${module}Objects ${dep}Objects)
++      elseif(TARGET ${dep})
++        add_dependencies(${module}Objects ${dep})
++      endif()
++    endforeach()
++  else()
++    target_link_libraries(${module} ${ARGN})
++  endif()
++endfunction()
++
++macro(vtk_module_third_party _pkg)
++  string(TOLOWER "${_pkg}" _lower)
++  string(TOUPPER "${_pkg}" _upper)
++
++  set(_includes "")
++  set(_pkg_name "")
++  set(_libs "")
++  set(_nolibs 0)
++  set(_subdir 1)
++  set(_version "")
++  set(_components "")
++  set(_optional_components "")
++  set(_doing "")
++  foreach(arg ${ARGN})
++    if("${arg}" MATCHES "^(LIBRARIES|INCLUDE_DIRS|COMPONENTS|OPTIONAL_COMPONENTS|PACKAGE)$")
++      set(_doing "${arg}")
++    elseif("${arg}" STREQUAL "NO_ADD_SUBDIRECTORY")
++      set(_doing "")
++      set(_subdir 0)
++    elseif("${arg}" STREQUAL "VERSION")
++      set(_doing "version")
++    elseif("${arg}" STREQUAL "NO_LIBRARIES")
++      set(_doing "")
++      set(_nolibs 1)
++    elseif("${_doing}" STREQUAL "version")
++      if (_version)
++        message(AUTHOR_WARNING "Duplicate 'VERSION' keyword")
++      endif ()
++      set(_version "${arg}")
++    elseif("${_doing}" STREQUAL "PACKAGE")
++      if (_pkg_name)
++        message(AUTHOR_WARNING "Duplicate 'PACKAGE' keyword")
++      endif ()
++      set(_pkg_name "${arg}")
++    elseif("${_doing}" STREQUAL "LIBRARIES")
++      list(APPEND _libs "${arg}")
++    elseif("${_doing}" STREQUAL "INCLUDE_DIRS")
++      list(APPEND _includes "${arg}")
++    elseif("${_doing}" STREQUAL "COMPONENTS")
++      list(APPEND _components "${arg}")
++    elseif("${_doing}" STREQUAL "OPTIONAL_COMPONENTS")
++      list(APPEND _optional_components "${arg}")
++    else()
++      set(_doing "")
++      message(AUTHOR_WARNING "Unknown argument [${arg}]")
++    endif()
++  endforeach()
++  if(_libs AND _nolibs)
++    message(FATAL_ERROR "Cannot specify both LIBRARIES and NO_LIBRARIES")
++  endif()
++  if (NOT _pkg_name)
++    set(_pkg_name "${_pkg}")
++  endif ()
++  string(TOUPPER "${_pkg_name}" _upper_pkg_name)
++
++  option(VTK_USE_SYSTEM_${_upper} "Use system-installed ${_pkg}" ${VTK_USE_SYSTEM_LIBRARIES})
++  mark_as_advanced(VTK_USE_SYSTEM_${_upper})
++
++  if(VTK_USE_SYSTEM_${_upper})
++    set(__extra_args)
++    if(_components)
++      list(APPEND __extra_args ${_components})
++    endif()
++    if (_optional_components)
++      list(APPEND __extra_args "OPTIONAL_COMPONENTS" ${_optional_components})
++    endif()
++    find_package(${_pkg_name} ${_version} REQUIRED ${__extra_args})
++    if(NOT ${_upper_pkg_name}_FOUND AND NOT ${_pkg_name}_FOUND)
++      message(FATAL_ERROR "VTK_USE_SYSTEM_${_upper} is ON but ${_pkg_name} is not found!")
++    endif()
++    if(${_pkg_name}_INCLUDE_DIRS)
++      set(vtk${_lower}_SYSTEM_INCLUDE_DIRS ${${_pkg_name}_INCLUDE_DIRS})
++    elseif(${_upper_pkg_name}_INCLUDE_DIRS)
++      set(vtk${_lower}_SYSTEM_INCLUDE_DIRS ${${_upper_pkg_name}_INCLUDE_DIRS})
++    else()
++      set(vtk${_lower}_SYSTEM_INCLUDE_DIRS ${${_upper_pkg_name}_INCLUDE_DIR})
++    endif()
++    if(${_pkg_name}_LIBRARIES)
++      set(vtk${_lower}_LIBRARIES "${${_pkg_name}_LIBRARIES}")
++    else()
++      set(vtk${_lower}_LIBRARIES "${${_upper_pkg_name}_LIBRARIES}")
++    endif()
++
++    #a workaround for bad FindHDF5 behavior in which deb or opt can
++    #end up empty. cmake >= 2.8.12.2 makes this unnecessary
++    string(REGEX MATCH "debug;.*optimized;.*"
++           _remove_deb_opt "${vtk${_lower}_LIBRARIES}")
++    if (_remove_deb_opt)
++      set(_tmp ${vtk${_lower}_LIBRARIES})
++      list(REMOVE_ITEM _tmp "debug")
++      list(REMOVE_ITEM _tmp "optimized")
++      list(REMOVE_DUPLICATES _tmp)
++      set(vtk${_lower}_LIBRARIES ${_tmp})
++    endif()
++
++    set(vtk${_lower}_INCLUDE_DIRS "")
++  else()
++    if(_nolibs)
++      set(vtk${_lower}_LIBRARIES "")
++    elseif(_libs)
++      set(vtk${_lower}_LIBRARIES "${_libs}")
++    else()
++      set(vtk${_lower}_LIBRARIES vtk${_lower})
++    endif()
++    set(vtk${_lower}_INCLUDE_DIRS "${_includes}")
++  endif()
++
++  set(vtk${_lower}_THIRD_PARTY 1)
++  vtk_module_impl()
++
++  # Export the core module information.
++  vtk_module_export_info()
++
++  configure_file(vtk_${_lower}.h.in vtk_${_lower}.h)
++  if (NOT VTK_INSTALL_NO_DEVELOPMENT)
++    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/vtk_${_lower}.h
++            DESTINATION ${VTK_INSTALL_INCLUDE_DIR}
++            COMPONENT Development)
++  endif()
++
++  if(_subdir AND NOT VTK_USE_SYSTEM_${_upper})
++    add_subdirectory(vtk${_lower})
++  endif()
++endmacro()
++
++# called internally to add one module to the list of available modules
++macro(vtk_add_module src f bld ) # [test-langs]
++  unset(vtk-module)
++  include(${src}/${f} OPTIONAL)
++  if(DEFINED vtk-module)
++    list(APPEND VTK_MODULES_ALL ${vtk-module})
++    get_filename_component(${vtk-module}_BASE ${f} PATH)
++    set(${vtk-module}_SOURCE_DIR ${src}/${${vtk-module}_BASE})
++    set(${vtk-module}_BINARY_DIR ${bld}/${${vtk-module}_BASE})
++    foreach(_lang ${ARGN})
++      if(EXISTS ${${vtk-module}_SOURCE_DIR}/Testing/${_lang}/CMakeLists.txt)
++        vtk_add_test_module(${_lang})
++      endif()
++    endforeach()
++    if(${vtk-module}_IMPLEMENTS)
++      foreach(dep IN LISTS ${vtk-module}_IMPLEMENTS)
++        set(${dep}_IMPLEMENTED 1)
++      endforeach()
++    endif()
++  endif()
++  unset(vtk-module)
++  unset(vtk-module-test)
++endmacro()
++
++# called internally to add all the modules underneath a particular directory to the list of modules
++macro(vtk_module_glob src bld) # [test-langs]
++  file(GLOB meta RELATIVE "${src}" "${src}/*/*/module.cmake")
++  foreach(f ${meta})
++    vtk_add_module(${src} ${f} ${bld} ${ARGN})
++  endforeach()
++endmacro()
++
++# called to search for all modules under the
++# vtk_module_src_glob_path and vtk_module_src_path paths to the list
++macro(vtk_module_search) # [test-langs]
++  set(VTK_MODULES_ALL)
++
++  vtk_module_glob("${VTK_SOURCE_DIR}" "${VTK_BINARY_DIR}" ${ARGN})
++
++  #go through any additional dirs, and make modules of any ./module.cmakes found under them
++  foreach(pair ${vtk_module_search_path})
++    string(REGEX MATCH "^([^,]*),([^,]*)$" m "${pair}")
++    set(src "${CMAKE_MATCH_1}")
++    set(bld "${CMAKE_MATCH_2}")
++    vtk_add_module("${src}" module.cmake "${bld}" ${ARGN})
++  endforeach()
++
++endmacro()
++
++macro(vtk_add_test_module _lang)
++  set(_test_module_name ${vtk-module-test}-${_lang})
++
++  list(APPEND VTK_MODULES_ALL ${_test_module_name})
++  set(${_test_module_name}_DEPENDS ${${vtk-module-test}_DEPENDS})
++  set(${_test_module_name}_SOURCE_DIR ${${vtk-module}_SOURCE_DIR}/Testing/${_lang})
++  set(${_test_module_name}_BINARY_DIR ${${vtk-module}_BINARY_DIR}/Testing/${_lang})
++  set(${_test_module_name}_IS_TEST 1)
++  list(APPEND ${vtk-module}_TESTED_BY ${_test_module_name})
++  set(${_test_module_name}_TESTS_FOR ${vtk-module})
++  set(${_test_module_name}_DECLARED 1)
++  # Exclude test modules from wrapping
++  set(${_test_module_name}_EXCLUDE_FROM_WRAPPING 1)
++endmacro()
+diff -Nru VTK-8.1.1.org/CMake/vtkNodeJsWrapping.cmake VTK-8.1.1/CMake/vtkNodeJsWrapping.cmake
+--- VTK-8.1.1.org/CMake/vtkNodeJsWrapping.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/CMake/vtkNodeJsWrapping.cmake	2018-07-06 11:36:58.822368685 +0200
+@@ -0,0 +1,32 @@
++include(vtkWrapNodeJs)
++
++function(vtk_add_nodejs_wrapping module_name)
++  if(NOT VTK_WRAP_NODEJS_INIT_EXE)
++    if(TARGET vtkWrapNodeJsInit)
++      set (VTK_WRAP_NODEJS_INIT_EXE vtkWrapNodeJsInit)
++    else()
++      message(FATAL_ERROR "VTK must be built with Node.js wrapping turned on.")
++    endif()
++  endif()
++
++  if(NOT ${module_name}_EXCLUDE_FROM_WRAP_HIERARCHY)
++    set(KIT_HIERARCHY_FILE ${${module_name}_WRAP_HIERARCHY_FILE})
++  endif()
++
++  string(REGEX REPLACE "^vtk" "" kit_name "${module_name}")
++  set(KIT ${kit_name})
++
++  # Figure out the dependent libraries for the module
++  unset(extra_links)
++  set(EXTRA_NODEJS_INCLUDE_DIRS ${${module_name}_NODEJS_INCLUDE_DIRS})
++
++  if(${module_name}_WRAP_HINTS AND EXISTS "${${module_name}_WRAP_HINTS}")
++    set(VTK_WRAP_HINTS "${${module_name}_WRAP_HINTS}")
++  endif()
++
++  vtk_wrap_nodejs(${module_name}NodeJs NodeJs_SRCS ${module_name} )
++
++  add_custom_target( ${module_name}NodeJsD ALL DEPENDS ${NodeJs_SRCS})
++
++endfunction()
++
+diff -Nru VTK-8.1.1.org/CMake/vtkWrapNodeJs.cmake VTK-8.1.1/CMake/vtkWrapNodeJs.cmake
+--- VTK-8.1.1.org/CMake/vtkWrapNodeJs.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/CMake/vtkWrapNodeJs.cmake	2018-07-06 11:36:58.822368685 +0200
+@@ -0,0 +1,146 @@
++#
++# CMake implementation of the Wrap NodeJs command.
++#
++file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/NodeJs)
++
++# Determine the location of the supplied header in the include_dirs supplied.
++macro(vtk_find_header header include_dirs full_path)
++  unset(${full_path})
++  foreach(_dir ${include_dirs})
++    if(EXISTS "${_dir}/${header}")
++      set(${full_path} "${_dir}/${header}")
++      break()
++    endif()
++  endforeach()
++endmacro()
++
++# Macro that just takes the name of the module, figure the rest out from there.
++macro(vtk_wrap_nodejs TARGET SRC_LIST_NAME module)
++  if(NOT VTK_WRAP_NODEJS_INIT_EXE)
++    if(TARGET vtkWrapNodeJsInit)
++      set(VTK_WRAP_NODEJS_INIT_EXE vtkWrapNodeJsInit)
++    else()
++      message(SEND_ERROR
++        "VTK_WRAP_NODEJS_INIT_EXE not specified when calling vtk_wrap_nodejs")
++    endif()
++  endif()
++  if(NOT VTK_WRAP_NODEJS_EXE)
++    if(TARGET vtkWrapNodeJs)
++      set(VTK_WRAP_NODEJS_EXE vtkWrapNodeJs)
++    else()
++      message(SEND_ERROR
++        "VTK_WRAP_NODEJS_EXE not specified when calling vtk_wrap_nodejs")
++    endif()
++  endif()
++
++  # The shell into which nmake.exe executes the custom command has some issues
++  # with mixing quoted and unquoted arguments :( Let's help.
++  if(CMAKE_GENERATOR MATCHES "NMake Makefiles")
++    set(verbatim "")
++    set(quote "\"")
++  else()
++    set(verbatim "VERBATIM")
++    set(quote "")
++  endif()
++
++  # start writing the input file for the init file
++  set(VTK_WRAPPER_INIT_DATA "${TARGET}")
++
++  # all the include directories
++  if(${module}_INCLUDE_DIRS)
++    set(TMP_INCLUDE_DIRS ${${module}_INCLUDE_DIRS})
++  elseif(VTK_WRAP_INCLUDE_DIRS)
++    set(TMP_INCLUDE_DIRS ${VTK_WRAP_INCLUDE_DIRS})
++  else()
++    set(TMP_INCLUDE_DIRS ${VTK_INCLUDE_DIRS})
++  endif()
++  # all the include directories
++
++  if(EXTRA_NODEJS_INCLUDE_DIRS)
++    list(APPEND TMP_INCLUDE_DIRS ${EXTRA_NODEJS_INCLUDE_DIRS})
++  endif()
++
++  # collect the common wrapper-tool arguments
++  set(_common_args)
++  get_directory_property(_def_list DEFINITION COMPILE_DEFINITIONS)
++  foreach(TMP_DEF ${_def_list})
++    set(_common_args "${_common_args}-D${TMP_DEF}\n")
++  endforeach()
++  foreach(INCLUDE_DIR ${TMP_INCLUDE_DIRS})
++    set(_common_args "${_common_args}-I\"${INCLUDE_DIR}\"\n")
++  endforeach()
++  if(VTK_WRAP_HINTS)
++    set(_common_args "${_common_args}--hints \"${VTK_WRAP_HINTS}\"\n")
++  endif()
++  if(KIT_HIERARCHY_FILE)
++    set(_common_args "${_common_args}--types \"${KIT_HIERARCHY_FILE}\"\n")
++  endif()
++
++  # write wrapper-tool arguments to a file
++  string(STRIP "${_common_args}" CMAKE_CONFIGURABLE_FILE_CONTENT)
++  set(_args_file ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.args)
++  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
++                 ${_args_file} @ONLY)
++
++  # Decide what to do for each header.
++  foreach(header ${${module}_HEADERS})
++    # Everything in this block is for headers that will be wrapped.
++    if(${module}_HEADER_${header}_WRAP_SPECIAL OR
++       NOT ${module}_HEADER_${header}_WRAP_EXCLUDE)
++
++      # Find the full path to the header file to be wrapped.
++      vtk_find_header(${header}.h "${${module}_INCLUDE_DIRS}" class_header_path)
++      if(NOT class_header_path)
++        message(FATAL_ERROR "Could not find the ${header} header file.")
++      endif()
++
++      # add the info to the init file
++      set(VTK_WRAPPER_INIT_DATA
++        "${VTK_WRAPPER_INIT_DATA}\n${header}")
++
++      # new source file is nameWrap.c, add to resulting list
++      set(${SRC_LIST_NAME} ${${SRC_LIST_NAME}} ${header}Wrap.cc)
++
++      # add custom command to output
++      add_custom_command(
++        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${header}Wrap.cc
++        DEPENDS ${VTK_WRAP_NODEJS_EXE} ${VTK_WRAP_HINTS} ${class_header_path}
++          ${_args_file} ${KIT_HIERARCHY_FILE}
++        COMMAND ${VTK_WRAP_NODEJS_EXE}
++          ARGS
++          "${quote}@${_args_file}${quote}"
++          "-o" "${quote}${CMAKE_BINARY_DIR}/NodeJs/${header}Wrap.cc${quote}"
++          "${quote}${class_header_path}${quote}"
++        COMMENT "NodeJs Wrapping - generating ${header}Wrap.cc"
++          ${verbatim}
++        )
++    else()
++      message("${header} will not be wrapped.")
++    endif()
++  endforeach()
++
++  # finish the data file for the init file
++  configure_file(
++    ${VTK_CMAKE_DIR}/vtkWrapperInit.data.in
++    ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data
++    COPY_ONLY
++    )
++ 
++  add_custom_command(
++    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.cxx
++    DEPENDS ${VTK_WRAP_NODEJS_INIT_EXE}
++      ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data
++    COMMAND ${VTK_WRAP_NODEJS_INIT_EXE}
++    ARGS
++	  "${quote}${KIT_HIERARCHY_FILE}${quote}"
++      "${quote}${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data${quote}"
++      "${quote}${CMAKE_BINARY_DIR}/NodeJs/${TARGET}Init.cc${quote}"
++    COMMENT "NodeJs Wrapping - generating ${TARGET}Init.cxx"
++      ${verbatim}
++    )
++
++  # Create the Init File
++  set(${SRC_LIST_NAME} ${${SRC_LIST_NAME}} ${TARGET}Init.cxx)
++
++endmacro()
++
+diff -Nru VTK-8.1.1.org/CMake/vtkWrapping.cmake VTK-8.1.1/CMake/vtkWrapping.cmake
+--- VTK-8.1.1.org/CMake/vtkWrapping.cmake	2018-05-11 16:34:24.000000000 +0200
++++ VTK-8.1.1/CMake/vtkWrapping.cmake	2018-07-06 11:36:58.826368658 +0200
+@@ -20,7 +20,7 @@
+ function(vtk_add_wrapping module_name module_srcs module_hdrs)
+   if(NOT ${module_name}_EXCLUDE_FROM_WRAPPING)
+     set(_wrap_module FALSE)
+-    if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++    if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS)
+       set(_wrap_module TRUE)
+     endif()
+ 
+@@ -54,6 +54,9 @@
+         # Note that the module should be Python wrapped.
+         set_property(GLOBAL APPEND PROPERTY VTK_PYTHON_WRAPPED ${module_name})
+       endif()
++      if(VTK_WRAP_NODEJS AND NOT ${module_name}_EXCLUDE_FROM_NODEJS_WRAPPING)
++        set_property(GLOBAL APPEND PROPERTY VTK_NODEJS_WRAPPED ${module_name})
++      endif()
+       if(VTK_WRAP_TCL AND NOT ${module_name}_EXCLUDE_FROM_TCL_WRAPPING)
+         set_property(GLOBAL APPEND PROPERTY VTK_TCL_WRAPPED ${module_name})
+         vtk_add_tcl_wrapping(${module_name} "${module_srcs}" "${module_hdrs}")
+diff -Nru VTK-8.1.1.org/CMake/vtkWrapping.cmake.orig VTK-8.1.1/CMake/vtkWrapping.cmake.orig
+--- VTK-8.1.1.org/CMake/vtkWrapping.cmake.orig	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/CMake/vtkWrapping.cmake.orig	2018-05-11 16:34:24.000000000 +0200
+@@ -0,0 +1,67 @@
++# This file ensures that any module that should be wrapped has the
++# vtkWrapHierarchy command executed on it, and also dispatches to the language
++# specific wrapping for each module.
++
++# First, ensure we include the correct CMake code so that we can wrap.
++if(VTK_WRAP_PYTHON)
++#  include(vtkPythonWrapping)
++endif()
++if(VTK_WRAP_TCL)
++  include(vtkTclWrapping)
++endif()
++if(VTK_WRAP_JAVA)
++  include(vtkJavaWrapping)
++endif()
++
++include(vtkWrapHierarchy)
++
++# This is the main function, always called from the vtk_module_library function
++# when a new module library is added.
++function(vtk_add_wrapping module_name module_srcs module_hdrs)
++  if(NOT ${module_name}_EXCLUDE_FROM_WRAPPING)
++    set(_wrap_module FALSE)
++    if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++      set(_wrap_module TRUE)
++    endif()
++
++    if(_wrap_module)
++      # The list of include dirs to pass to wrapper tool command lines
++      set(VTK_WRAP_INCLUDE_DIRS)
++      if(${vtk-module}_DEPENDS_INCLUDE_DIRS)
++        list(APPEND VTK_WRAP_INCLUDE_DIRS ${${vtk-module}_DEPENDS_INCLUDE_DIRS})
++      endif()
++      if(${vtk-module}_INCLUDE_DIRS)
++        list(APPEND VTK_WRAP_INCLUDE_DIRS ${${vtk-module}_INCLUDE_DIRS})
++      endif()
++      if(${vtk-module}_SYSTEM_INCLUDE_DIRS)
++        list(APPEND VTK_WRAP_INCLUDE_DIRS ${${vtk-module}_SYSTEM_INCLUDE_DIRS})
++      endif()
++
++      # The module is wrapped by at least one language - invoke wrap hierarchy.
++      if(NOT ${module_name}_EXCLUDE_FROM_WRAP_HIERARCHY)
++        set(_all_files ${module_srcs} ${modules_hdrs})
++        vtk_wrap_hierarchy(${module_name} ${VTK_MODULES_DIR}
++          "${_all_files}")
++        set (${module_name}_WRAP_HIERARCHY_FILE
++          "${VTK_MODULES_DIR}/${module_name}Hierarchy.txt"
++          PARENT_SCOPE)
++        set (${module_name}_WRAP_HIERARCHY_FILE
++          "${VTK_MODULES_DIR}/${module_name}Hierarchy.txt")
++      endif()
++
++      # Now to wrap the languages that are on.
++      if(VTK_WRAP_PYTHON AND NOT ${module_name}_EXCLUDE_FROM_PYTHON_WRAPPING)
++        # Note that the module should be Python wrapped.
++        set_property(GLOBAL APPEND PROPERTY VTK_PYTHON_WRAPPED ${module_name})
++      endif()
++      if(VTK_WRAP_TCL AND NOT ${module_name}_EXCLUDE_FROM_TCL_WRAPPING)
++        set_property(GLOBAL APPEND PROPERTY VTK_TCL_WRAPPED ${module_name})
++        vtk_add_tcl_wrapping(${module_name} "${module_srcs}" "${module_hdrs}")
++      endif()
++      if(VTK_WRAP_JAVA AND NOT ${module_name}_EXCLUDE_FROM_JAVA_WRAPPING)
++        set_property(GLOBAL APPEND PROPERTY VTK_JAVA_WRAPPED ${module_name})
++        vtk_add_java_wrapping(${module_name} "${module_srcs}" "${module_hdrs}")
++      endif()
++    endif()
++  endif()
++endfunction()
+diff -Nru VTK-8.1.1.org/CMake/vtkWrapPython.cmake.orig VTK-8.1.1/CMake/vtkWrapPython.cmake.orig
+--- VTK-8.1.1.org/CMake/vtkWrapPython.cmake.orig	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/CMake/vtkWrapPython.cmake.orig	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,264 @@
++#
++# CMake implementation of the Wrap Python command.
++#
++macro(VTK_WRAP_PYTHON2 TARGET SOURCE_LIST_NAME)
++  # convert to the WRAP3 signature
++  vtk_wrap_python3(${TARGET} ${SOURCE_LIST_NAME} "${ARGN}")
++endmacro()
++
++macro(VTK_WRAP_PYTHON3 TARGET SRC_LIST_NAME SOURCES)
++  if(NOT VTK_WRAP_PYTHON_INIT_EXE)
++    if(TARGET vtkWrapPythonInit)
++      set(VTK_WRAP_PYTHON_INIT_EXE vtkWrapPythonInit)
++    else()
++      message(SEND_ERROR
++        "VTK_WRAP_PYTHON_INIT_EXE not specified when calling vtk_wrap_python")
++    endif()
++  endif()
++  if(NOT VTK_WRAP_PYTHON_EXE)
++    if(TARGET vtkWrapPython)
++      set(VTK_WRAP_PYTHON_EXE vtkWrapPython)
++    else()
++      message(SEND_ERROR
++        "VTK_WRAP_PYTHON_EXE not specified when calling vtk_wrap_python")
++    endif()
++  endif()
++
++  # Initialize the custom target counter.
++  if(VTK_WRAP_PYTHON_NEED_CUSTOM_TARGETS)
++    set(VTK_WRAP_PYTHON_CUSTOM_COUNT "")
++    set(VTK_WRAP_PYTHON_CUSTOM_NAME ${TARGET})
++    set(VTK_WRAP_PYTHON_CUSTOM_LIST)
++  endif()
++
++  # start writing the input file for the init file
++  set(VTK_WRAPPER_INIT_DATA "${TARGET}")
++
++  # collect the common wrapper-tool arguments
++  set(_common_args)
++  foreach(file IN LISTS VTK_WRAP_HINTS)
++    set(_common_args "${_common_args}--hints \"${file}\"\n")
++  endforeach()
++  foreach(file IN LISTS KIT_HIERARCHY_FILE)
++    set(_common_args "${_common_args}--types \"${file}\"\n")
++  endforeach()
++
++  if(NOT VTK_ENABLE_KITS)
++    # write wrapper-tool arguments to a file
++    set(_args_file ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.$<CONFIGURATION>.args)
++    file(GENERATE OUTPUT ${_args_file} CONTENT "${_common_args}
++$<$<BOOL:$<TARGET_PROPERTY:${TARGET},COMPILE_DEFINITIONS>>:
++-D\"$<JOIN:$<TARGET_PROPERTY:${TARGET},COMPILE_DEFINITIONS>,\"
++-D\">\">
++$<$<BOOL:$<TARGET_PROPERTY:${TARGET},INCLUDE_DIRECTORIES>>:
++-I\"$<JOIN:$<TARGET_PROPERTY:${TARGET},INCLUDE_DIRECTORIES>,\"
++-I\">\">
++")
++  else()
++    # all the include directories
++    set(TMP_INCLUDE_DIRS)
++    set(_modules ${ARGN})
++    if(NOT _modules)
++      string(REGEX REPLACE "Python\$" "" module "${TARGET}")
++      set(_modules ${module})
++    endif()
++    foreach(module IN LISTS ${_modules})
++      if(${module}_INCLUDE_DIRS)
++        list(APPEND TMP_INCLUDE_DIRS ${${module}_INCLUDE_DIRS})
++      endif()
++    endforeach()
++    if(VTK_WRAP_INCLUDE_DIRS)
++      list(APPEND TMP_INCLUDE_DIRS ${VTK_WRAP_INCLUDE_DIRS})
++    else()
++      list(APPEND TMP_INCLUDE_DIRS ${VTK_INCLUDE_DIRS})
++    endif()
++    if(EXTRA_PYTHON_INCLUDE_DIRS)
++      list(APPEND TMP_INCLUDE_DIRS ${EXTRA_PYTHON_INCLUDE_DIRS})
++    endif()
++    foreach(INCLUDE_DIR ${TMP_INCLUDE_DIRS})
++      set(_common_args "${_common_args}-I\"${INCLUDE_DIR}\"\n")
++    endforeach()
++    get_directory_property(_def_list DEFINITION COMPILE_DEFINITIONS)
++    foreach(TMP_DEF ${_def_list})
++      set(_common_args "${_common_args}-D${TMP_DEF}\n")
++    endforeach()
++    # write wrapper-tool arguments to a file
++    string(STRIP "${_common_args}" CMAKE_CONFIGURABLE_FILE_CONTENT)
++    set(_args_file ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.args)
++    configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
++                   ${_args_file} @ONLY)
++  endif()
++
++  # for each class
++  foreach(FILE ${SOURCES})
++    # should we wrap the file?
++    get_source_file_property(TMP_EXCLUDE_PYTHON ${FILE} WRAP_EXCLUDE_PYTHON)
++
++    # if we should wrap it
++    if(NOT TMP_EXCLUDE_PYTHON)
++
++      # what is the filename without the extension
++      get_filename_component(TMP_FILENAME ${FILE} NAME_WE)
++
++      # the input file might be full path so handle that
++      get_filename_component(TMP_FILEPATH ${FILE} PATH)
++
++      # compute the input filename
++      if(TMP_FILEPATH)
++        set(TMP_INPUT ${TMP_FILEPATH}/${TMP_FILENAME}.h)
++      else()
++        set(TMP_INPUT ${CMAKE_CURRENT_SOURCE_DIR}/${TMP_FILENAME}.h)
++      endif()
++
++      # add the info to the init file
++      set(VTK_WRAPPER_INIT_DATA
++        "${VTK_WRAPPER_INIT_DATA}\n${TMP_FILENAME}")
++
++      # new source file is namePython.cxx, add to resulting list
++      list(APPEND ${SRC_LIST_NAME} ${TMP_FILENAME}Python.cxx)
++
++      # add custom command to output
++      add_custom_command(
++        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${TMP_FILENAME}Python.cxx
++        DEPENDS ${VTK_WRAP_PYTHON_EXE}
++                ${VTK_WRAP_HINTS}
++                ${TMP_INPUT}
++                ${_args_file}
++                ${KIT_HIERARCHY_FILE}
++        IMPLICIT_DEPENDS CXX ${TMP_INPUT}
++        COMMAND ${VTK_WRAP_PYTHON_EXE}
++                @${_args_file}
++                -o ${CMAKE_CURRENT_BINARY_DIR}/${TMP_FILENAME}Python.cxx
++                ${TMP_INPUT}
++        COMMENT "Python Wrapping - generating ${TMP_FILENAME}Python.cxx"
++        VERBATIM
++        )
++
++      # Add this output to a custom target if needed.
++      if(VTK_WRAP_PYTHON_NEED_CUSTOM_TARGETS)
++        set(VTK_WRAP_PYTHON_CUSTOM_LIST ${VTK_WRAP_PYTHON_CUSTOM_LIST}
++          ${CMAKE_CURRENT_BINARY_DIR}/${TMP_FILENAME}Python.cxx)
++        set(VTK_WRAP_PYTHON_CUSTOM_COUNT ${VTK_WRAP_PYTHON_CUSTOM_COUNT}x)
++        if(VTK_WRAP_PYTHON_CUSTOM_COUNT MATCHES "^${VTK_WRAP_PYTHON_CUSTOM_LIMIT}$")
++          set(VTK_WRAP_PYTHON_CUSTOM_NAME ${VTK_WRAP_PYTHON_CUSTOM_NAME}Hack)
++          add_custom_target(${VTK_WRAP_PYTHON_CUSTOM_NAME}
++            DEPENDS ${VTK_WRAP_PYTHON_CUSTOM_LIST})
++          set(KIT_PYTHON_DEPS ${VTK_WRAP_PYTHON_CUSTOM_NAME})
++          set(VTK_WRAP_PYTHON_CUSTOM_LIST)
++          set(VTK_WRAP_PYTHON_CUSTOM_COUNT)
++        endif()
++      endif()
++    else()
++      # message("${TMP_FILENAME} will not be wrapped.")
++    endif()
++  endforeach()
++
++  # finish the data file for the init file
++  configure_file(
++    ${VTK_CMAKE_DIR}/vtkWrapperInit.data.in
++    ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data
++    @ONLY
++    )
++
++  add_custom_command(
++    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.cxx
++           ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}InitImpl.cxx
++    DEPENDS ${VTK_WRAP_PYTHON_INIT_EXE}
++            ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data
++    COMMAND ${VTK_WRAP_PYTHON_INIT_EXE}
++            ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data
++            ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.cxx
++            ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}InitImpl.cxx
++    COMMENT "Python Wrapping - generating ${TARGET}Init.cxx"
++    VERBATIM
++    )
++
++  # Create the Init File
++  set(${SRC_LIST_NAME} ${${SRC_LIST_NAME}} ${TARGET}InitImpl.cxx)
++
++endmacro()
++
++if(VTK_WRAP_PYTHON_FIND_LIBS)
++  get_filename_component(_CURRENT_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
++  if (VTK_UNDEFINED_SYMBOLS_ALLOWED)
++    set(_QUIET_LIBRARY "QUIET")
++  else()
++    set(_QUIET_LIBRARY "REQUIRED")
++  endif()
++  find_package(PythonLibs ${_QUIET_LIBRARY})
++
++  # Use separate debug/optimized libraries if they are different.
++  if(PYTHON_DEBUG_LIBRARY)
++    if("${PYTHON_DEBUG_LIBRARY}" STREQUAL "${PYTHON_LIBRARY}")
++      set(VTK_PYTHON_LIBRARIES ${PYTHON_LIBRARY})
++    else()
++      set(VTK_PYTHON_LIBRARIES
++        optimized ${PYTHON_LIBRARY}
++        debug ${PYTHON_DEBUG_LIBRARY})
++    endif()
++    set(VTK_WINDOWS_PYTHON_DEBUGGABLE 0)
++    if(WIN32)
++      if(PYTHON_DEBUG_LIBRARY MATCHES "_d")
++        set(VTK_WINDOWS_PYTHON_DEBUGGABLE 1)
++      endif()
++    endif()
++  else()
++    set(VTK_PYTHON_LIBRARIES ${PYTHON_LIBRARY})
++  endif()
++
++  # Some python installations on UNIX need to link to extra libraries
++  # such as zlib (-lz).  It is hard to automatically detect the needed
++  # libraries so instead just give the user an easy way to specify
++  # the libraries.  This should be needed only rarely.  It should
++  # also be moved to the CMake FindPython.cmake module at some point.
++  if(UNIX)
++    if(NOT DEFINED PYTHON_EXTRA_LIBS)
++      set(PYTHON_EXTRA_LIBS "" CACHE STRING
++        "Extra libraries to link when linking to python (such as \"z\" for zlib).  Separate multiple libraries with semicolons.")
++      mark_as_advanced(PYTHON_EXTRA_LIBS)
++    endif()
++  endif()
++
++  # Include any extra libraries for python.
++  set(VTK_PYTHON_LIBRARIES ${VTK_PYTHON_LIBRARIES} ${PYTHON_EXTRA_LIBS})
++endif()
++
++# Determine the location of the supplied header in the include_dirs supplied.
++macro(vtk_find_header header include_dirs full_path)
++  unset(${full_path})
++  foreach(_dir ${include_dirs})
++    if(EXISTS "${_dir}/${header}")
++      set(${full_path} "${_dir}/${header}")
++      break()
++    endif()
++  endforeach()
++endmacro()
++
++# Macro that just takes the a list of module names, figure the rest out from there.
++macro(vtk_wrap_python TARGET SRC_LIST_NAME)
++  # List of all headers to wrap.
++  set(headers_to_wrap)
++
++  foreach(module ${ARGN})
++
++  # Decide what to do for each header.
++  foreach(header ${${module}_HEADERS})
++    # Everything in this block is for headers that will be wrapped.
++    if(NOT ${module}_HEADER_${header}_WRAP_EXCLUDE_PYTHON)
++
++      # Find the full path to the header file to be wrapped.
++      vtk_find_header(${header}.h "${${module}_INCLUDE_DIRS}" class_header_path)
++      if(NOT class_header_path)
++        message(FATAL_ERROR "Could not find ${header}.h for Python wrapping!")
++      endif()
++
++      # The new list of headers has the full path to each file.
++      list(APPEND headers_to_wrap ${class_header_path})
++    endif()
++  endforeach()
++
++  endforeach() # end ARGN loop
++
++  # Delegate to vtk_wrap_python3
++  vtk_wrap_python3(${TARGET} ${SRC_LIST_NAME} "${headers_to_wrap}" ${ARGN})
++endmacro()
+diff -Nru VTK-8.1.1.org/CMake/vtkWrapPython.cmake.rej VTK-8.1.1/CMake/vtkWrapPython.cmake.rej
+--- VTK-8.1.1.org/CMake/vtkWrapPython.cmake.rej	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/CMake/vtkWrapPython.cmake.rej	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,14 @@
++--- CMake/vtkWrapPython.cmake	2017-03-15 10:43:40.368979887 +0100
+++++ CMake/vtkWrapPython.cmake	2017-03-16 11:10:42.215614016 +0100
++@@ -112,6 +112,11 @@
++           "${quote}@${_args_file}${quote}"
++           "-o" "${quote}${CMAKE_CURRENT_BINARY_DIR}/${TMP_FILENAME}Python.cxx${quote}"
++           "${quote}${TMP_INPUT}${quote}"
+++#        COMMAND ${VTK_WRAP_NODEJS_EXE}
+++#          ARGS
+++#          "${quote}@${_args_file}${quote}"
+++#          "-o" "${quote}${CMAKE_BINARY_DIR}/NodeJs/${TMP_FILENAME}Wrap.cxx${quote}"
+++#          "${quote}${TMP_INPUT}${quote}"
++         COMMENT "Python Wrapping - generating ${TMP_FILENAME}Python.cxx"
++           ${verbatim}
++         )
+diff -Nru VTK-8.1.1.org/CMakeLists.txt VTK-8.1.1/CMakeLists.txt
+--- VTK-8.1.1.org/CMakeLists.txt	2018-05-11 16:34:24.000000000 +0200
++++ VTK-8.1.1/CMakeLists.txt	2018-07-06 11:36:58.826368658 +0200
+@@ -408,6 +408,9 @@
+ # FIXME: The test should be moved and rewritten.
+ include(VTKParallelCMakeTests)
+ 
++# Add the option for build the NodeJS wrapping to VTK.
++option(VTK_WRAP_NODEJS "Should VTK NodeJS wrapping be built?" ON)
++
+ # Add the option for build the Python wrapping to VTK.
+ option(VTK_WRAP_PYTHON "Should VTK Python wrapping be built?" OFF)
+ set(VTK_PYTHON_VERSION 2 CACHE STRING
+@@ -445,6 +448,19 @@
+     FORCE)
+ endif()
+ 
++if(VTK_WRAP_NODEJS)
++  set(VTK_WRAP_NODEJS_EXE vtkWrapNodeJs)
++  set(VTK_WRAP_NODEJS_INIT_EXE vtkWrapNodeJsInit)
++  set(VTK_NODEJS_EXE vtknodejs)
++  # Force the WrappingNodeJSCore module to on if wrapping is on
++  set(Module_vtkWrappingNodeJs ON CACHE BOOL "Core Node.js wrapping library"
++    FORCE)
++else()
++  # if wrapping is not on then force WrappingNodeJSCore module to be off
++  set(Module_vtkWrappingNodeJs OFF CACHE BOOL "Core Node.js wrapping library"
++    FORCE)
++endif()
++
+ if(VTK_WRAP_JAVA)
+   set(VTK_WRAP_JAVA3_INIT_DIR "${VTK_SOURCE_DIR}/Wrapping/Java")
+   # Wrapping executables.
+@@ -492,7 +508,7 @@
+     FORCE)
+ endif()
+ 
+-if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS)
+   set(VTK_WRAP_HIERARCHY_EXE vtkWrapHierarchy)
+ endif()
+ 
+diff -Nru VTK-8.1.1.org/CMakeLists.txt.orig VTK-8.1.1/CMakeLists.txt.orig
+--- VTK-8.1.1.org/CMakeLists.txt.orig	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/CMakeLists.txt.orig	2018-05-11 16:34:24.000000000 +0200
+@@ -0,0 +1,583 @@
++cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
++
++# Set a consistent MACOSX_RPATH default across all CMake versions.
++# When CMake 2.8.12 is required, change this default to 1.
++# When CMake 3.0.0 is required, remove this block (see CMP0042).
++if(NOT DEFINED CMAKE_MACOSX_RPATH)
++  set(CMAKE_MACOSX_RPATH 0)
++endif()
++
++if(CMAKE_SYSTEM_NAME STREQUAL "Android" AND CMAKE_VERSION VERSION_LESS 3.7)
++  message(FATAL_ERROR "CMake 3.7 or above is required to build for Android")
++endif()
++
++project(VTK)
++
++#-----------------------------------------------------------------------------
++# Minimum compiler version check: GCC >= 4.8
++if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND
++    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.8)
++  message(FATAL_ERROR "GCC 4.8 or later is required.")
++endif ()
++
++#-----------------------------------------------------------------------------
++# Minimum compiler version check: LLVM Clang >= 3.3
++if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND
++    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.3)
++  message(FATAL_ERROR "LLVM Clang 3.3 or later is required.")
++endif ()
++
++#-----------------------------------------------------------------------------
++# Minimum compiler version check: Apple Clang >= 5.0 (Xcode 5.0)
++if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" AND
++    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
++  message(FATAL_ERROR "Apple Clang 5.0 or later is required.")
++endif ()
++
++#-----------------------------------------------------------------------------
++# Minimum compiler version check: Microsoft C/C++ >= 18.0 (aka VS 2013 aka VS 12.0)
++if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND
++    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 18.0)
++  message(FATAL_ERROR "Microsoft Visual Studio 2013 or later is required.")
++endif ()
++
++#-----------------------------------------------------------------------------
++# Minimum compiler version check: Intel C++ (ICC) >= 14
++if (CMAKE_CXX_COMPILER_ID STREQUAL "Intel" AND
++    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 14.0)
++  message(FATAL_ERROR "Intel C++ (ICC) 14.0 or later is required.")
++endif ()
++
++# Make sure we have C++11 enabled.
++if(NOT VTK_IGNORE_CMAKE_CXX11_CHECKS)
++  # Needed to make sure libraries and executables not built by the
++  # vtkModuleMacros still have the C++11 compiler flags enabled
++  # Wrap this in an escape hatch for unknown compilers
++  set(CMAKE_CXX_STANDARD 11)
++  set(CMAKE_CXX_STANDARD_REQUIRED True)
++  set(CMAKE_CXX_EXTENSIONS False)
++endif()
++
++
++# Objective-C++ compile flags.
++# CMake has no equivalent of CMAKE_CXX_FLAGS for Objective-C++ (bug #4756)
++# so we provide this in case the user needs to specify flags specifically
++# for Objective-C++ source files.  For example, to build with garbage
++# collection support, the -fobjc-gc flag would be used.
++IF(APPLE)
++  SET(VTK_OBJCXX_FLAGS_DEFAULT "")
++  SET(VTK_REQUIRED_OBJCXX_FLAGS ${VTK_OBJCXX_FLAGS_DEFAULT} CACHE STRING "Extra flags for Objective-C++ compilation")
++  MARK_AS_ADVANCED(VTK_REQUIRED_OBJCXX_FLAGS)
++ENDIF()
++
++set(VTK_CMAKE_DIR "${VTK_SOURCE_DIR}/CMake")
++set(CMAKE_MODULE_PATH ${VTK_CMAKE_DIR} ${CMAKE_MODULE_PATH})
++
++include(vtkModuleMacros)
++include(vtkExternalData)
++
++#-----------------------------------------------------------------------------
++# Forbid downloading resources from the network during a build. This helps
++# when building on systems without network connectivity to determine which
++# resources much be obtained manually and made available to the build.
++option(VTK_FORBID_DOWNLOADS "Do not download source code or data from the network" OFF)
++mark_as_advanced(VTK_FORBID_DOWNLOADS)
++macro(vtk_download_attempt_check _name)
++  if(VTK_FORBID_DOWNLOADS)
++    message(SEND_ERROR "Attempted to download ${_name} when VTK_FORBID_DOWNLOADS is ON")
++  endif()
++endmacro()
++
++include(vtkInitializeBuildType)
++
++# Test input data staging directory.
++file(RELATIVE_PATH vtk_reldir "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
++set(VTK_TEST_DATA_DIR "${ExternalData_BINARY_ROOT}/${vtk_reldir}/Testing")
++
++# Test input data directory.
++set(VTK_TEST_INPUT_DIR "${VTK_SOURCE_DIR}/Testing/Data")
++
++# Test output directory.
++set(VTK_TEST_OUTPUT_DIR "${VTK_BINARY_DIR}/Testing/Temporary")
++
++# Set up our directory structure for output libraries and binaries
++if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
++  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${VTK_BINARY_DIR}/bin")
++endif()
++if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
++  if(UNIX)
++    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${VTK_BINARY_DIR}/lib")
++  else()
++    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${VTK_BINARY_DIR}/bin")
++  endif()
++endif()
++if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
++  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${VTK_BINARY_DIR}/lib")
++endif()
++mark_as_advanced(CMAKE_RUNTIME_OUTPUT_DIRECTORY
++  CMAKE_LIBRARY_OUTPUT_DIRECTORY
++  CMAKE_ARCHIVE_OUTPUT_DIRECTORY
++  )
++
++include(vtkVersion)
++set(VTK_VERSION
++    "${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}.${VTK_BUILD_VERSION}")
++
++#-----------------------------------------------------------------------------
++# Do we want examples built?
++OPTION(BUILD_EXAMPLES "Build VTK examples." OFF)
++
++#-----------------------------------------------------------------------------
++if(NOT EXISTS "${VTK_SOURCE_DIR}/.ExternalData/README.rst")
++  # This file is always present in version-controlled source trees
++  # so we must have been extracted from a source tarball with no
++  # data objects needed for testing.  Turn off tests by default
++  # since enabling them requires network access or manual data
++  # store configuration.
++  option(BUILD_TESTING "Build the testing tree." OFF)
++endif()
++include(CTest)
++
++option(VTK_IOS_BUILD "Build vtk.framework for iOS" OFF)
++if (VTK_IOS_BUILD)
++  include(vtkiOS)
++  return()
++endif()
++
++option(VTK_ANDROID_BUILD "Build VTK for Android" OFF)
++if (VTK_ANDROID_BUILD)
++  include(vtkAndroid)
++  return()
++endif()
++
++# some specific defaults for Andriod to give folks
++# a reasonable starting point
++if (ANDROID OR APPLE_IOS)
++  SET( CMAKE_REQUIRE_LARGE_FILE_SUPPORT 2
++       CACHE STRING "Result from TRY_RUN" FORCE)
++  SET( CMAKE_REQUIRE_LARGE_FILE_SUPPORT__TRYRUN_OUTPUT ""
++       CACHE STRING "Output from TRY_RUN" FORCE)
++  SET( KWSYS_LFS_WORKS 2
++     CACHE STRING "Result from TRY_RUN" FORCE)
++  SET( KWSYS_LFS_WORKS__TRYRUN_OUTPUT ""
++     CACHE STRING "Output from TRY_RUN" FORCE)
++
++  if (APPLE_IOS)
++    unset(OPENGL_INCLUDE_DIR CACHE)
++    find_path(OPENGL_INCLUDE_DIR ES3/gl.h
++              ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/OpenGLES.framework/Headers
++              ${_OPENGL_INCLUDE_DIR})
++    find_library(OPENGL_gl_LIBRARY
++       NAMES OpenGLES
++       PATHS
++         ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks
++         ${_OPENGL_LIB_PATH}
++       )
++  elseif (ANDROID)
++    unset(OPENGL_INCLUDE_DIR CACHE)
++    unset(OPENGL_gl_LIBRARY CACHE)
++    unset(OPENGL_egl_LIBRARY CACHE)
++
++    find_path(OPENGL_INCLUDE_DIR GLES3/gl3.h)
++    find_library(OPENGL_gl_LIBRARY NAMES GLESv3)
++    find_library(OPENGL_egl_LIBRARY NAMES EGL)
++  endif()
++else()
++  # Choose static or shared libraries.
++  option(BUILD_SHARED_LIBS "Build VTK with shared libraries." ON)
++endif()
++
++# default to not using the system GLEW as ours has fixes in it right now
++set(VTK_USE_SYSTEM_GLEW OFF CACHE BOOL "do not use a system glew")
++
++set(VTK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
++
++#-----------------------------------------------------------------------------
++# VTK installation structure
++if(NOT VTK_INSTALL_RUNTIME_DIR)
++  set(VTK_INSTALL_RUNTIME_DIR bin)
++endif()
++if(NOT VTK_INSTALL_LIBRARY_DIR)
++  set(VTK_INSTALL_LIBRARY_DIR lib)
++endif()
++if(NOT VTK_INSTALL_ARCHIVE_DIR)
++  set(VTK_INSTALL_ARCHIVE_DIR lib)
++endif()
++if(NOT VTK_INSTALL_INCLUDE_DIR)
++  set(VTK_INSTALL_INCLUDE_DIR include/vtk-${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION})
++endif()
++if(NOT VTK_INSTALL_DATA_DIR)
++  set(VTK_INSTALL_DATA_DIR share/vtk-${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION})
++endif()
++if(NOT VTK_INSTALL_DOC_DIR)
++  set(VTK_INSTALL_DOC_DIR share/doc/vtk-${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION})
++endif()
++if(NOT VTK_INSTALL_PACKAGE_DIR)
++  set(VTK_INSTALL_PACKAGE_DIR "lib/cmake/vtk-${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}")
++endif()
++if(NOT VTK_INSTALL_DOXYGEN_DIR)
++  set(VTK_INSTALL_DOXYGEN_DIR ${VTK_INSTALL_DOC_DIR}/doxygen)
++endif()
++if(NOT VTK_INSTALL_TCL_DIR)
++  # tclsh searches <prefix>/lib/tcltk and its subdirectories for pkgIndex.tcl files
++  set(VTK_INSTALL_TCL_DIR lib/tcltk/vtk-${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION})
++endif()
++if(NOT VTK_INSTALL_EXPORT_NAME)
++  set(VTK_INSTALL_EXPORT_NAME VTKTargets)
++endif()
++if(NOT VTK_MODULES_DIR)
++  set(VTK_MODULES_DIR "${VTK_BINARY_DIR}/${VTK_INSTALL_PACKAGE_DIR}/Modules")
++endif()
++if(NOT VTK_WWW_DIR)
++  set(VTK_WWW_DIR "${VTK_BINARY_DIR}/www")
++endif()
++if(NOT VTK_INSTALL_PYTHON_MODULE_DIR)
++  set (VTK_INSTALL_PYTHON_MODULE_DIR "-NOTFOUND" CACHE
++       PATH "Directory where python modules will be installed")
++  mark_as_advanced(VTK_INSTALL_PYTHON_MODULE_DIR)
++endif()
++if(NOT VTK_BUILD_PYTHON_MODULE_DIR)
++  set (VTK_BUILD_PYTHON_MODULE_DIR "-NOTFOUND" CACHE
++       PATH "Directory where python modules will be put inside the build tree")
++  mark_as_advanced(VTK_BUILD_PYTHON_MODULE_DIR)
++endif()
++# Full functional CMAKE_CROSSCOMPILING_EMULATOR support for custom_command and
++# custom_target is available in CMake 3.8.0
++# It was first added in CMake 3.6.0 and later fixed in CMake 3.8.0 (commit e7480d67, CMake issue #16288)
++set(_crosscompiling_emulator_support_custom_target 1)
++if(CMAKE_VERSION VERSION_LESS 3.8.0)
++  set(_crosscompiling_emulator_support_custom_target 0)
++endif()
++# Maintain backward compatibility with user setting COMPILE_TOOLS_IMPORTED
++if(DEFINED COMPILE_TOOLS_IMPORTED AND NOT DEFINED VTK_COMPILE_TOOLS_IMPORTED)
++  set(VTK_COMPILE_TOOLS_IMPORTED ${COMPILE_TOOLS_IMPORTED})
++endif()
++# Variable VTK_COMPILE_TOOLS_IMPORTED is preferred
++if(NOT DEFINED VTK_COMPILE_TOOLS_IMPORTED)
++  set(VTK_COMPILE_TOOLS_IMPORTED FALSE)
++endif()
++if(CMAKE_CROSSCOMPILING
++    AND NOT VTK_COMPILE_TOOLS_IMPORTED
++    AND (NOT DEFINED CMAKE_CROSSCOMPILING_EMULATOR
++         OR NOT _crosscompiling_emulator_support_custom_target)
++  )
++  # if CMAKE_CROSSCOMPILING is true and crosscompiling emulator is not available, we need
++  # to import build-tools targets.
++  find_package(VTKCompileTools REQUIRED)
++  set(VTK_COMPILE_TOOLS_IMPORTED TRUE)
++endif()
++
++#-----------------------------------------------------------------------------
++# Add the Remote Subdirectory
++add_subdirectory(Remote)
++
++#-----------------------------------------------------------------------------
++# Do we try to use system libraries by default?
++option(VTK_USE_SYSTEM_LIBRARIES "Use the system's libraries by default." OFF)
++mark_as_advanced(VTK_USE_SYSTEM_LIBRARIES)
++
++#-----------------------------------------------------------------------------
++# The third party macros are still used in one or two third party builds.
++include(vtkThirdParty)
++
++#-----------------------------------------------------------------------------
++include(vtkCompilerExtras)
++include(vtkBuildPath)
++
++#-----------------------------------------------------------------------------
++if(APPLE)
++  mark_as_advanced(
++    CMAKE_OSX_ARCHITECTURES
++    CMAKE_OSX_DEPLOYMENT_TARGET
++    CMAKE_OSX_SYSROOT
++    )
++
++  if (CMAKE_OSX_DEPLOYMENT_TARGET AND
++      CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.7)
++    message(FATAL_ERROR "Minimum OS X deployment target is 10.7, please update CMAKE_OSX_DEPLOYMENT_TARGET.")
++  endif ()
++endif()
++
++#-----------------------------------------------------------------------------
++# Does VTK require support for 64 bit file systems
++INCLUDE(CheckCXXSourceRuns)
++FILE(READ "${VTK_CMAKE_DIR}/vtkRequireLargeFilesSupport.cxx"
++  VTK_REQUIRE_LARGE_FILE_SUPPORT_FILE)
++CHECK_CXX_SOURCE_RUNS("${VTK_REQUIRE_LARGE_FILE_SUPPORT_FILE}"
++  CMAKE_REQUIRE_LARGE_FILE_SUPPORT "Support for 64 bit file systems")
++SET(VTK_REQUIRE_LARGE_FILE_SUPPORT ${CMAKE_REQUIRE_LARGE_FILE_SUPPORT})
++
++#-----------------------------------------------------------------------------
++# Does the const_reverse_iterator have the comparison operators? They were not
++# present in older versions of gcc (ex: Apple fork of gcc 4.2).
++include(CheckCXXSourceCompiles)
++set(VTK_CONST_REVERSE_ITERATOR_COMPARISON_FILE
++"#include <vector>
++int main()
++{
++  std::vector<int> test;
++  std::vector<int>::const_reverse_iterator it = test.rbegin();
++  it != test.rend();
++  return 0;
++}")
++check_cxx_source_compiles("${VTK_CONST_REVERSE_ITERATOR_COMPARISON_FILE}"
++  VTK_CONST_REVERSE_ITERATOR_COMPARISON)
++
++#-----------------------------------------------------------------------------
++# Provide compatibility options.
++option(VTK_LEGACY_REMOVE "Remove all legacy code completely." OFF)
++option(VTK_LEGACY_SILENT "Silence all legacy code messages." OFF)
++mark_as_advanced(VTK_LEGACY_REMOVE VTK_LEGACY_SILENT)
++
++#-----------------------------------------------------------------------------
++# VTK requires special compiler flags on some platforms.
++include(vtkDetermineCompilerFlags)
++
++# Tell VTK source files they are being built inside VTK.
++add_definitions(-DVTK_IN_VTK)
++
++#-----------------------------------------------------------------------------
++if(BUILD_TESTING)
++  include(vtkLegacyData)
++endif()
++
++# Provide an option for tests requiring "large" input data
++option(VTK_USE_LARGE_DATA "Enable tests requiring \"large\" data" OFF)
++
++#-----------------------------------------------------------------------------
++# Platform configuration tests.
++include(TestBigEndian)
++TEST_BIG_ENDIAN(CMAKE_WORDS_BIGENDIAN)
++
++include(FindThreads)
++set(VTK_USE_WIN32_THREADS 0)
++set(VTK_USE_PTHREADS 0)
++# if win32 threads and pthreads are available figure out which
++# one the compiler is setup to use.  If you can not figure it
++# out default to pthreads.
++if(CMAKE_USE_PTHREADS_INIT AND CMAKE_USE_WIN32_THREADS_INIT)
++  if(DEFINED VTK_THREAD_MODEL)
++    set(output "${VTK_THREAD_MODEL}")
++  else()
++    execute_process(COMMAND "${CMAKE_C_COMPILER}" -v OUTPUT_VARIABLE output
++      ERROR_VARIABLE output RESULT_VARIABLE result TIMEOUT 10)
++  endif()
++  if(output MATCHES "Thread model: posix")
++    set(VTK_THREAD_MODEL "Thread model: posix" CACHE STRING
++      "Thread model used by gcc.")
++    set(CMAKE_USE_WIN32_THREADS_INIT 0)
++  elseif(output MATCHES "Thread model: win32")
++    set(VTK_THREAD_MODEL "Thread model: win32" CACHE STRING
++      "Thread model used by gcc.")
++    set(CMAKE_USE_PTHREADS_INIT 0)
++  else()
++    set(VTK_THREAD_MODEL "Thread model: posix" CACHE STRING
++      "Thread model used by gcc.")
++    set(CMAKE_USE_WIN32_THREADS_INIT 0)
++  endif()
++endif()
++mark_as_advanced(VTK_THREAD_MODEL)
++if(CMAKE_USE_WIN32_THREADS_INIT)
++  set(VTK_USE_WIN32_THREADS 1)
++  set(CMAKE_THREAD_LIBS_INIT "")
++elseif(CMAKE_USE_PTHREADS_INIT)
++  set(VTK_USE_PTHREADS 1)
++endif()
++set(CMAKE_THREAD_LIBS "${CMAKE_THREAD_LIBS_INIT}" CACHE STRING "Thread library used.")
++mark_as_advanced(CMAKE_THREAD_LIBS)
++set(VTK_MAX_THREADS "64" CACHE STRING
++  "Max number of threads vtkMultiThreader will allocate.")
++mark_as_advanced(VTK_MAX_THREADS)
++
++include(CheckTypeSize)
++
++# Socket tests etc.
++#INCLUDE(Parallel/VTKParallelCMakeTests.cmake)
++
++# Test for atomics and other compiler intrinsics
++include(vtkTestBuiltins)
++
++#-----------------------------------------------------------------------------
++# Dispatch the build into the proper subdirectories.
++SET(VTK_HAS_EXODUS 1)
++
++#-----------------------------------------------------------------------------
++# Configure files with settings for use by the build.
++
++# Include the sockets test.
++# FIXME: The test should be moved and rewritten.
++include(VTKParallelCMakeTests)
++
++# Add the option for build the Python wrapping to VTK.
++option(VTK_WRAP_PYTHON "Should VTK Python wrapping be built?" OFF)
++set(VTK_PYTHON_VERSION 2 CACHE STRING
++    "Python version to use: 2, 2.x, 3, 3.x, or empty")
++
++# Add the option for build the Python wrapping to VTK.
++option(VTK_WRAP_JAVA "Should VTK Java wrapping be built?" OFF)
++
++# Force reset of hints file location in cache if it was moved
++if(VTK_WRAP_HINTS)
++  if(NOT EXISTS ${VTK_WRAP_HINTS})
++    set(VTK_WRAP_HINTS "VTK_WRAP_HINTS-NOTFOUND")
++  endif()
++endif()
++
++find_file(VTK_WRAP_HINTS hints ${VTK_SOURCE_DIR}/Wrapping/Tools
++  NO_CMAKE_FIND_ROOT_PATH)
++mark_as_advanced(VTK_WRAP_HINTS)
++
++if(BUILD_TESTING OR VTK_WRAP_PYTHON)
++  # Need PYTHON_EXECUTABLE for HeaderTesting or python wrapping
++  find_package(PythonInterp ${VTK_PYTHON_VERSION} QUIET)
++  mark_as_advanced(PYTHON_EXECUTABLE)
++endif()
++
++if(VTK_WRAP_PYTHON)
++  set(VTK_WRAP_PYTHON_EXE vtkWrapPython)
++  set(VTK_WRAP_PYTHON_INIT_EXE vtkWrapPythonInit)
++  # Force the WrappingPythonCore module to on if wrapping is on
++  set(Module_vtkWrappingPythonCore ON CACHE BOOL "Core Python wrapping library"
++    FORCE)
++else()
++  # if wrapping is not on then force WrappingPythonCore module to be off
++  set(Module_vtkWrappingPythonCore OFF CACHE BOOL "Core Python wrapping library"
++    FORCE)
++endif()
++
++if(VTK_WRAP_JAVA)
++  set(VTK_WRAP_JAVA3_INIT_DIR "${VTK_SOURCE_DIR}/Wrapping/Java")
++  # Wrapping executables.
++  set(VTK_WRAP_JAVA_EXE  vtkWrapJava)
++  set(VTK_PARSE_JAVA_EXE vtkParseJava)
++  set(Module_vtkWrappingJava ON CACHE BOOL "Core Java wrapping library"
++    FORCE)
++
++  # Java package location.
++  set(VTK_JAVA_JAR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/vtk.jar)
++  set(VTK_JAVA_HOME ${VTK_BINARY_DIR}/java/vtk)
++  file(MAKE_DIRECTORY ${VTK_JAVA_HOME})
++else()
++  set(Module_vtkWrappingJava OFF CACHE BOOL "Core Java wrapping library"
++    FORCE)
++endif()
++
++# Now for Tcl wrapping.
++option(VTK_WRAP_TCL "Should VTK Tcl wrapping be built?" OFF)
++if (VTK_LEGACY_REMOVE)
++  set_property(CACHE VTK_WRAP_TCL
++    PROPERTY TYPE INTERNAL)
++  set(VTK_WRAP_TCL OFF)
++else ()
++  set_property(CACHE VTK_WRAP_TCL
++    PROPERTY TYPE BOOL)
++endif ()
++if(VTK_WRAP_TCL)
++  if (NOT VTK_LEGACY_SILENT)
++    message(WARNING
++      "Tcl wrapping support is deprecated as of VTK 8.1.")
++  endif ()
++
++  set(VTK_WRAP_TCL_EXE vtkWrapTcl)
++  set(VTK_WRAP_TCL_INIT_EXE vtkWrapTclInit)
++  set(VTK_TCL_EXE vtk)
++  # Tcl package location.
++  set(VTK_TCL_HOME ${VTK_BINARY_DIR}/Wrapping/Tcl)
++  # Force the WrappingTcl module to on if wrapping is on
++  set(Module_vtkWrappingTcl ON CACHE BOOL "Core Tcl wrapping library"
++    FORCE)
++else()
++  # if wrapping is not on then force WrappingTcl module to be off
++  set(Module_vtkWrappingTcl OFF CACHE BOOL "Core Tcl wrapping library"
++    FORCE)
++endif()
++
++if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++  set(VTK_WRAP_HIERARCHY_EXE vtkWrapHierarchy)
++endif()
++
++# This is not normally necessary, but could be desirable in some circumstances.
++option(VTK_MAKE_INSTANTIATORS "Should all modules build instantiators" OFF)
++mark_as_advanced(VTK_MAKE_INSTANTIATORS)
++
++# Kits bundle multiple modules together into a single library, this
++# is used to dramatically reduce the number of generated libraries.
++option(VTK_ENABLE_KITS "Build VTK using kits instead of modules." OFF)
++mark_as_advanced(VTK_ENABLE_KITS)
++
++#----------------------------------------------------------------------
++# Load the module DAG, assess all modules etc.
++include(vtkModuleTop)
++
++# Now build the Python wrapping if necessary.
++if(VTK_WRAP_PYTHON)
++  add_subdirectory(Wrapping/Python)
++endif()
++
++if(BUILD_TESTING)
++  add_subdirectory(Testing/Install)
++endif()
++
++if(BUILD_EXAMPLES)
++  add_subdirectory(Examples)
++endif()
++
++# The doxygen documentation needs to be aware of all modules.
++option(BUILD_DOCUMENTATION "Build the VTK documentation" OFF)
++if(BUILD_DOCUMENTATION)
++  add_subdirectory(Utilities/Doxygen)
++endif()
++
++# If python wrapping and testing is enabled then add driver scripts to run
++# tests.  Note: Many pythong tests used to be automatically converted from TCL
++# scripts. Hence the name vtkTclTest2Py
++if(BUILD_TESTING AND VTK_WRAP_PYTHON)
++  add_subdirectory(Utilities/vtkTclTest2Py)
++endif()
++
++# Configure the CTestCustom.cmake file now that everything is done.
++set(memcheck_excluded_tests "  # These tests do not run any VTK code\n")
++foreach(vtk-module ${VTK_MODULES_ALL})
++  set(memcheck_excluded_tests
++    "${memcheck_excluded_tests}  ${vtk-module}-HeaderTest\n")
++endforeach()
++configure_file("${VTK_CMAKE_DIR}/CTestCustom.cmake.in"
++  "${CMAKE_CURRENT_BINARY_DIR}/CTestCustom.cmake" @ONLY)
++
++#-----------------------------------------------------------------------------
++# Export all targets at once from the build tree in their final configuration.
++get_property(_vtk_targets GLOBAL PROPERTY VTK_TARGETS)
++get_property(_vtk_compiletools_targets GLOBAL PROPERTY VTK_COMPILETOOLS_TARGETS)
++set (_vtk_all_targets ${_vtk_targets} ${_vtk_compiletools_targets})
++if (_vtk_all_targets)
++  list(REMOVE_DUPLICATES _vtk_all_targets)
++  export(TARGETS ${_vtk_all_targets} FILE ${VTK_BINARY_DIR}/VTKTargets.cmake)
++endif()
++# Add a virtual target that can be used to build all compile tools.
++add_custom_target(vtkCompileTools)
++if (_vtk_compiletools_targets)
++  list(REMOVE_DUPLICATES _vtk_compiletools_targets)
++  export(TARGETS ${_vtk_compiletools_targets}
++         FILE ${VTK_BINARY_DIR}/VTKCompileToolsConfig.cmake)
++  add_dependencies(vtkCompileTools ${_vtk_compiletools_targets})
++endif()
++
++unset(_vtk_targets)
++unset(_vtk_compiletools_targets)
++unset(_vtk_all_targets)
++
++# Create target to download data from the VTKData group.  This must come after
++# all tests have been added that reference the group, so we put it last.
++ExternalData_Add_Target(VTKData)
++if(VTK_DATA_EXCLUDE_FROM_ALL)
++  set_property(TARGET VTKData PROPERTY EXCLUDE_FROM_ALL 1)
++  if(BUILD_TESTING AND NOT VTK_DATA_EXCLUDE_FROM_ALL_NO_WARNING)
++    message(WARNING "VTK_DATA_EXCLUDE_FROM_ALL is ON so test data "
++      "(needed because BUILD_TESTING is ON) may not be available "
++      "without manually building the 'VTKData' target.")
++  endif()
++endif()
++
++#-----------------------------------------------------------------------------
++# Install the license file
++install(FILES ${VTK_SOURCE_DIR}/Copyright.txt DESTINATION ${VTK_INSTALL_DOC_DIR})
+diff -Nru VTK-8.1.1.org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx VTK-8.1.1/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx
+--- VTK-8.1.1.org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2018-05-11 16:34:24.000000000 +0200
++++ VTK-8.1.1/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2018-07-06 11:36:58.826368658 +0200
+@@ -26,7 +26,7 @@
+ 
+ // Define GLX_GLXEXT_LEGACY to prevent glx.h from including the glxext.h
+ // provided by the system.
+-//#define GLX_GLXEXT_LEGACY
++#define GLX_GLXEXT_LEGACY
+ 
+ // New Workaround:
+ // The GLX_GLXEXT_LEGACY definition was added to work around system glxext.h
+diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/CMakeLists.txt VTK-8.1.1/Wrapping/NodeJs/CMakeLists.txt
+--- VTK-8.1.1.org/Wrapping/NodeJs/CMakeLists.txt	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/Wrapping/NodeJs/CMakeLists.txt	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,33 @@
++# This is where we actually wrap the modules that have requested it.
++include(vtkNodeJsWrapping)
++
++get_property(VTK_NODEJS_MODULES GLOBAL PROPERTY VTK_NODEJS_WRAPPED)
++
++# Get the include directories for the module and all its dependencies.
++macro(vtk_include_recurse module)
++  _vtk_module_config_recurse("${module}_NODEJS" ${module})
++  include_directories(${${module}_NODEJS_INCLUDE_DIRS})
++endmacro()
++
++
++set(VTK_NODEJS_INIT_EXTERNALS)
++set(VTK_NODEJS_INIT_CALLS)
++
++# Loop through all modules that should be wrapped, and wrap them.
++foreach(module ${VTK_NODEJS_MODULES})
++  vtk_module_load(${module})
++  vtk_module_headers_load(${module})
++  vtk_include_recurse(${module})
++  vtk_add_nodejs_wrapping(${module})
++  set(VTK_NODEJS_INIT_EXTERNALS "${VTK_NODEJS_INIT_EXTERNALS}\nextern void ${module}NodeJsInit(v8::Local<v8::Object>);")
++  set(VTK_NODEJS_INIT_CALLS "${VTK_NODEJS_INIT_CALLS}\n\t${module}NodeJsInit(exports);")
++endforeach()
++
++
++
++configure_file(
++  ${CMAKE_CURRENT_SOURCE_DIR}/init.cc.in
++  ${CMAKE_BINARY_DIR}/NodeJs/init.cc
++  COPY_ONLY
++)
++
+diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/init.cc.in VTK-8.1.1/Wrapping/NodeJs/init.cc.in
+--- VTK-8.1.1.org/Wrapping/NodeJs/init.cc.in	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/Wrapping/NodeJs/init.cc.in	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,22 @@
++#include <nan.h>
++
++using namespace v8;
++using v8::Local;
++using v8::Object;
++
++// special object to request nowrap creations
++// not available to javascript.
++Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
++@VTK_NODEJS_INIT_EXTERNALS@
++extern void vtkNodeJsPlusInit(v8::Local<v8::Object>);
++
++void init( Local<Object> exports )
++{
++	vtkNodeJsNoWrap.Reset( Nan::New<v8::Object>() );
++
++	@VTK_NODEJS_INIT_CALLS@
++	vtkNodeJsPlusInit(exports);
++}
++
++NODE_MODULE( addon, init )
++
+diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/module.cmake VTK-8.1.1/Wrapping/NodeJs/module.cmake
+--- VTK-8.1.1.org/Wrapping/NodeJs/module.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/Wrapping/NodeJs/module.cmake	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,9 @@
++vtk_module(vtkWrappingNodeJs
++  DEPENDS
++    vtkCommonCore
++    vtksys
++  COMPILE_DEPENDS
++    vtkWrappingTools
++  EXCLUDE_FROM_ALL
++  EXCLUDE_FROM_WRAPPING
++  )
+diff -Nru VTK-8.1.1.org/Wrapping/Tools/CMakeLists.txt VTK-8.1.1/Wrapping/Tools/CMakeLists.txt
+--- VTK-8.1.1.org/Wrapping/Tools/CMakeLists.txt	2018-05-11 16:34:24.000000000 +0200
++++ VTK-8.1.1/Wrapping/Tools/CMakeLists.txt	2018-07-06 11:36:58.826368658 +0200
+@@ -88,6 +88,13 @@
+   add_executable(vtkWrapPythonInit vtkWrapPythonInit.c)
+   vtk_compile_tools_target(vtkWrapPython)
+   vtk_compile_tools_target(vtkWrapPythonInit)
++  
++  add_executable(vtkWrapNodeJs vtkWrapNodeJs.c)
++  target_link_libraries(vtkWrapNodeJs vtkWrappingTools)
++  add_executable(vtkWrapNodeJsInit vtkWrapNodeJsInit.c)
++  target_link_libraries(vtkWrapNodeJsInit vtkWrappingTools)
++  vtk_compile_tools_target(vtkWrapNodeJs)
++  vtk_compile_tools_target(vtkWrapNodeJsInit)
+ 
+   add_executable(vtkParseJava vtkParseJava.c)
+   target_link_libraries(vtkParseJava vtkWrappingTools)
+diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJs.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJs.c
+--- VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJs.c	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,1881 @@
++/*=========================================================================
++
++  Program:   Visualization Toolkit
++  Module:    vtkWrapNodeJs.c
++
++  Copyright (c) Ken Martin, Will Schroeder, Bill Lorensen
++  All rights reserved.
++  See Copyright.txt or http://www.kitware.com/Copyright.htm for details.
++
++     This software is distributed WITHOUT ANY WARRANTY; without even
++     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
++     PURPOSE.  See the above copyright notice for more information.
++
++=========================================================================*/
++
++#include "vtkWrap.h"
++#include "vtkWrapText.h"
++#include "vtkParse.h"
++#include "vtkParseData.h"
++#include "vtkParseMain.h"
++#include "vtkParseExtras.h"
++#include "vtkParseMangle.h"
++#include "vtkParseString.h"
++#include "vtkParseHierarchy.h"
++#include "vtkConfigure.h"
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <ctype.h>
++
++
++#define MAX_WRAPPED_CLASSES 512
++#define MAX_WRAPPED_PARAMS 16
++
++#include "vtkWrapNodeJsSupport.c"
++
++enum ArrayWrapType {
++  ARRAY_WRAP_NO,
++  ARRAY_WRAP_TYPED,
++  ARRAY_WRAP_POLYMORPH
++};
++
++/* method info with additional information */
++/* about typed/polymorph array overload */
++struct MethodInfo {
++  FunctionInfo *finfo;
++  enum ArrayWrapType awType[MAX_WRAPPED_PARAMS];
++};
++
++
++/* -------------------------------------------------------------------- */
++/* Returns true if class by "name" is supported by white/blacklists */
++
++static int supportedClass(
++  const char *name
++)
++{
++  const char **cpp;
++#ifndef DO_WHITELIST
++  for(cpp = blacklist; *cpp; cpp++)
++    if (!strcmp(name, *cpp))
++      {
++      return 0;
++      }
++  return 1;
++#else
++  for(cpp = whitelist; *cpp; cpp++)
++    if (!strcmp(name, *cpp))
++      {
++      return 1;
++      }
++  return 0;
++#endif
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Check an arg to see if it is wrappable */
++
++static int isValueWrappable(
++  ValueInfo *val,
++  HierarchyInfo *hinfo,
++  int flags
++)
++{
++  static unsigned int wrappableTypes[] = {
++//  FIXME make handles for all stuff commented out
++//  VTK_PARSE_VOID,
++    VTK_PARSE_BOOL,
++    VTK_PARSE_FLOAT,
++    VTK_PARSE_DOUBLE,
++    VTK_PARSE_CHAR,
++    VTK_PARSE_UNSIGNED_CHAR,
++    VTK_PARSE_SIGNED_CHAR,
++    VTK_PARSE_INT,
++    VTK_PARSE_UNSIGNED_INT,
++    VTK_PARSE_SHORT,
++    VTK_PARSE_UNSIGNED_SHORT,
++    VTK_PARSE_LONG,
++    VTK_PARSE_UNSIGNED_LONG,
++//  VTK_PARSE_ID_TYPE,
++//  VTK_PARSE_UNSIGNED_ID_TYPE,
++//  VTK_PARSE_SSIZE_T,
++//  VTK_PARSE_SIZE_T,
++#ifdef VTK_TYPE_USE_LONG_LONG
++//  VTK_PARSE_LONG_LONG,
++//  VTK_PARSE_UNSIGNED_LONG_LONG,
++#endif
++#ifdef VTK_TYPE_USE___INT64
++//  VTK_PARSE___INT64,
++//  VTK_PARSE_UNSIGNED___INT64,
++#endif
++    VTK_PARSE_OBJECT,
++//  VTK_PARSE_QOBJECT,
++//  VTK_PARSE_STRING,
++//    VTK_PARSE_UNICODE_STRING,
++    0
++  };
++
++  HierarchyEntry *he;
++  char const * const* cpp;
++  unsigned int baseType;
++  int j;
++
++  baseType = val->Type & VTK_PARSE_BASE_TYPE;
++
++  if ((flags & VTK_WRAP_RETURN))
++    {
++    if (vtkWrap_IsVoid(val)) return 1;
++    }
++
++
++  /* goes through all types that are indicated as wrappable */
++  for (j = 0; wrappableTypes[j]; j++)
++    {
++    if (baseType == wrappableTypes[j]) break;
++    }
++
++  if (wrappableTypes[j] == 0) return 0;
++
++  if ((baseType == VTK_PARSE_LONG || baseType == VTK_PARSE_UNSIGNED_LONG) &&
++    (vtkWrap_IsPointer(val) || vtkWrap_IsArray(val))) return 0;
++
++  if (vtkWrap_IsRef(val)) return 0;
++
++//  if (val->Template) return 0;
++  if (val->Class && strchr(val->Class, '<')) return 0;
++
++  if (vtkWrap_IsNArray(val)) return 0;
++
++  if (baseType == VTK_PARSE_OBJECT)
++    {
++    if (!vtkWrap_IsPointer(val))
++      {
++      return 0;
++      }
++
++    he = vtkParseHierarchy_FindEntry(hinfo, val->Class);
++
++    if (he && vtkParseHierarchy_GetProperty(he, "WRAP_EXCLUDE"))
++      {
++      return 0;
++      }
++
++    return supportedClass(val->Class);
++    }
++
++  if (vtkWrap_IsScalar(val)) return 1;
++
++  if (vtkWrap_IsArray(val)) return 1;
++
++  if (vtkWrap_IsPointer(val))
++    {
++    if (vtkWrap_IsCharPointer(val))
++      {
++      return 1;
++      }
++
++    if (vtkWrap_IsVTKObject(val))
++      {
++      return 1;
++      }
++    }
++
++  return 0;
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Checks a method to see if it is wrappable in python */
++
++static int vtkWrapNodeJs_MethodCheck(
++  FunctionInfo *finfo, HierarchyInfo *hinfo)
++{
++  int i, n;
++
++  /* some functions will not get wrapped no matter what */
++  if (finfo->Access != VTK_ACCESS_PUBLIC)
++    {
++    return 0;
++    }
++
++  /* no need to wrap constructors/destructors as functions */
++  if(!finfo->ReturnValue)
++    {
++    return 0;
++    }
++
++  if(finfo->IsOperator)
++    {
++    return 0;
++    }
++
++  if(finfo->IsPureVirtual)
++    {
++    return 0;
++    }
++
++  /* new and delete are meaningless in wrapped languages */
++  if (finfo->Name == 0 ||
++      strcmp("Register", finfo->Name) == 0 ||
++      strcmp("UnRegister", finfo->Name) == 0 ||
++      strcmp("Delete", finfo->Name) == 0 ||
++      strcmp("FastDelete", finfo->Name) == 0 ||
++      strcmp("GetReferenceCount", finfo->Name) == 0 ||
++      strcmp("SetReferenceCount", finfo->Name) == 0 ||
++      strcmp("New", finfo->Name) == 0)
++    {
++    return 0;
++    }
++
++  /* function pointer arguments for callbacks */
++  if (finfo->NumberOfParameters == 2 &&
++      vtkWrap_IsVoidFunction(finfo->Parameters[0]) &&
++      vtkWrap_IsVoidPointer(finfo->Parameters[1]) &&
++      !vtkWrap_IsConst(finfo->Parameters[1]) &&
++      vtkWrap_IsVoid(finfo->ReturnValue))
++    {
++//  return 1;
++    return 0;
++    }
++
++  n = vtkWrap_CountWrappedParameters(finfo);
++
++  /* check to see if we can handle all the args */
++  for (i = 0; i < n; i++)
++    {
++    if (!isValueWrappable(
++          finfo->Parameters[i], hinfo, VTK_WRAP_ARG))
++      {
++      return 0;
++      }
++    }
++
++  /* check the return value */
++  if (!isValueWrappable(
++        finfo->ReturnValue, hinfo, VTK_WRAP_RETURN))
++    {
++    return 0;
++    }
++
++  return 1;
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Compares two function in terms of name/overloading precedence. */
++static int methodCompare(FunctionInfo const *f1, FunctionInfo const *f2)
++{
++  int ncmp, p, fpn1, fpn2;
++  unsigned int t1, t2;
++
++  ncmp = strcmp(f1->Name, f2->Name);
++
++  if( ncmp ) return ncmp;
++
++  p = 0;
++  fpn1 = f1->NumberOfParameters;
++  fpn2 = f2->NumberOfParameters;
++
++  for(;;)
++    {
++    if( p >= fpn1 ) return +1;
++    if( p >= fpn2 ) return -1;
++
++    t1 = f1->Parameters[p]->Type;
++    t2 = f2->Parameters[p]->Type;
++
++    if( t1 > t2 ) return -1;
++    if( t1 < t2 ) return +1;
++
++    p++;
++    }
++
++  fprintf(stderr, "got identical overloads!\n");
++  exit(1);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Returns a null terminated list of method infos of a class. */
++/* Sorted by name and overloading precedence. */
++
++static struct MethodInfo *getMethodsInfo(
++  ClassInfo const * cinfo,
++  HierarchyInfo * hinfo
++)
++{
++  int i, j, nof, nom;
++  int aop;
++  struct MethodInfo *minfo;
++  FunctionInfo *finfo;
++
++  nof = cinfo->NumberOfFunctions;
++  nom = 0;
++  /* count how many methods are actually needed */
++  for(i = 0, j = 0; i < nof; i++ )
++    {
++    finfo = cinfo->Functions[i];
++    if (!vtkWrapNodeJs_MethodCheck(finfo, hinfo))
++      {
++      continue;
++      }
++
++    if (finfo->NumberOfParameters > MAX_WRAPPED_PARAMS)
++    {
++      fputs("Too many parameters.\n", stderr);
++      exit(1);
++    }
++
++    /* array overload potency */
++    aop = 1;
++    for(j = 0; j < finfo->NumberOfParameters; j++)
++      {
++      if(vtkWrap_IsArray(finfo->Parameters[j]))
++        {
++        aop*=2;
++        }
++      }
++    nom+=aop;
++    }
++
++  minfo = (struct MethodInfo*) calloc(nom + 1, sizeof(struct MethodInfo));
++  for(i = 0, j = 0; i < nof; i++ )
++  {
++    finfo = cinfo->Functions[i];
++    if (vtkWrapNodeJs_MethodCheck(finfo, hinfo))
++      {
++      minfo[j++].finfo = finfo;
++      }
++  }
++
++  nof = j;
++
++  /* sorts them by name/parameters */
++  for(i = 1; i < nof; i++)
++    {
++    for(j = i; j > 0 && methodCompare(minfo[j - 1].finfo, minfo[j].finfo) > 0; j--)
++      {
++      finfo = minfo[j].finfo;
++      minfo[j].finfo = minfo[j-1].finfo;
++      minfo[j-1].finfo = finfo;
++      }
++    }
++
++  /* sets typed/no array extra param info */
++  for(i = 0; i < nof; i++)
++    {
++    struct MethodInfo *mi = minfo + i;
++    finfo = mi->finfo;
++    for(j = 0; j < finfo->NumberOfParameters; j++)
++      {
++      mi->awType[j] =
++        vtkWrap_IsArray(finfo->Parameters[j])
++        ? ARRAY_WRAP_TYPED
++        : ARRAY_WRAP_NO;
++      }
++    }
++  /* inserts polymorph array overloads */
++  for(i = 0; i < nof; i++)
++    {
++    struct MethodInfo *mi = minfo + i;
++    finfo = mi->finfo;
++    for(j = 0; j < finfo->NumberOfParameters; j++)
++      {
++      if(mi->awType[j] == ARRAY_WRAP_POLYMORPH)
++        {
++        break;
++        }
++      if(mi->awType[j] == ARRAY_WRAP_TYPED)
++        {
++        memmove(mi + 1, mi, sizeof(struct MethodInfo) * (nof - i));
++        mi[1].awType[j] = ARRAY_WRAP_POLYMORPH;
++        nof++;
++        }
++      }
++    }
++
++  return minfo;
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Returns true if there is no lowercase char in s.       */
++
++static int isUpperString(
++  char const *s
++)
++{
++  while (*s)
++    {
++    if (*s != toupper(*s)) return 0;
++    s++;
++    }
++
++  return 1;
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the initializer which registers a wrapper class to node       */
++
++static void writeInit(
++  FILE *f,
++  char const *name,
++  char const *wrapperName,
++  ClassInfo *cinfo,
++  struct MethodInfo *minfo,
++  HierarchyInfo *hinfo,
++  HierarchyEntry *he
++)
++{
++  char const *lastName;
++  char const *sname;
++  char *upperName, *c;
++  struct MethodInfo *m;
++
++  if(he->NumberOfSuperClasses > 1 )
++    {
++    fprintf(stderr, "Cannot do multiple inheritance\n");
++    exit(1);
++    }
++
++  fprintf(f, "void %s::Init(v8::Local<v8::Object> exports)\n", wrapperName);
++  fprintf(f, "{\n");
++
++  fprintf(f,
++    "\tNan::SetAccessor(exports, Nan::New(\"%s\").ToLocalChecked(), ConstructorGetter);\n",
++    name
++    );
++
++  if(!strncmp(name, "vtk", 3 ))
++    {
++    fprintf(f,
++      "\tNan::SetAccessor(exports, Nan::New(\"%s\").ToLocalChecked(), ConstructorGetter);\n",
++      name + 3
++      );
++    }
++
++  fprintf(f, "}\n");
++  fprintf(f, "\n");
++
++  fprintf(f, "void %s::ConstructorGetter(\n", wrapperName);
++  fprintf(f, "\tv8::Local<v8::String> property,\n");
++  fprintf(f, "\tconst Nan::PropertyCallbackInfo<v8::Value>& info)\n");
++  fprintf(f, "{\n");
++  fprintf(f, "\tInitPtpl();\n");
++  fprintf(f, "\tinfo.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());\n");
++  fprintf(f, "}\n");
++  fprintf(f, "\n");
++
++  fprintf(f, "void %s::InitPtpl()\n", wrapperName);
++  fprintf(f, "{\n");
++  fprintf(f, "\tif (!ptpl.IsEmpty()) return;\n");
++
++  fprintf(f, "\tv8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);\n");
++
++  if(he->NumberOfSuperClasses > 0 )
++    {
++    sname = he->SuperClasses[0];
++    fprintf(f, "\t%c%sWrap::InitPtpl( );\n", toupper(*sname), sname + 1 );
++    fprintf(f,
++      "\ttpl->Inherit(Nan::New<FunctionTemplate>(%c%sWrap::ptpl));\n",
++      toupper(*sname),
++      sname + 1
++      );
++    }
++
++  fprintf(f, "\ttpl->SetClassName(Nan::New(\"%s\").ToLocalChecked());\n", wrapperName);
++  fprintf(f, "\ttpl->InstanceTemplate()->SetInternalFieldCount(1);\n");
++  fprintf(f, "\n");
++
++  lastName = 0;
++  for (m = minfo; m->finfo; m++)
++    {
++    FunctionInfo *finfo = m->finfo;
++    if (lastName && !strcmp(lastName, finfo->Name)) continue;
++    lastName = finfo->Name;
++
++    fprintf(f,
++      "\tNan::SetPrototypeMethod(tpl, \"%s\", %s);\n",
++      finfo->Name,
++      finfo->Name
++      );
++
++    if (!isUpperString(finfo->Name ))
++      {
++      fprintf(f,
++        "\tNan::SetPrototypeMethod(tpl, \"%c%s\", %s);\n",
++        tolower(*finfo->Name), finfo->Name + 1,
++        finfo->Name
++        );
++      }
++
++    fprintf(f, "\n");
++    }
++
++  upperName = strdup(name);
++  for(c = upperName; *c; c++) *c = toupper(*c);
++	fprintf(f, "#ifdef VTK_NODE_PLUS_%sWRAP_INITPTPL\n", upperName );
++	fprintf(f, "\tVTK_NODE_PLUS_%sWRAP_INITPTPL\n", upperName );
++  fputs("#endif\n", f);
++  free(upperName);
++
++	fputs("\tptpl.Reset( tpl );\n", f);
++  fputs("}\n", f);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the "new" handler. */
++
++static void writeNew(
++  FILE *f,
++  char const *name,
++  char const *wrapperName,
++  ClassInfo *cinfo
++)
++{
++  fprintf(f, "void %s::New(const Nan::FunctionCallbackInfo<v8::Value>& info)\n", wrapperName);
++  fprintf(f, "{\n");
++  fprintf(f, "\tif(!info.IsConstructCall())\n");
++  fprintf(f, "\t{\n");
++  fprintf(f, "\t\tNan::ThrowError(\"Constructor not called in a construct call.\");\n");
++  fprintf(f, "\t\treturn;\n");
++  fprintf(f, "\t}\n");
++  fprintf(f, "\n");
++  fprintf(f, "\tif(info.Length() == 0)\n");
++  fprintf(f, "\t{\n");
++
++  if (!cinfo->IsAbstract)
++    {
++    fprintf(f, "\t\tvtkSmartPointer<%s> native = vtkSmartPointer<%s>::New();\n", name, name);
++    fprintf(f, "\t\t%s* obj = new %s(native);\n", wrapperName, wrapperName);
++    fprintf(f, "\t\tobj->Wrap(info.This());\n");
++    }
++  else
++    {
++    fprintf(f, "\t\tNan::ThrowError(\"Cannot create instance of abstract class.\");\n");
++    fprintf(f, "\t\treturn;\n");
++    }
++  fprintf(f, "\t}\n");
++  fprintf(f, "\telse\n");
++  fprintf(f, "\t{\n");
++  fprintf(f, "\t\tif(info[0]->ToObject() != vtkNodeJsNoWrap )\n");
++  fprintf(f, "\t\t{\n");
++  fprintf(f, "\t\t\tNan::ThrowError(\"Parameter Error\");\n");
++  fprintf(f, "\t\t\treturn;\n");
++  fprintf(f, "\t\t}\n");
++  fprintf(f, "\t}\n");
++  fprintf(f, "\n");
++  fprintf(f, "\tinfo.GetReturnValue().Set(info.This());\n");
++  fprintf(f, "}\n");
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Returns the v8 parameter test function */
++
++static char const * v8ParameterTestFuncName(
++   ValueInfo *vinfo
++)
++{
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++
++  switch (baseType )
++    {
++    case VTK_PARSE_BOOL : return "IsBoolean";
++
++    case VTK_PARSE_FLOAT : return "IsNumber";
++    
++    case VTK_PARSE_DOUBLE : return "IsNumber";
++
++    case VTK_PARSE_INT : return "IsInt32";
++
++    case VTK_PARSE_LONG : return "IsInt32";
++
++    case VTK_PARSE_SHORT : return "IsInt32";
++
++    case VTK_PARSE_UNSIGNED_INT : return "IsUint32";
++
++    case VTK_PARSE_UNSIGNED_SHORT : return "IsUint32";
++ 
++    case VTK_PARSE_UNSIGNED_LONG : return "IsUint32";
++
++    case VTK_PARSE_CHAR :
++      if(vtkWrap_IsPointer(vinfo)) return "IsString";
++      else return "IsInt32";
++
++    case VTK_PARSE_SIGNED_CHAR : return "IsInt32";
++
++    case VTK_PARSE_UNSIGNED_CHAR : return "IsUint32";
++
++    default :
++      fprintf(stderr,
++        "Unexpected parameter type %d/%d for %s.\n",
++         baseType, vinfo->Type, vinfo->Name
++         );
++      exit(1);
++    }
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Returns the C primitive for vinfo */
++
++static char const * getCPrimitive(ValueInfo *vinfo)
++{
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++
++  switch (baseType)
++    {
++    case VTK_PARSE_BOOL : return "bool";
++    case VTK_PARSE_CHAR : return "char";
++    case VTK_PARSE_SIGNED_CHAR : return "signed char";
++    case VTK_PARSE_UNSIGNED_CHAR : return "unsigned char";
++    case VTK_PARSE_INT : return "int";
++    case VTK_PARSE_UNSIGNED_INT : return "unsigned int";
++    case VTK_PARSE_LONG : return "int";
++    case VTK_PARSE_UNSIGNED_LONG : return "unsigned int";
++    case VTK_PARSE_SHORT : return "short";
++    case VTK_PARSE_UNSIGNED_SHORT : return "unsigned short";
++    case VTK_PARSE_FLOAT : return "float";
++    case VTK_PARSE_DOUBLE : return "double";
++    default :
++      fputs("unknown primitive!\n", stderr);
++      exit(1);
++    }
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Returns the V8 typed array class for a given baseType */
++
++static char const * getTypedArrayV8Class(
++  unsigned int baseType
++)
++{
++  switch(baseType)
++  {
++  case VTK_PARSE_CHAR            : return "Int8Array";
++  case VTK_PARSE_SIGNED_CHAR     : return "Int8Array";
++  case VTK_PARSE_UNSIGNED_CHAR   : return "Uint8Array";
++  case VTK_PARSE_DOUBLE          : return "Float64Array";
++  case VTK_PARSE_FLOAT           : return "Float32Array";
++  case VTK_PARSE_INT             : return "Int32Array";
++  case VTK_PARSE_UNSIGNED_INT    : return "Uint32Array";
++  case VTK_PARSE_LONG            : return "Int32Array";
++  case VTK_PARSE_UNSIGNED_LONG   : return "Uint32Array";
++  case VTK_PARSE_SHORT           : return "Int16Array";
++  case VTK_PARSE_UNSIGNED_SHORT  : return "Uint16Array";
++
++  default :
++    fprintf(stderr, "Unknown base type for typed array %d\n", baseType);
++    exit(1);
++  }
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes a parameter variable for some parameters that need it. */
++
++static void writeHandlerParameterVar(
++  FILE *f,
++  char const *indent,
++  int p,
++  ValueInfo *vinfo,
++  enum ArrayWrapType awType
++)
++{
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++  char const *arrayV8Class;
++
++  if (vtkWrap_IsArray(vinfo))
++    {
++    switch(awType)
++      {
++      case ARRAY_WRAP_TYPED :
++        arrayV8Class = getTypedArrayV8Class(baseType);
++        fprintf(f,
++          "\t%sv8::Local<v8::%s>a%d"
++          "(v8::Local<v8::%s>::Cast(info[%d]->ToObject()));\n",
++          indent,
++          arrayV8Class,
++          p,
++          arrayV8Class,
++          p
++          );
++
++        return;
++
++      case ARRAY_WRAP_POLYMORPH :
++        fprintf(f,
++          "\t%sv8::Local<v8::Array>a%d"
++          "(v8::Local<v8::Array>::Cast(info[%d]->ToObject()));\n",
++          indent,
++          p,
++          p
++          );
++
++        fprintf(f,
++          "\t%s%s b%d[%d];\n",
++          indent,
++          getCPrimitive(vinfo),
++          p,
++          vinfo->Count
++          );
++
++        return;
++      }
++    }
++
++  switch (baseType)
++    {
++    case VTK_PARSE_CHAR :
++
++      if(vtkWrap_IsPointer(vinfo))
++        {
++        fprintf(f, "\t%sNan::Utf8String a%d(info[%d]);\n", indent, p, p);
++        }
++        else
++        {
++        fprintf(f, "\t%schar a%d = info[%d]->Int32Value();\n", indent, p, p);
++        fprintf(f, "\t%sif( a%d < -127 || a%d > 128 )\n", indent, p, p );
++        fprintf(f, "\t%s{\n", indent );
++        fprintf(f, "\t%s\tNan::ThrowError(\"char value out of bounds.\");\n", indent );
++        fprintf(f, "\t%s\treturn;\n", indent );
++        fprintf(f, "\t%s}\n", indent );
++        }
++
++      break;
++
++    case VTK_PARSE_OBJECT :
++      fprintf(f,
++        "\t%s%c%sWrap *a%d = ObjectWrap::Unwrap<%c%sWrap>(info[%d]->ToObject());\n",
++        indent,
++        toupper(*vinfo->Class),
++        vinfo->Class + 1,
++        p,
++        toupper(*vinfo->Class),
++        vinfo->Class + 1,
++        p
++        );
++      break;
++    }
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes a parameter value getter for the handlers native call. */
++
++static void writeHandlerParameterValue(
++   FILE *f,
++   char const *indent,
++   int p,
++   ValueInfo *vinfo,
++   int nop,
++   enum ArrayWrapType awType
++)
++{
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++
++  fputs("\t", f);
++  fputs(indent, f);
++  fputs("\t", f);
++
++  switch(awType)
++    {
++    case ARRAY_WRAP_TYPED :
++      fprintf(f,
++        "(%s *)(a%d->Buffer()->GetContents().Data())%s\n",
++        getCPrimitive(vinfo),
++        p,
++        p + 1 < nop ? "," : ""
++        );
++      return;
++
++    case ARRAY_WRAP_POLYMORPH :
++      fprintf(f,
++        "b%d%s\n",
++        p,
++        p + 1 < nop ? "," : ""
++        );
++      return;
++    }
++
++  switch(baseType)
++    {
++    case VTK_PARSE_BOOL :
++      fprintf(f, "info[%d]->BooleanValue()", p);
++      break;
++
++    case VTK_PARSE_DOUBLE :
++    case VTK_PARSE_FLOAT :
++      fprintf(f, "info[%d]->NumberValue()", p);
++      break;
++
++    case VTK_PARSE_SIGNED_CHAR :
++    case VTK_PARSE_INT :
++    case VTK_PARSE_LONG :
++    case VTK_PARSE_SHORT :
++      fprintf(f, "info[%d]->Int32Value()", p);
++      break;
++
++    case VTK_PARSE_UNSIGNED_CHAR :
++    case VTK_PARSE_UNSIGNED_INT :
++    case VTK_PARSE_UNSIGNED_LONG :
++    case VTK_PARSE_UNSIGNED_SHORT :
++      fprintf(f, "info[%d]->Uint32Value()", p);
++      break;
++
++    case VTK_PARSE_CHAR :
++      if(vtkWrap_IsPointer(vinfo))
++        {
++        fputs("*", f);
++        }
++      fprintf(f, "a%d", p);
++      break;
++
++    case VTK_PARSE_OBJECT :
++      fprintf(f, "(%s *) a%d->native.GetPointer()", vinfo->Class, p);
++
++      break;
++
++    default :
++      fprintf(stderr, "Unexpected parameter type.\n");
++      exit(1);
++    }
++
++  if( p + 1 < nop )
++    {
++    fputs(",", f);
++    }
++
++  fputs("\n", f);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the return value parameter if needed. . */
++
++static void writeHandlerReturnVar(
++   FILE *f,
++   char const *indent,
++   ValueInfo *rinfo
++)
++{
++  unsigned int rBaseType;
++
++  rBaseType = (rinfo->Type & VTK_PARSE_BASE_TYPE);
++
++  fputs("\t", f);
++  fputs(indent, f);
++
++  switch(rBaseType)
++    {
++    case VTK_PARSE_VOID : return;
++    case VTK_PARSE_BOOL : fputs("bool ", f); break;
++    case VTK_PARSE_DOUBLE : fputs("double ", f); break;
++    case VTK_PARSE_FLOAT : fputs("float ", f); break;
++    case VTK_PARSE_INT : fputs("int ", f); break;
++    case VTK_PARSE_UNSIGNED_INT : fputs("unsigned int ", f); break;
++    case VTK_PARSE_LONG : fputs("int ", f); break;
++    case VTK_PARSE_UNSIGNED_LONG : fputs("unsigned int ", f); break;
++    case VTK_PARSE_SHORT : fputs("short ", f); break;
++    case VTK_PARSE_UNSIGNED_SHORT : fputs("unsigned short ", f); break;
++    case VTK_PARSE_SIGNED_CHAR : fputs("signed char ", f); break;
++    case VTK_PARSE_UNSIGNED_CHAR : fputs("unsigned char ", f); break;
++    case VTK_PARSE_CHAR : fputs("char ", f); break;
++    case VTK_PARSE_OBJECT : fputs(rinfo->Class, f); fputs(" ", f); break;
++    default :
++      fprintf(stderr, "Unexpected parameter type %d for return value.\n", rBaseType );
++      exit(1);
++    }
++
++    if (vtkWrap_IsPointer(rinfo))
++      {
++      if(rBaseType == VTK_PARSE_CHAR)
++        {
++        fputs("const * ", f);
++        }
++        else
++        {
++        fputs("* ", f);
++        }
++      }
++
++    if (vtkWrap_IsArray(rinfo))
++      {
++      fputs("const * ", f);
++      }
++
++  fputs( "r;\n", f);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the return value setter, if needed. . */
++
++static void writeHandlerReturnSetter(
++   FILE *f,
++   char const *indent,
++   ValueInfo *rinfo
++)
++{
++  unsigned int rBaseType = (rinfo->Type & VTK_PARSE_BASE_TYPE);
++
++  if (vtkWrap_IsPointer(rinfo))
++    {
++    switch(rBaseType)
++      {
++      case VTK_PARSE_CHAR :
++        /* a pointer to char(s) is treated as string */
++        fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r).ToLocalChecked());\n", indent);
++        return;
++
++      case VTK_PARSE_OBJECT :
++        fprintf(f,
++          "\t%s%c%sWrap::InitPtpl();\n",
++          indent,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1
++          );
++        fprintf(f, "\t%sv8::Local<v8::Value> argv[1] =\n", indent );
++        fprintf(f, "\t%s\t{ Nan::New(vtkNodeJsNoWrap) };\n", indent);
++        fprintf(f, "\t%sv8::Local<v8::Function> cons =\n", indent );
++        fprintf(f,
++          "\t%s\tNan::New<v8::FunctionTemplate>(%c%sWrap::ptpl)->GetFunction();\n",
++          indent,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1
++          );
++        fprintf(f, "\t%sv8::Local<v8::Object> wo = cons->NewInstance(1, argv);\n", indent );
++        fprintf(f,
++          "\t%s%c%sWrap *w = new %c%sWrap();\n",
++          indent,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1
++          );
++        fprintf(f, "\t%sw->native = r;\n", indent );
++        fprintf(f, "\t%sw->Wrap(wo);\n", indent);
++        fprintf(f, "\t%sinfo.GetReturnValue().Set(wo);\n", indent);
++        return;
++
++      default :
++
++       fprintf(stderr, "Internal fail, writeHandlerReturnSetter unexpected pointer.\n");
++       exit(1);
++       }
++    }
++
++  if (vtkWrap_IsArray(rinfo))
++    {
++    fputs("\t", f);
++    fputs(indent, f);
++    fputs("Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), ", f);
++    if (rinfo->Count)
++      {
++      fprintf(f, "%d", rinfo->Count);
++      }
++    else
++      {
++      fputs(rinfo->CountHint,f);
++      }
++
++    fprintf(f, " * sizeof(%s));\n", getCPrimitive(rinfo));
++
++    fprintf(f,
++      "\t%sLocal<v8::%s> at = v8::%s::New(ab, 0, ",
++      indent,
++      getTypedArrayV8Class(rBaseType),
++      getTypedArrayV8Class(rBaseType)
++    );
++    if (rinfo->Count)
++      {
++      fprintf(f, "%d", rinfo->Count);
++      }
++    else
++      {
++      fputs(rinfo->CountHint,f);
++      }
++    fputs(");\n", f);
++
++    fprintf(f,
++      "\t%smemcpy(ab->GetContents().Data(), r, ",
++      indent
++    );
++    if (rinfo->Count)
++      {
++      fprintf(f, "%d", rinfo->Count);
++      }
++    else
++      {
++      fputs(rinfo->CountHint,f);
++      }
++    fprintf(f, " * sizeof(%s));\n", getCPrimitive(rinfo));
++    fprintf(f, "\t%sinfo.GetReturnValue().Set(at);\n", indent);
++
++    return;
++    }
++
++
++  switch( rBaseType )
++    {
++    case VTK_PARSE_VOID :
++      break;
++
++    case VTK_PARSE_BOOL :
++    case VTK_PARSE_DOUBLE :
++    case VTK_PARSE_FLOAT :
++    case VTK_PARSE_INT :
++    case VTK_PARSE_LONG :
++    case VTK_PARSE_SHORT :
++    case VTK_PARSE_SIGNED_CHAR :
++    case VTK_PARSE_UNSIGNED_CHAR :
++    case VTK_PARSE_UNSIGNED_LONG :
++    case VTK_PARSE_UNSIGNED_SHORT :
++    case VTK_PARSE_UNSIGNED_INT :
++      fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
++      break;
++
++    case VTK_PARSE_CHAR :
++      fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
++      break;
++
++    default :
++      fprintf(stderr, "Unexpected parameter type %d for return value.\n", rBaseType);
++      exit(1);
++    }
++}
++
++/* -------------------------------------------------------------------- */
++/* Returns true if the Wrapper cannot destinguish overloads. */
++/* For example "float" and "double" are the same thing in Javascipt V8 */
++/* which is "Number" */
++
++static int parameterEqualInOverload(
++  ValueInfo *p1info,
++  ValueInfo *p2info
++)
++{
++  if( p1info->Type != VTK_PARSE_OBJECT_PTR ) return p1info->Type == p2info->Type;
++
++  return !strcmp(p1info->Class, p2info->Class );
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the handler for typed arrays. */
++
++static void writeTypedArrayParameterHandler(
++  FILE *f,
++  char const *indent,
++  int p,
++  ValueInfo *vinfo
++)
++{
++  int count = vinfo->Count;
++
++  if( !count )
++   {
++   fprintf(stderr, "Array without count!\n");
++   exit(1);
++   }
++
++  fprintf(f, "\t%sif( a%d->Length() < %d )\n", indent, p, count);
++  fprintf(f, "\t%s{\n", indent);
++  fprintf(f, "\t%s\tNan::ThrowError(\"Array too short.\");\n", indent);
++  fprintf(f, "\t%s\treturn;\n", indent);
++  fprintf(f, "\t%s}\n", indent);
++  fprintf(f, "\n");
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the handler for polymorphic arrays which need to be copied in a loop. */
++
++static void writePolymorphArrayParameterHandler(
++  FILE *f,
++  char const *indent,
++  int p,
++  ValueInfo *vinfo
++)
++{
++  int count;
++  char const *test = v8ParameterTestFuncName(vinfo);
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++  count = vinfo->Count;
++
++  if( !count )
++   {
++   fprintf(stderr, "Array without count!\n");
++   exit(1);
++   }
++
++  fprintf(f, "\t%sif( a%d->Length() < %d )\n", indent, p, count);
++  fprintf(f, "\t%s{\n", indent);
++  fprintf(f, "\t%s\tNan::ThrowError(\"Array too short.\");\n", indent);
++  fprintf(f, "\t%s\treturn;\n", indent);
++  fprintf(f, "\t%s}\n", indent);
++  fprintf(f, "\n");
++
++  fprintf(f, "\t%sfor( i = 0; i < %d; i++ )\n", indent, count);
++  fprintf(f, "\t%s{\n", indent);
++  fprintf(f, "\t%s\tif( !a%d->Get(i)->%s() )\n", indent, p, test );
++  fprintf(f, "\t%s\t{\n", indent);
++  fprintf(f, "\t%s\t\tNan::ThrowError(\"Array contents invalid.\");\n", indent);
++  fprintf(f, "\t%s\t\treturn;\n", indent);
++  fprintf(f, "\t%s\t}\n", indent);
++  switch( baseType )
++    {
++    case VTK_PARSE_BOOL:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->BooleanValue();\n", indent, p, p );
++      break;
++
++    case VTK_PARSE_FLOAT :
++    case VTK_PARSE_DOUBLE:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->NumberValue();\n", indent, p, p );
++      break;
++
++    case VTK_PARSE_CHAR:
++    case VTK_PARSE_SIGNED_CHAR:
++    case VTK_PARSE_INT:
++    case VTK_PARSE_LONG:
++    case VTK_PARSE_SHORT:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->Int32Value();\n", indent, p, p );
++      break;
++
++    case VTK_PARSE_UNSIGNED_CHAR:
++    case VTK_PARSE_UNSIGNED_SHORT:
++    case VTK_PARSE_UNSIGNED_LONG:
++    case VTK_PARSE_UNSIGNED_INT:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->Uint32Value();\n", indent, p, p );
++      break;
++
++    default:
++      fprintf(stderr, "Invalid basetype\n");
++      exit(1);
++    }
++  fprintf(f, "\t%s}\n", indent);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes one parameter check.  */
++
++static void writeHandlerParameterCheck(
++  FILE *f,                  /* file to write to */
++  char const *indent,       /* current indentation level */
++  int p,                    /* current parameter number */
++  ValueInfo *vinfo,         /* current parameter info */
++  int writeElse,            /* true if current control flow needs else */
++  enum ArrayWrapType awType /* for array if typed or polymorph */
++)
++{
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++  const char *sname;
++
++  fputs("\t", f);
++  fputs(indent, f);
++  if( writeElse )
++    {
++    fputs( "else ", f );
++    }
++
++  switch(awType)
++    {
++    case ARRAY_WRAP_TYPED :
++      fprintf(f,
++        "if(info.Length() > %d && info[%d]->Is%s())\n",
++        p,
++        p,
++        getTypedArrayV8Class(baseType)
++        );
++      return;
++
++    case ARRAY_WRAP_POLYMORPH :
++      fprintf(f,
++        "if(info.Length() > %d && info[%d]->IsArray())\n",
++        p,
++        p
++        );
++      return;
++    }
++
++  if (baseType != VTK_PARSE_OBJECT)
++    {
++    fprintf(f,
++      "if(info.Length() > %d && info[%d]->%s())\n",
++      p,
++      p,
++      v8ParameterTestFuncName(vinfo)
++      );
++    }
++  else
++    {
++    sname = vinfo->Class;
++
++    fprintf(f,
++      "if(info.Length() > %d && info[%d]->IsObject() && "
++      "(Nan::New(%c%sWrap::ptpl))->HasInstance(info[%d]))\n",
++      p,
++      p,
++      toupper(*sname),
++      sname + 1,
++      p
++      );
++    }
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes a function handler */
++
++static void writeFunctionHandler(
++  FILE *f,
++  char const *name,
++  char const *wrapperName,
++  int overloadCount,
++  struct MethodInfo *minfo,
++  ClassInfo *cinfo,
++  HierarchyInfo *hinfo
++)
++{
++  int nop;
++  int p, pd;
++  char indent[255];
++  unsigned int rBaseType = VTK_PARSE_VOID;
++  ValueInfo *rinfo;
++  FunctionInfo *finfo = minfo->finfo;
++  int overload;
++  int writeElse;
++  int needi;
++  struct MethodInfo *mi;
++
++  fprintf(f,
++    "void %s::%s(const Nan::FunctionCallbackInfo<v8::Value>& info)\n",
++    wrapperName,
++    finfo->Name
++    );
++
++  fprintf(f, "{\n");
++
++  fprintf(f,
++    "\t%s *wrapper = ObjectWrap::Unwrap<%s>(info.Holder());\n",
++    wrapperName,
++    wrapperName
++    );
++
++  fprintf(f,
++    "\t%s *native = (%s *)wrapper->native.GetPointer();\n",
++    name,
++    name
++    );
++
++  /* See if an 'i' counter variable is needed */
++  needi = 0;
++  for (overload = 0; overload < overloadCount && !needi; overload++)
++    {
++    finfo = minfo[overload].finfo;
++    for (p = 0; p < finfo->NumberOfParameters && !needi; p++)
++      {
++      if (vtkWrap_IsArray(finfo->Parameters[p]))
++        {
++        needi = 1;
++        }
++      }
++    }
++
++  if( needi )
++    {
++    fprintf(f, "\tsize_t i;\n");
++    }
++
++  /* Argument checking */
++
++  *indent = 0;
++  p = 0;
++  writeElse = 0;
++
++  for (overload = 0; overload < overloadCount; overload++)
++    {
++    mi = minfo + overload;
++    finfo = mi->finfo;
++    nop = finfo->NumberOfParameters;
++
++    for (; p < nop; p++)
++      {
++      ValueInfo *vinfo = finfo->Parameters[p];
++
++      writeHandlerParameterCheck(f, indent, p, vinfo, writeElse, mi->awType[p]);
++      writeElse = 0;
++
++      fprintf(f, "\t%s{\n", indent);
++      strcat(indent, "\t");
++      writeHandlerParameterVar(f, indent, p, vinfo, mi->awType[p]);
++      switch(mi->awType[p])
++        {
++        case ARRAY_WRAP_TYPED :
++          writeTypedArrayParameterHandler(f, indent, p, vinfo);
++          break;
++        case ARRAY_WRAP_POLYMORPH :
++          writePolymorphArrayParameterHandler(f, indent, p, vinfo);
++          break;
++        }
++      }
++
++    rinfo = finfo->ReturnValue;
++    if(rinfo)
++      {
++      rBaseType = (rinfo->Type & VTK_PARSE_BASE_TYPE);
++      writeHandlerReturnVar(f, indent, rinfo);
++      }
++
++    fprintf(f, "\t%sif(info.Length() != %u)\n", indent, nop);
++    fprintf(f, "\t%s{\n", indent);
++    fprintf(f, "\t%s\tNan::ThrowError(\"Too many parameters.\");\n", indent);
++    fprintf(f, "\t%s\treturn;\n", indent);
++    fprintf(f, "\t%s}\n", indent);
++
++    /* writes the native call */
++    fprintf(f,
++      "\t%s%snative->%s(",
++      indent,
++      rBaseType != VTK_PARSE_VOID ? "r = " : "",
++      finfo->Name
++      );
++
++    if (nop > 0)
++      {
++      fputs("\n", f);
++
++      for(p = 0; p < nop; p++)
++        {
++        writeHandlerParameterValue(f, indent, p, finfo->Parameters[p], nop, mi->awType[p]);
++        }
++
++      fprintf(f, "\t%s);\n", indent);
++      }
++    else
++      {
++      fputs(");\n", f);
++      }
++
++    /* sets the return value */
++    if (rinfo)
++      {
++      writeHandlerReturnSetter(f, indent, rinfo);
++      }
++
++    /* if one overload takes zero parameter, */
++    /* it will be the last in the chain */
++    if (nop > 0)
++      {
++      fprintf(f, "\t%sreturn;\n", indent);
++      }
++
++    /* figures out after how many parameters */
++    /* the overload differs */
++    for (;;)
++      {
++      if (overload + 1 < overloadCount)
++        {
++        /* the next overloading function */
++        /* it has less or equal amount of parameters */
++        FunctionInfo *foinfo = minfo[overload + 1].finfo;
++
++        for (pd = 0; pd < foinfo->NumberOfParameters; pd++)
++          {
++          if (
++            minfo[overload].awType[pd] != minfo[overload + 1].awType[pd]
++            ||
++            !parameterEqualInOverload( finfo->Parameters[pd], foinfo->Parameters[pd]))
++              {
++              break;
++              }
++          }
++
++        if (foinfo->NumberOfParameters == finfo->NumberOfParameters
++          && pd >= foinfo->NumberOfParameters)
++          {
++          fprintf(stderr,
++            "WARN: Cannot distinguish overloads for method \"%s\"\n",
++            finfo->Name
++          );
++          //exit(1);
++          overload++;
++          continue;
++          }
++
++        for (; p > pd; p--)
++          {
++          indent[strlen(indent)-1] = 0;
++          fprintf(f, "\t%s}\n", indent);
++          writeElse = 1;
++          }
++        }
++        break;
++      }
++    }
++
++  while (*indent)
++    {
++    indent[strlen(indent)-1] = 0;
++    fprintf(f, "\t%s}\n", indent);
++    }
++
++  if (nop > 0)
++    {
++    fputs("\tNan::ThrowError(\"Parameter mismatch\");\n", f);
++    }
++
++  fputs("}\n", f);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Returns 1 if needle is in hay */
++
++static int needleInHay(
++   char const * const * hay,
++   int count,
++   char const * needle
++)
++{
++  int i;
++  for (i = 0; i < count; i++)
++    {
++    if(!strcmp(hay[i],needle)) return 1;
++    }
++  return 0;
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes a class inclusion. */
++
++static void writeClassInclude(
++  FILE *f,
++  const char *name
++)
++{
++  fputs("#include \"", f);
++  while(*name && *name != '<')
++    {
++    fputc(*name, f);
++    name++;
++    }
++  fputs("Wrap.h\"\n", f);
++}
++
++/* -------------------------------------------------------------------- */
++/* Writes the header for the wrapped object class */
++
++static void writeHeader(
++  char const *name,
++  char const *wrapperName,
++  ClassInfo *cinfo,
++  struct MethodInfo *minfo,
++  HierarchyInfo *hinfo,
++  HierarchyEntry *he,
++  OptionInfo *options
++)
++{
++  char *c;
++  char *cxxFilename;
++  char *hFilename;
++  char *upperName;
++  char const *sname;
++  char const *lastName;
++  int k, cxxFilenameLen;
++  int a;
++  FILE * f;
++  struct MethodInfo *m;
++  FunctionInfo *finfo;
++
++  cxxFilename = options->OutputFileName;
++  cxxFilenameLen = strlen(cxxFilename);
++
++  for (k = cxxFilenameLen; k > 0 && cxxFilename[ k ] != '.'; k--);
++
++  if (k == 0)
++    {
++    fprintf(stderr, "Output filename \"%s\" has no extension", options->OutputFileName);
++    exit(1);
++    }
++
++  hFilename = (char *) calloc(cxxFilenameLen + 3, sizeof(char));
++  strncpy(hFilename, cxxFilename, k);
++  strcat(hFilename, ".h");
++
++  f = fopen(hFilename, "w");
++
++  if (!f)
++    {
++    fprintf(stderr, "Error opening output header file %s\n", hFilename);
++    exit(1);
++    }
++
++  upperName = strdup(name);
++  for(c = upperName; *c; c++) *c = toupper(*c);
++
++  fputs("/* this file has been autogenerated by vtkNodeJsWrap */\n", f);
++  fputs("/* editing this might proof futile */\n", f);
++  fputs("\n", f);
++
++  fputs("#ifndef NATIVE_EXTENSION_VTK_", f);
++  fputs(upperName, f);
++  fputs("WRAP_H\n", f);
++
++  fputs("#define NATIVE_EXTENSION_VTK_", f);
++  fputs(upperName, f);
++  fputs("WRAP_H\n", f);
++
++  fputs("\n", f);
++  fputs("#include <nan.h>\n", f);
++  fputs("\n", f);
++  fputs("#include <vtkSmartPointer.h>\n", f);
++  fprintf(f, "#include <%s.h>\n", name);
++  fputs("\n", f);
++
++  for (a = 0; a < he->NumberOfSuperClasses; a++)
++    {
++    sname = he->SuperClasses[ a ];
++    writeClassInclude(f, sname);
++    }
++
++  fputs("#include \"../../plus/plus.h\"\n", f);
++  fputs("\n", f);
++
++  if( he->NumberOfSuperClasses )
++    {
++    fprintf(f, "class %s :", wrapperName);
++    for(a = 0; a < he->NumberOfSuperClasses; a++)
++      {
++      if( a ) fprintf(f, ",");
++      sname = he->SuperClasses[ a ];
++      fprintf(f, " public %c%sWrap", toupper(*sname), sname + 1);
++      }
++    fputs("\n", f);
++    }
++  else
++    {
++    fprintf(f, "class %s : public Nan::ObjectWrap\n", wrapperName);
++    }
++
++  fputs("{\n", f);
++  fputs("\tpublic:\n", f);
++  fputs("\t\tusing Nan::ObjectWrap::Wrap;\n", f);
++  fputs("\t\tstatic void Init(v8::Local<v8::Object> exports);\n", f);
++  fputs("\t\tstatic void InitPtpl();\n", f);
++  fputs("\t\tstatic void ConstructorGetter(\n", f);
++  fputs("\t\t\tv8::Local<v8::String> property,\n", f);
++  fputs("\t\t\tconst Nan::PropertyCallbackInfo<v8::Value>& info);\n", f);
++  fputs("\n", f);
++
++  if(!he->NumberOfSuperClasses)
++    {
++    fprintf(f, "\t\tvtkSmartPointer<%s> native;\n", name);
++    fputs("\n", f);
++    }
++
++  fprintf(f, "\t\t%s(vtkSmartPointer<%s>);\n", wrapperName, name);
++  fprintf(f, "\t\t%s();\n", wrapperName);
++  fprintf(f, "\t\t~%s( );\n", wrapperName);
++  fputs("\t\tstatic Nan::Persistent<v8::FunctionTemplate> ptpl;\n", f);
++  fputs("\n", f);
++  fputs("\tprivate:\n", f);
++  fputs("\t\tstatic void New(const Nan::FunctionCallbackInfo<v8::Value>& info);\n", f);
++  fputs("\n", f);
++
++  lastName = 0;
++  for (m = minfo; m->finfo; m++)
++    {
++    finfo = m->finfo;
++    if (lastName && !strcmp(lastName, finfo->Name)) continue;
++    lastName = finfo->Name;
++
++    fprintf(
++      f,
++      "\t\tstatic void %s(const Nan::FunctionCallbackInfo<v8::Value>& info);\n",
++      finfo->Name
++      );
++    }
++  fputs("\n", f);
++	fprintf(f, "#ifdef VTK_NODE_PLUS_%sWRAP_CLASSDEF\n", upperName );
++	fprintf(f, "\t\tVTK_NODE_PLUS_%sWRAP_CLASSDEF\n", upperName );
++  fputs("#endif\n", f);
++
++  fputs("};\n", f);
++  fputs("\n", f);
++  fputs("#endif\n", f);
++
++  fclose(f);
++
++  free(hFilename);
++  free(upperName);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the c++ code for the wrapped object class */
++
++static void writeCC(
++  const char *name,
++  const char *wrapperName,
++  ClassInfo *cinfo,
++  struct MethodInfo *minfo,
++  HierarchyInfo *hinfo,
++  HierarchyEntry *he,
++  OptionInfo *options
++)
++{
++  FILE *f;
++  int a, b;
++  char const *included[MAX_WRAPPED_CLASSES + 1];
++  int incCount = 0;
++  char const *sname;
++  struct MethodInfo *m;
++  int oc;
++
++  /* get the output file */
++  f = fopen(options->OutputFileName, "w");
++
++  fputs("/* this file has been autogenerated by vtkNodeJsWrap */\n", f);
++  fputs("/* editing this might proof futile */\n", f);
++  fputs("\n", f);
++
++  if (!f)
++    {
++    fprintf(stderr, "Error opening output file %s\n", options->OutputFileName);
++    exit(1);
++    }
++
++  /* the VTK_WRAPPING_CXX tells header files where they're included from */
++  fputs("#define VTK_WRAPPING_CXX\n", f);
++
++  /* unless this is vtkObjectBase.h, define VTK_STREAMS_FWD_ONLY */
++  if (strcmp("vtkObjectBase", name) != 0)
++    {
++    /* Block inclusion of full streams.  */
++    fputs("#define VTK_STREAMS_FWD_ONLY\n", f);
++    }
++
++  fputs("#include <nan.h>\n", f);
++  fputs("\n", f);
++
++  for (a = 0; a < he->NumberOfSuperClasses; a++)
++    {
++    sname = he->SuperClasses[ a ];
++    if (needleInHay(included, incCount, sname)) continue;
++    writeClassInclude(f, sname);
++    included[incCount++] = sname;
++    if (incCount >= MAX_WRAPPED_CLASSES)
++      {
++      fprintf(stderr, "MAX_WRAPPED_CLASSES exceeded\n" );
++      exit(1);
++      }
++    }
++
++  if(!needleInHay(included, incCount, name))
++    {
++    fprintf(f, "#include \"%sWrap.h\"\n", name);
++    included[incCount++] = name;
++    if (incCount >= MAX_WRAPPED_CLASSES)
++      {
++      fprintf(stderr, "MAX_WRAPPED_CLASSES exceeded\n" );
++      exit(1);
++      }
++    }
++
++  /* includes wrappers for returned classes. */
++  for (a = 0; a < cinfo->NumberOfFunctions; a++)
++    {
++    FunctionInfo *finfo = cinfo->Functions[a];
++    // FIXME use minfo
++    if (!vtkWrapNodeJs_MethodCheck(finfo, hinfo)) continue;
++    if (finfo->ReturnValue && vtkWrap_IsVTKObject(finfo->ReturnValue))
++      {
++      sname = finfo->ReturnValue->Class;
++      if (!needleInHay(included, incCount, sname))
++        {
++        fprintf(f, "#include \"%sWrap.h\"\n", sname);
++        included[incCount++] = sname;
++        if (incCount >= MAX_WRAPPED_CLASSES)
++          {
++          fprintf(stderr, "MAX_WRAPPED_CLASSES exceeded\n" );
++          exit(1);
++          }
++        }
++      }
++    for (b = 0; b < finfo->NumberOfParameters; b++)
++      {
++      ValueInfo *vinfo = finfo->Parameters[b];
++      if (!vtkWrap_IsVTKObject(vinfo)) continue;
++      sname = vinfo->Class;
++      if (needleInHay(included, incCount, sname)) continue;
++      fprintf(f, "#include \"%sWrap.h\"\n", sname);
++      included[incCount++] = sname;
++      if (incCount >= MAX_WRAPPED_CLASSES)
++        {
++        fprintf(stderr, "MAX_WRAPPED_CLASSES exceeded\n" );
++        exit(1);
++        }
++      }
++    }
++
++  fputs("#include \"../../plus/plus.h\"\n", f);
++
++  fputs("\n", f);
++  fputs("using namespace v8;\n", f);
++  fputs("\n", f);
++
++  fprintf(f, "extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;");
++  fprintf(f, "\n");
++
++  fprintf(f, "Nan::Persistent<v8::FunctionTemplate> %s::ptpl;\n", wrapperName);
++  fprintf(f, "\n");
++
++  fprintf(f, "%s::%s()\n", wrapperName, wrapperName);
++  fprintf(f, "{ }\n");
++  fprintf(f, "\n");
++
++  fprintf(f, "%s::%s(vtkSmartPointer<%s> _native)\n", wrapperName, wrapperName, name);
++  fprintf(f, "{ native = _native; }\n");
++  fprintf(f, "\n");
++
++  fprintf(f, "%s::~%s()\n", wrapperName, wrapperName);
++  fprintf(f, "{ }\n");
++  fprintf(f, "\n");
++
++  writeInit(f, name, wrapperName, cinfo, minfo, hinfo, he);
++
++  fprintf(f, "\n");
++
++  writeNew(f, name, wrapperName, cinfo );
++
++  fprintf(f, "\n");
++
++  for (m = minfo; m->finfo; m += oc)
++    {
++    oc = 1; /* overload count */
++    while(m[oc].finfo && !strcmp(m[0].finfo->Name,m[oc].finfo->Name)) oc++;
++    writeFunctionHandler(f, name, wrapperName, oc, m, cinfo, hinfo);
++    fprintf(f, "\n");
++    }
++}
++
++
++/* -------------------------------------------------------------------- */
++/* This is the main entry point. */
++int main(int argc, char *argv[])
++{
++  OptionInfo *options = 0;
++  HierarchyInfo *hinfo = 0;
++  FileInfo *file_info = 0;
++  char const *name = 0;
++  char *name_from_file = 0;
++  char *wrapperName = 0;
++  HierarchyEntry *he = 0;
++  ClassInfo *cinfo;
++  struct MethodInfo *minfo;
++  int k, m;
++  char const * const *cpp;
++
++  /* get command-line args and parse the header file */
++  file_info = vtkParse_Main(argc, argv);
++
++  /* get the command-line options */
++  options = vtkParse_GetCommandLineOptions();
++
++  /* get the hierarchy info for accurate typing */
++  if (options->HierarchyFileName)
++    {
++    hinfo = vtkParseHierarchy_ReadFile(options->HierarchyFileName);
++    }
++
++  /* get the filename without the extension */
++  name = file_info->FileName;
++  m = strlen(name);
++  for (k = m; k > 0; k--)
++    {
++    if (name[k] == '.') { break; }
++    }
++
++  if (k > 0) { m = k; }
++
++  for (k = m; k > 0; k--)
++    {
++    if (!((name[k-1] >= 'a' && name[k-1] <= 'z') ||
++          (name[k-1] >= 'A' && name[k-1] <= 'Z') ||
++          (name[k-1] >= '0' && name[k-1] <= '9') ||
++          name[k-1] == '_')) { break; }
++    }
++  name_from_file = (char *)calloc(m - k + 1, sizeof( char ));
++
++  strncpy(name_from_file, name + k, m - k);
++
++  wrapperName = (char *)calloc(strlen(name_from_file) + 5, sizeof( char ));
++
++  strcpy(wrapperName, name_from_file);
++
++  strcat(wrapperName, "Wrap");
++
++  *wrapperName = toupper(*wrapperName);
++
++  /* finds the hierarchy info of the mainClass */
++  he = vtkParseHierarchy_FindEntry(hinfo, name_from_file);
++  if (!he )
++    {
++    fprintf(stderr, "Cannot find hierarchy info!\n");
++    exit(0);
++    }
++
++  if (vtkParseHierarchy_GetProperty(he, "WRAP_EXCLUDE")) return 0;
++
++#ifndef DO_WHITELIST
++  for(cpp = blacklist; *cpp; cpp++)
++    {
++    if(!strcmp(*cpp, name_from_file )) return 0;
++    }
++#else
++  for(cpp = whitelist; *cpp; cpp++)
++    {
++    if(!strcmp(*cpp, name_from_file )) break;
++    }
++  if (!*cpp) return 0;
++#endif
++
++  cinfo = file_info->MainClass;
++
++  if (!cinfo) return 0;
++
++  if (cinfo->Template)
++    {
++    fprintf(stderr, "WARN: Cannot yet do templates.\n");
++    return 0;
++    }
++
++  minfo = getMethodsInfo(cinfo, hinfo);
++
++  writeHeader(name_from_file, wrapperName, cinfo, minfo, hinfo, he, options);
++
++  writeCC(name_from_file, wrapperName, cinfo, minfo, hinfo, he, options);
++
++  free(minfo);
++
++  free(name_from_file);
++
++  free(wrapperName);
++
++  vtkParse_Free(file_info);
++
++  return 0;
++}
++
++
++// vim:set ts=2 sw=2 expandtab:
+diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsInit.c
+--- VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsInit.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsInit.c	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,146 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++#include "vtkParseHierarchy.h"
++#include "vtkWrapNodeJsSupport.c"
++
++static int isBlacklisted(
++  const char *name
++)
++{
++  char const * const *e;
++
++#ifndef DO_WHITELIST
++  for (e = blacklist; *e; e++)
++    {
++    if (!strcmp(*e, name) ) return 1;
++    }
++  return 0;
++#else
++  for (e = whitelist; *e; e++)
++    {
++    if (!strcmp(*e, name) ) return 0;
++    }
++  return 1;
++#endif
++}
++
++
++static void createInitFile(
++  FILE *f,
++  char ** entries,
++  HierarchyInfo *hinfo
++)
++{
++  HierarchyEntry *he;
++  char **e;
++
++  fprintf(f,"/* this file has been autogenerated by vtkNodeJsWrapInit */\n");
++  fprintf(f,"/* editing this might proof futile */\n");
++  fprintf(f,"\n");
++  fprintf(f,"#include <nan.h>\n");
++  fprintf(f,"\n");
++
++  for(e = entries + 1; *e; e++)
++    {
++    if (isBlacklisted(*e)) continue;
++
++    he = vtkParseHierarchy_FindEntry(hinfo, *e);
++    if (!he || vtkParseHierarchy_GetProperty(he, "WRAP_EXCLUDE")) continue;
++
++    fprintf(f, "#include \"%sWrap.h\"\n", *e );
++    }
++
++  fprintf(f,"\n");
++  fprintf(f,"using namespace v8;\n");
++  fprintf(f,"\n");
++  fprintf(f,"extern void %sInit( v8::Local<v8::Object> exports )\n", entries[ 0 ] );
++  fprintf(f,"{\n");
++
++  for(e = entries + 1; *e; e++)
++    {
++    if (isBlacklisted(*e)) continue;
++
++    he = vtkParseHierarchy_FindEntry(hinfo, *e);
++    if (!he || vtkParseHierarchy_GetProperty(he, "WRAP_EXCLUDE")) continue;
++
++    fprintf(f, "\t%c%sWrap::Init( exports );\n", toupper(**e), *e + 1 );
++    }
++  fprintf(f,"}\n");
++  fprintf(f,"\n");
++}
++
++#define MAXENTRIES 4000
++
++int main(int argc,char *argv[])
++{
++  char b[512];
++  char b2[2];
++  char *cp;
++  size_t z;
++  FILE *f;
++  FILE *of;
++  char libName[512];
++  char *entries[MAXENTRIES];
++  int nEntries = 0;
++  HierarchyInfo *hinfo;
++
++  if (argc < 3)
++    {
++    fprintf(stderr,"Usage: %s data_list_file init_file\n",argv[0]);
++    return 1;
++    }
++  
++  hinfo = vtkParseHierarchy_ReadFile(argv[1]);
++
++  f = fopen(argv[2],"r");
++  if (!f)
++    {
++    fprintf(stderr,"Input file %s could not be opened\n",argv[2]);
++    return 1;
++    }
++  
++  for(;;)
++    {
++    cp = fgets(b, sizeof(b), f);
++    if (!cp) break;
++    z = strlen( b );
++    if (z == 0 || b[z - 1]!='\n')
++      {
++      cp = fgets(b2, sizeof(b2), f);
++      if (cp)
++        {
++        fprintf(stderr, "Filename \"%s\".. too long\"\n", b);
++        return 1;
++        }
++      }
++
++    /* removes the newline */
++    b[ z - 1] = 0;
++
++    if (nEntries+2>=MAXENTRIES)
++      {
++      fprintf(stderr, "Too many entries!\"\n");
++      return 1;
++      }
++    entries[nEntries++] = strdup( b );
++    }
++ 
++  entries[nEntries] = 0;
++
++  of = fopen(argv[3],"w");
++  if (!of)
++    {
++    fprintf(stderr, "Cannot open %s for writing\n", argv[3]);
++    return 1;
++    }
++
++  createInitFile(of, entries, hinfo);
++  fclose(of);
++
++  return 0;
++}
++
++// vim:set ts=2 sw=2 expandtab:
++
+diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsSupport.c
+--- VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsSupport.c	2018-07-06 11:36:58.826368658 +0200
+@@ -0,0 +1,53 @@
++
++/* used for development for a minimal vtk lib wrapper */
++/* to quickly test stuff out */
++/* #define DO_WHITELIST */
++
++/* TODO REMOVE */
++
++#ifdef DO_WHITELIST
++char const *whitelist[] =
++  {
++  "vtkViewport",
++  "vtkInteractorStyle",
++  "vtkInteractorStyleTrackballCamera",
++  "vtkInteractorObserver",
++  "vtkRenderer",
++  "vtkRenderWindow",
++  "vtkRenderWindowInteractor",
++  "vtkWindow",
++  "vtkActor",
++  "vtkProp3D",
++  "vtkProp",
++  "vtkObjectBase",
++  "vtkObject",
++  "vtkAbstractMapper",
++  "vtkAbstractMapper3D",
++  "vtkAlgorithm",
++  "vtkAlgorithmOutput",
++  "vtkPolyDataAlgorithm",
++  "vtkPolyDataMapper",
++  "vtkMapper",
++  "vtkConeSource",
++  "vtkCubeSource",
++  0,
++  };
++#endif
++
++char const *blacklist[] =
++  {
++  "vtkTimeStamp",
++  "vtkTDxMotionEventInfo",
++  "vtkContourRepresentationNode",
++  "vtkVolumeRayCastDynamicInfo",
++  "vtkShadowMapBakerPassTextures",
++  "vtkShadowMapBakerPassLightCameras",
++  "vtkImageComplex",
++  "vtkVolumeRayCastStaticInfo",
++  "vtkShaderProgram2",
++  "vtkInterpolationWeights",
++  "vtkPainterDeviceAdapter",
++  0,
++  };
++
++// vim:set ts=2 sw=2 expandtab:
