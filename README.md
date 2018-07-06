@@ -15,7 +15,7 @@ npm install vtk
 ```
 
 It will build the wrapper classes matching the VTK installed on your system.
-Currently 6.1.0, 6.2.0 and 6.3.0 are supported.
+Currently 7.0.0 is supported.
 
 Building the wrappers might take a little while.
 
