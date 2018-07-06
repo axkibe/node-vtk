@@ -1,2 +1,2 @@
 'use strict';
-module.exports = require('./build/Release/node-vtk');
+module.exports = require( './build/Release/node-vtk' );

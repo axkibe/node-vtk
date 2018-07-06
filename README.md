@@ -21,7 +21,7 @@ Building the wrappers might take a little while.
 
 You might need to install following packages for example on Debian:
 ```
-sudo apt-get install vtk6-dev qtbase5-dev
+sudo apt-get install vtk8-dev qtbase5-dev
 ```
 
 Usage

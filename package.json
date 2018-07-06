@@ -13,12 +13,12 @@
   "main": "./index",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "nan": "^2.2.0",
-    "cmake-js": "^3.0.0"
+    "nan": "^2.10.0",
+    "cmake-js": "^3.7.3"
   },
   "dependencies": {
-    "nan": "^2.2.0",
-    "cmake-js": "^3.0.0"
+    "nan": "^2.10.0",
+    "cmake-js": "^3.7.3"
   },
   "scripts": {
     "install": "cmake-js compile"
