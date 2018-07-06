@@ -9,7 +9,6 @@
 #include "vtkWidgetEventTranslatorWrap.h"
 #include "vtkObjectBaseWrap.h"
 #include "vtkEventWrap.h"
-#include "vtkEventDataWrap.h"
 #include "../../plus/plus.h"
 
 using namespace v8;
@@ -147,23 +146,7 @@ void VtkWidgetEventTranslatorWrap::GetTranslation(const Nan::FunctionCallbackInf
 	}
 	else if(info.Length() > 0 && info[0]->IsUint32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkEventDataWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkEventDataWrap *a1 = ObjectWrap::Unwrap<VtkEventDataWrap>(info[1]->ToObject());
-			unsigned int r;
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			r = native->GetTranslation(
-				info[0]->Uint32Value(),
-				(vtkEventData *) a1->native.GetPointer()
-			);
-			info.GetReturnValue().Set(Nan::New(r));
-			return;
-		}
-		else if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
@@ -250,21 +233,6 @@ void VtkWidgetEventTranslatorWrap::RemoveTranslation(const Nan::FunctionCallback
 		}
 		r = native->RemoveTranslation(
 			*a0
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventDataWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkEventDataWrap *a0 = ObjectWrap::Unwrap<VtkEventDataWrap>(info[0]->ToObject());
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->RemoveTranslation(
-			(vtkEventData *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -407,25 +375,7 @@ void VtkWidgetEventTranslatorWrap::SetTranslation(const Nan::FunctionCallbackInf
 	}
 	else if(info.Length() > 0 && info[0]->IsUint32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkEventDataWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkEventDataWrap *a1 = ObjectWrap::Unwrap<VtkEventDataWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsUint32())
-			{
-								if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->SetTranslation(
-					info[0]->Uint32Value(),
-					(vtkEventData *) a1->native.GetPointer(),
-					info[2]->Uint32Value()
-				);
-				return;
-			}
-		}
-		else if(info.Length() > 1 && info[1]->IsUint32())
+		if(info.Length() > 1 && info[1]->IsUint32())
 		{
 						if(info.Length() != 2)
 			{

@@ -10,7 +10,6 @@
 #include "vtkObjectBaseWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkFloatArrayWrap.h"
-#include "vtkGenericOpenGLResourceFreeCallbackWrap.h"
 #include "../../plus/plus.h"
 
 using namespace v8;
@@ -137,9 +136,6 @@ void VtkOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "PushContext", PushContext);
 	Nan::SetPrototypeMethod(tpl, "pushContext", PushContext);
 
-	Nan::SetPrototypeMethod(tpl, "RegisterGraphicsResources", RegisterGraphicsResources);
-	Nan::SetPrototypeMethod(tpl, "registerGraphicsResources", RegisterGraphicsResources);
-
 	Nan::SetPrototypeMethod(tpl, "ReportCapabilities", ReportCapabilities);
 	Nan::SetPrototypeMethod(tpl, "reportCapabilities", ReportCapabilities);
 
@@ -175,9 +171,6 @@ void VtkOpenGLRenderWindowWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SupportsOpenGL", SupportsOpenGL);
 	Nan::SetPrototypeMethod(tpl, "supportsOpenGL", SupportsOpenGL);
-
-	Nan::SetPrototypeMethod(tpl, "UnregisterGraphicsResources", UnregisterGraphicsResources);
-	Nan::SetPrototypeMethod(tpl, "unregisterGraphicsResources", UnregisterGraphicsResources);
 
 	Nan::SetPrototypeMethod(tpl, "WaitForCompletion", WaitForCompletion);
 	Nan::SetPrototypeMethod(tpl, "waitForCompletion", WaitForCompletion);
@@ -759,26 +752,6 @@ void VtkOpenGLRenderWindowWrap::PushContext(const Nan::FunctionCallbackInfo<v8::
 	native->PushContext();
 }
 
-void VtkOpenGLRenderWindowWrap::RegisterGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
-	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericOpenGLResourceFreeCallbackWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkGenericOpenGLResourceFreeCallbackWrap *a0 = ObjectWrap::Unwrap<VtkGenericOpenGLResourceFreeCallbackWrap>(info[0]->ToObject());
-				if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->RegisterGraphicsResources(
-			(vtkGenericOpenGLResourceFreeCallback *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkOpenGLRenderWindowWrap::ReportCapabilities(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
@@ -1172,26 +1145,6 @@ void VtkOpenGLRenderWindowWrap::SupportsOpenGL(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->SupportsOpenGL();
 	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkOpenGLRenderWindowWrap::UnregisterGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
-	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericOpenGLResourceFreeCallbackWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkGenericOpenGLResourceFreeCallbackWrap *a0 = ObjectWrap::Unwrap<VtkGenericOpenGLResourceFreeCallbackWrap>(info[0]->ToObject());
-				if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->UnregisterGraphicsResources(
-			(vtkGenericOpenGLResourceFreeCallback *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOpenGLRenderWindowWrap::WaitForCompletion(const Nan::FunctionCallbackInfo<v8::Value>& info)

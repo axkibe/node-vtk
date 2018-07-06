@@ -59,7 +59,6 @@ class VtkOpenGLRenderWindowWrap : public VtkRenderWindowWrap
 		static void OpenGLInitState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PopContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PushContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void RegisterGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReportCapabilities(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetContextSupportsOpenGL32(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -72,7 +71,6 @@ class VtkOpenGLRenderWindowWrap : public VtkRenderWindowWrap
 		static void SetUseOffScreenBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZbufferData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportsOpenGL(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void UnregisterGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WaitForCompletion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 #ifdef VTK_NODE_PLUS_VTKOPENGLRENDERWINDOWWRAP_CLASSDEF

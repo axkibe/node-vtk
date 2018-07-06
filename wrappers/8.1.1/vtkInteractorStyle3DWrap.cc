@@ -8,7 +8,6 @@
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyle3DWrap.h"
 #include "vtkObjectBaseWrap.h"
-#include "vtkEventDataWrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkPropPickerWrap.h"
 #include "../../plus/plus.h"
@@ -50,9 +49,6 @@ void VtkInteractorStyle3DWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkInteractorStyle3DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "Dolly3D", Dolly3D);
-	Nan::SetPrototypeMethod(tpl, "dolly3D", Dolly3D);
-
 	Nan::SetPrototypeMethod(tpl, "GetDollyMotionFactor", GetDollyMotionFactor);
 	Nan::SetPrototypeMethod(tpl, "getDollyMotionFactor", GetDollyMotionFactor);
 
@@ -61,9 +57,6 @@ void VtkInteractorStyle3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "PositionProp", PositionProp);
-	Nan::SetPrototypeMethod(tpl, "positionProp", PositionProp);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -104,26 +97,6 @@ void VtkInteractorStyle3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkInteractorStyle3DWrap::Dolly3D(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkInteractorStyle3DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyle3DWrap>(info.Holder());
-	vtkInteractorStyle3D *native = (vtkInteractorStyle3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventDataWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkEventDataWrap *a0 = ObjectWrap::Unwrap<VtkEventDataWrap>(info[0]->ToObject());
-				if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->Dolly3D(
-			(vtkEventData *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkInteractorStyle3DWrap::GetDollyMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -184,26 +157,6 @@ void VtkInteractorStyle3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkInteractorStyle3DWrap::PositionProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkInteractorStyle3DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyle3DWrap>(info.Holder());
-	vtkInteractorStyle3D *native = (vtkInteractorStyle3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventDataWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkEventDataWrap *a0 = ObjectWrap::Unwrap<VtkEventDataWrap>(info[0]->ToObject());
-				if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->PositionProp(
-			(vtkEventData *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkInteractorStyle3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

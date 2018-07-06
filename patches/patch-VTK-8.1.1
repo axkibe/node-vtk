@@ -1,4 +1,4 @@
-diff -Nru VTK-8.1.1.org/CMake/vtkModuleMacros.cmake VTK-8.1.1/CMake/vtkModuleMacros.cmake
+diff -rNu VTK-8.1.1.org/CMake/vtkModuleMacros.cmake VTK-8.1.1/CMake/vtkModuleMacros.cmake
 --- VTK-8.1.1.org/CMake/vtkModuleMacros.cmake	2018-05-11 16:34:24.000000000 +0200
 +++ VTK-8.1.1/CMake/vtkModuleMacros.cmake	2018-07-06 11:36:58.822368685 +0200
 @@ -362,7 +362,7 @@
@@ -19,7 +19,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkModuleMacros.cmake VTK-8.1.1/CMake/vtkModuleMac
      set(_hierarchy ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Hierarchy.stamp.txt)
    else()
      set(_hierarchy "")
-diff -Nru VTK-8.1.1.org/CMake/vtkModuleMacros.cmake.orig VTK-8.1.1/CMake/vtkModuleMacros.cmake.orig
+diff -rNu VTK-8.1.1.org/CMake/vtkModuleMacros.cmake.orig VTK-8.1.1/CMake/vtkModuleMacros.cmake.orig
 --- VTK-8.1.1.org/CMake/vtkModuleMacros.cmake.orig	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/CMake/vtkModuleMacros.cmake.orig	2018-05-11 16:34:24.000000000 +0200
 @@ -0,0 +1,1071 @@
@@ -1094,7 +1094,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkModuleMacros.cmake.orig VTK-8.1.1/CMake/vtkModu
 +  # Exclude test modules from wrapping
 +  set(${_test_module_name}_EXCLUDE_FROM_WRAPPING 1)
 +endmacro()
-diff -Nru VTK-8.1.1.org/CMake/vtkNodeJsWrapping.cmake VTK-8.1.1/CMake/vtkNodeJsWrapping.cmake
+diff -rNu VTK-8.1.1.org/CMake/vtkNodeJsWrapping.cmake VTK-8.1.1/CMake/vtkNodeJsWrapping.cmake
 --- VTK-8.1.1.org/CMake/vtkNodeJsWrapping.cmake	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/CMake/vtkNodeJsWrapping.cmake	2018-07-06 11:36:58.822368685 +0200
 @@ -0,0 +1,32 @@
@@ -1130,7 +1130,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkNodeJsWrapping.cmake VTK-8.1.1/CMake/vtkNodeJsW
 +
 +endfunction()
 +
-diff -Nru VTK-8.1.1.org/CMake/vtkWrapNodeJs.cmake VTK-8.1.1/CMake/vtkWrapNodeJs.cmake
+diff -rNu VTK-8.1.1.org/CMake/vtkWrapNodeJs.cmake VTK-8.1.1/CMake/vtkWrapNodeJs.cmake
 --- VTK-8.1.1.org/CMake/vtkWrapNodeJs.cmake	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/CMake/vtkWrapNodeJs.cmake	2018-07-06 11:36:58.822368685 +0200
 @@ -0,0 +1,146 @@
@@ -1280,7 +1280,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkWrapNodeJs.cmake VTK-8.1.1/CMake/vtkWrapNodeJs.
 +
 +endmacro()
 +
-diff -Nru VTK-8.1.1.org/CMake/vtkWrapping.cmake VTK-8.1.1/CMake/vtkWrapping.cmake
+diff -rNu VTK-8.1.1.org/CMake/vtkWrapping.cmake VTK-8.1.1/CMake/vtkWrapping.cmake
 --- VTK-8.1.1.org/CMake/vtkWrapping.cmake	2018-05-11 16:34:24.000000000 +0200
 +++ VTK-8.1.1/CMake/vtkWrapping.cmake	2018-07-06 11:36:58.826368658 +0200
 @@ -20,7 +20,7 @@
@@ -1302,7 +1302,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkWrapping.cmake VTK-8.1.1/CMake/vtkWrapping.cmak
        if(VTK_WRAP_TCL AND NOT ${module_name}_EXCLUDE_FROM_TCL_WRAPPING)
          set_property(GLOBAL APPEND PROPERTY VTK_TCL_WRAPPED ${module_name})
          vtk_add_tcl_wrapping(${module_name} "${module_srcs}" "${module_hdrs}")
-diff -Nru VTK-8.1.1.org/CMake/vtkWrapping.cmake.orig VTK-8.1.1/CMake/vtkWrapping.cmake.orig
+diff -rNu VTK-8.1.1.org/CMake/vtkWrapping.cmake.orig VTK-8.1.1/CMake/vtkWrapping.cmake.orig
 --- VTK-8.1.1.org/CMake/vtkWrapping.cmake.orig	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/CMake/vtkWrapping.cmake.orig	2018-05-11 16:34:24.000000000 +0200
 @@ -0,0 +1,67 @@
@@ -1373,7 +1373,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkWrapping.cmake.orig VTK-8.1.1/CMake/vtkWrapping
 +    endif()
 +  endif()
 +endfunction()
-diff -Nru VTK-8.1.1.org/CMake/vtkWrapPython.cmake.orig VTK-8.1.1/CMake/vtkWrapPython.cmake.orig
+diff -rNu VTK-8.1.1.org/CMake/vtkWrapPython.cmake.orig VTK-8.1.1/CMake/vtkWrapPython.cmake.orig
 --- VTK-8.1.1.org/CMake/vtkWrapPython.cmake.orig	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/CMake/vtkWrapPython.cmake.orig	2018-07-06 11:36:58.826368658 +0200
 @@ -0,0 +1,264 @@
@@ -1641,7 +1641,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkWrapPython.cmake.orig VTK-8.1.1/CMake/vtkWrapPy
 +  # Delegate to vtk_wrap_python3
 +  vtk_wrap_python3(${TARGET} ${SRC_LIST_NAME} "${headers_to_wrap}" ${ARGN})
 +endmacro()
-diff -Nru VTK-8.1.1.org/CMake/vtkWrapPython.cmake.rej VTK-8.1.1/CMake/vtkWrapPython.cmake.rej
+diff -rNu VTK-8.1.1.org/CMake/vtkWrapPython.cmake.rej VTK-8.1.1/CMake/vtkWrapPython.cmake.rej
 --- VTK-8.1.1.org/CMake/vtkWrapPython.cmake.rej	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/CMake/vtkWrapPython.cmake.rej	2018-07-06 11:36:58.826368658 +0200
 @@ -0,0 +1,14 @@
@@ -1659,7 +1659,7 @@ diff -Nru VTK-8.1.1.org/CMake/vtkWrapPython.cmake.rej VTK-8.1.1/CMake/vtkWrapPyt
 +         COMMENT "Python Wrapping - generating ${TMP_FILENAME}Python.cxx"
 +           ${verbatim}
 +         )
-diff -Nru VTK-8.1.1.org/CMakeLists.txt VTK-8.1.1/CMakeLists.txt
+diff -rNu VTK-8.1.1.org/CMakeLists.txt VTK-8.1.1/CMakeLists.txt
 --- VTK-8.1.1.org/CMakeLists.txt	2018-05-11 16:34:24.000000000 +0200
 +++ VTK-8.1.1/CMakeLists.txt	2018-07-06 11:36:58.826368658 +0200
 @@ -408,6 +408,9 @@
@@ -1701,7 +1701,7 @@ diff -Nru VTK-8.1.1.org/CMakeLists.txt VTK-8.1.1/CMakeLists.txt
    set(VTK_WRAP_HIERARCHY_EXE vtkWrapHierarchy)
  endif()
  
-diff -Nru VTK-8.1.1.org/CMakeLists.txt.orig VTK-8.1.1/CMakeLists.txt.orig
+diff -rNu VTK-8.1.1.org/CMakeLists.txt.orig VTK-8.1.1/CMakeLists.txt.orig
 --- VTK-8.1.1.org/CMakeLists.txt.orig	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/CMakeLists.txt.orig	2018-05-11 16:34:24.000000000 +0200
 @@ -0,0 +1,583 @@
@@ -2288,7 +2288,7 @@ diff -Nru VTK-8.1.1.org/CMakeLists.txt.orig VTK-8.1.1/CMakeLists.txt.orig
 +#-----------------------------------------------------------------------------
 +# Install the license file
 +install(FILES ${VTK_SOURCE_DIR}/Copyright.txt DESTINATION ${VTK_INSTALL_DOC_DIR})
-diff -Nru VTK-8.1.1.org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx VTK-8.1.1/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx
+diff -rNu VTK-8.1.1.org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx VTK-8.1.1/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx
 --- VTK-8.1.1.org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2018-05-11 16:34:24.000000000 +0200
 +++ VTK-8.1.1/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2018-07-06 11:36:58.826368658 +0200
 @@ -26,7 +26,7 @@
@@ -2300,7 +2300,7 @@ diff -Nru VTK-8.1.1.org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx VTK-8.1.1/Re
  
  // New Workaround:
  // The GLX_GLXEXT_LEGACY definition was added to work around system glxext.h
-diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/CMakeLists.txt VTK-8.1.1/Wrapping/NodeJs/CMakeLists.txt
+diff -rNu VTK-8.1.1.org/Wrapping/NodeJs/CMakeLists.txt VTK-8.1.1/Wrapping/NodeJs/CMakeLists.txt
 --- VTK-8.1.1.org/Wrapping/NodeJs/CMakeLists.txt	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/Wrapping/NodeJs/CMakeLists.txt	2018-07-06 11:36:58.826368658 +0200
 @@ -0,0 +1,33 @@
@@ -2337,7 +2337,7 @@ diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/CMakeLists.txt VTK-8.1.1/Wrapping/NodeJs
 +  COPY_ONLY
 +)
 +
-diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/init.cc.in VTK-8.1.1/Wrapping/NodeJs/init.cc.in
+diff -rNu VTK-8.1.1.org/Wrapping/NodeJs/init.cc.in VTK-8.1.1/Wrapping/NodeJs/init.cc.in
 --- VTK-8.1.1.org/Wrapping/NodeJs/init.cc.in	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/Wrapping/NodeJs/init.cc.in	2018-07-06 11:36:58.826368658 +0200
 @@ -0,0 +1,22 @@
@@ -2363,7 +2363,7 @@ diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/init.cc.in VTK-8.1.1/Wrapping/NodeJs/ini
 +
 +NODE_MODULE( addon, init )
 +
-diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/module.cmake VTK-8.1.1/Wrapping/NodeJs/module.cmake
+diff -rNu VTK-8.1.1.org/Wrapping/NodeJs/module.cmake VTK-8.1.1/Wrapping/NodeJs/module.cmake
 --- VTK-8.1.1.org/Wrapping/NodeJs/module.cmake	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/Wrapping/NodeJs/module.cmake	2018-07-06 11:36:58.826368658 +0200
 @@ -0,0 +1,9 @@
@@ -2376,7 +2376,7 @@ diff -Nru VTK-8.1.1.org/Wrapping/NodeJs/module.cmake VTK-8.1.1/Wrapping/NodeJs/m
 +  EXCLUDE_FROM_ALL
 +  EXCLUDE_FROM_WRAPPING
 +  )
-diff -Nru VTK-8.1.1.org/Wrapping/Tools/CMakeLists.txt VTK-8.1.1/Wrapping/Tools/CMakeLists.txt
+diff -rNu VTK-8.1.1.org/Wrapping/Tools/CMakeLists.txt VTK-8.1.1/Wrapping/Tools/CMakeLists.txt
 --- VTK-8.1.1.org/Wrapping/Tools/CMakeLists.txt	2018-05-11 16:34:24.000000000 +0200
 +++ VTK-8.1.1/Wrapping/Tools/CMakeLists.txt	2018-07-06 11:36:58.826368658 +0200
 @@ -88,6 +88,13 @@
@@ -2393,7 +2393,7 @@ diff -Nru VTK-8.1.1.org/Wrapping/Tools/CMakeLists.txt VTK-8.1.1/Wrapping/Tools/C
  
    add_executable(vtkParseJava vtkParseJava.c)
    target_link_libraries(vtkParseJava vtkWrappingTools)
-diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJs.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJs.c
+diff -rNu VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJs.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJs.c	2018-07-06 11:36:58.826368658 +0200
 @@ -0,0 +1,1881 @@
@@ -4278,7 +4278,7 @@ diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJs.c VTK-8.1.1/Wrapping/Tools/
 +
 +
 +// vim:set ts=2 sw=2 expandtab:
-diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsInit.c
+diff -rNu VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsInit.c
 --- VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsInit.c	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsInit.c	2018-07-06 11:36:58.826368658 +0200
 @@ -0,0 +1,146 @@
@@ -4428,10 +4428,10 @@ diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-8.1.1/Wrapping/To
 +
 +// vim:set ts=2 sw=2 expandtab:
 +
-diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsSupport.c
+diff -rNu VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsSupport.c
 --- VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsSupport.c	2018-07-06 11:36:58.826368658 +0200
-@@ -0,0 +1,53 @@
++++ VTK-8.1.1/Wrapping/Tools/vtkWrapNodeJsSupport.c	2018-07-06 13:45:38.043790297 +0200
+@@ -0,0 +1,55 @@
 +
 +/* used for development for a minimal vtk lib wrapper */
 +/* to quickly test stuff out */
@@ -4470,6 +4470,8 @@ diff -Nru VTK-8.1.1.org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-8.1.1/Wrapping
 +
 +char const *blacklist[] =
 +  {
++  "vtkEventData",
++  "vtkGenericOpenGLResourceFreeCallback",
 +  "vtkTimeStamp",
 +  "vtkTDxMotionEventInfo",
 +  "vtkContourRepresentationNode",

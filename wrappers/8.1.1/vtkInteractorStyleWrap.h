@@ -60,7 +60,6 @@ class VtkInteractorStyleWrap : public VtkInteractorObserverWrap
 		static void HighlightProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HighlightProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void OnButton3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnChar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnConfigure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnEnter(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -82,7 +81,6 @@ class VtkInteractorStyleWrap : public VtkInteractorObserverWrap
 		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMouseWheelBackward(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMouseWheelForward(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void OnMove3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnPan(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnPinch(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnRightButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);

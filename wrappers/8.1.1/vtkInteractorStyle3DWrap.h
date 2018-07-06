@@ -30,11 +30,9 @@ class VtkInteractorStyle3DWrap : public VtkInteractorStyleWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void Dolly3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDollyMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void PositionProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDollyMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);

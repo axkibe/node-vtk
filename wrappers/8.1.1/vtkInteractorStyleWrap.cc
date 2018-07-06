@@ -9,7 +9,6 @@
 #include "vtkInteractorStyleWrap.h"
 #include "vtkObjectBaseWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
-#include "vtkEventDataWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkActor2DWrap.h"
 #include "vtkProp3DWrap.h"
@@ -143,9 +142,6 @@ void VtkInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
-	Nan::SetPrototypeMethod(tpl, "OnButton3D", OnButton3D);
-	Nan::SetPrototypeMethod(tpl, "onButton3D", OnButton3D);
-
 	Nan::SetPrototypeMethod(tpl, "OnChar", OnChar);
 	Nan::SetPrototypeMethod(tpl, "onChar", OnChar);
 
@@ -208,9 +204,6 @@ void VtkInteractorStyleWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "OnMouseWheelForward", OnMouseWheelForward);
 	Nan::SetPrototypeMethod(tpl, "onMouseWheelForward", OnMouseWheelForward);
-
-	Nan::SetPrototypeMethod(tpl, "OnMove3D", OnMove3D);
-	Nan::SetPrototypeMethod(tpl, "onMove3D", OnMove3D);
 
 	Nan::SetPrototypeMethod(tpl, "OnPan", OnPan);
 	Nan::SetPrototypeMethod(tpl, "onPan", OnPan);
@@ -797,26 +790,6 @@ void VtkInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkInteractorStyleWrap::OnButton3D(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
-	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventDataWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkEventDataWrap *a0 = ObjectWrap::Unwrap<VtkEventDataWrap>(info[0]->ToObject());
-				if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->OnButton3D(
-			(vtkEventData *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkInteractorStyleWrap::OnChar(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
@@ -1067,26 +1040,6 @@ void VtkInteractorStyleWrap::OnMouseWheelForward(const Nan::FunctionCallbackInfo
 		return;
 	}
 	native->OnMouseWheelForward();
-}
-
-void VtkInteractorStyleWrap::OnMove3D(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
-	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventDataWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkEventDataWrap *a0 = ObjectWrap::Unwrap<VtkEventDataWrap>(info[0]->ToObject());
-				if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->OnMove3D(
-			(vtkEventData *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkInteractorStyleWrap::OnPan(const Nan::FunctionCallbackInfo<v8::Value>& info)
