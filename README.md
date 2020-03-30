@@ -1,6 +1,5 @@
-***NOTE: You are probably looking for [vtk.js](https://github.com/kitware/vtk-js#readme) instead***
-
-This is something different providing node.js bindings to the binary c++ library.
+# ***NOTE: You are probably looking for [vtk.js](https://github.com/kitware/vtk-js#readme) instead!***
+# This is something different providing node.js bindings to the binary c++ library.
 
 # node-vtk
 VTK bindings for Node.js
